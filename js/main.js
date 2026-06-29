@@ -92,3 +92,5 @@ import {
     console.error("Errore caricamento dati:", err);
   }
 })();
+
+document.getElementById("current-year").textContent = new Date().getFullYear();
