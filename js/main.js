@@ -18,6 +18,7 @@ import {
 (async function () {
   "use strict";
 
+  // --- Inizializzazioni generali ---
   initNav();
   const revealIO = initReveal();
   initParticles();
@@ -26,8 +27,10 @@ import {
   initMouseGlow();
 
   try {
+    // --- Caricamento dati ---
     const { siteData, progettiData, serviziData } = await loadAllData();
 
+    // --- Contatore progetti ---
     const totalProgetti = progettiData.progetti.length;
     const statItems = document.querySelectorAll(".stat-item");
     statItems.forEach((item) => {
@@ -36,25 +39,22 @@ import {
         item.dataset.count = totalProgetti;
       }
     });
-
     initCounter();
 
-    // Render dei contenuti
+    // --- Render dei contenuti ---
     renderProgetti(progettiData, revealIO);
     renderServizi(serviziData, revealIO);
     renderContatti(siteData, revealIO);
     renderFooterSocial(siteData);
 
-    // ---- POPOLO IL DROPDOWN NAVBAR CON LE CATEGORIE ----
+    // --- Popolamento dropdown categorie ---
     const dropdownMenu = document.querySelector(".nav-dropdown-menu");
     if (dropdownMenu && progettiData) {
-      // Estraggo le categorie uniche
       const categorieSet = new Set(
         progettiData.progetti.map((p) => p.categoria),
       );
       const categorie = ["Tutti", ...Array.from(categorieSet)];
 
-      // Svuoto il menu (tranne eventuali voci fisse, ma non ce ne sono)
       dropdownMenu.innerHTML = "";
       categorie.forEach((cat) => {
         const li = document.createElement("li");
@@ -66,24 +66,68 @@ import {
         dropdownMenu.appendChild(li);
       });
 
-      // Aggiungo event listener a ogni voce
-      dropdownMenu.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          const categoria = link.dataset.cat;
+      // -------------------------------
+      // DELEGAZIONE EVENTI: ascolto i click su tutto il dropdown
+      // -------------------------------
+      dropdownMenu.addEventListener("click", (e) => {
+        const link = e.target.closest("a");
+        if (!link) return;
+        // Verifico che sia un link interno al dropdown (con dataset.cat)
+        if (!link.dataset.cat) return;
 
-          // Scorro alla sezione progetti
-          const progettiSection = document.getElementById("progetti");
-          if (progettiSection) {
-            progettiSection.scrollIntoView({ behavior: "smooth" });
-          }
+        e.preventDefault(); // Blocca il comportamento predefinito dell'ancora
 
-          // Imposto il select e attivo il filtro
-          const select = document.getElementById("categoria-select");
-          if (select) {
-            select.value = categoria;
-            // Trigger dell'evento 'change' per filtrare
-            select.dispatchEvent(new Event("change"));
+        const categoria = link.dataset.cat;
+
+        // Scroll alla sezione progetti (con fallback se non esiste)
+        const progettiSection = document.getElementById("progetti");
+        if (progettiSection) {
+          progettiSection.scrollIntoView({ behavior: "smooth" });
+        } else {
+          console.warn("Sezione #progetti non trovata");
+        }
+
+        // Imposta il select e attiva il filtro
+        const select = document.getElementById("categoria-select");
+        if (select) {
+          select.value = categoria;
+          select.dispatchEvent(new Event("change"));
+        }
+      });
+    }
+
+    // -------------------------------
+    // SCROLL AUTOMATICO ALL'AVVIO CON HASH #progetti
+    // -------------------------------
+    if (window.location.hash === "#progetti") {
+      // Attendere il completamento del rendering (layout) prima di scrollare
+      // Uso un setTimeout per dare tempo ai contenuti di essere renderizzati
+      setTimeout(() => {
+        const progettiSection = document.getElementById("progetti");
+        if (progettiSection) {
+          progettiSection.scrollIntoView({ behavior: "smooth" });
+        } else {
+          console.warn("Sezione #progetti non trovata per lo scroll iniziale");
+        }
+      }, 600); // 600 ms è un buon compromesso
+    }
+
+    // -------------------------------
+    // LISTENER DI FILTRO (se non già presente in render.js)
+    // -------------------------------
+    const select = document.getElementById("categoria-select");
+    if (select) {
+      // Rimuovo eventuali listener precedenti (per evitare duplicati)
+      // Nota: se render.js ha già un listener, questo si aggiunge e coesiste.
+      select.addEventListener("change", function () {
+        const categoria = this.value;
+        const cards = document.querySelectorAll("#progetti-grid .project-card");
+        cards.forEach((card) => {
+          const cardCat = card.dataset.categoria;
+          if (categoria === "Tutti" || cardCat === categoria) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
           }
         });
       });
@@ -93,6 +137,7 @@ import {
   }
 })();
 
+// --- Gestione anno nel footer (invariata) ---
 document.getElementById("current-year").textContent = new Date().getFullYear();
 
 function updateYear() {
@@ -106,23 +151,14 @@ function updateYear() {
   const nextYear = currentYear + 1;
   const nextJan1 = new Date(nextYear, 0, 1, 0, 0, 0, 0);
   const msUntilMidnight = nextJan1 - now;
-  // se siamo a meno di 1 giorno, schedulo al millisecondo esatto
   if (msUntilMidnight > 0 && msUntilMidnight < 86400000) {
     clearTimeout(window._yearTimer);
     window._yearTimer = setTimeout(() => {
       updateYear();
-      // poi riavvio il controllo ogni secondo
       setInterval(updateYear, 1000);
     }, msUntilMidnight + 10);
   }
 }
 
 updateYear();
-// fallback ogni secondo se il timer non parte
 setInterval(updateYear, 1000);
-
-// Forza l'hash a #home e scrolla in alto PRIMA di qualsiasi rendering
-if (window.location.hash !== "#home") {
-  history.replaceState(null, "", "#home");
-}
-window.scrollTo(0, 0);

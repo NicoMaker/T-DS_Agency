@@ -45,7 +45,7 @@ export function renderProgetti(progettiData, revealObserver) {
         <p class="project-desc">${p.descrizione}</p>
         <div class="project-card-footer">
           <div class="project-tech">${p.tecnologie.map((t) => `<span class="tech-tag">${t}</span>`).join("")}</div>
-          ${p.link ? `<a href="${p.link}" class="project-link-btn" target="_blank" rel="noopener" aria-label="Apri ${p.titolo}">Apri Sito Web ${SVG_EXTERNAL}</a>` : ""}
+          ${p.link ? `<a href="${p.link}" class="project-link-btn" target="_blank" rel="noopener" aria-label="Apri ${p.titolo}">Apri ${p.categoria} ${SVG_EXTERNAL}</a>` : ""}
         </div>
       </div>
     </div>
