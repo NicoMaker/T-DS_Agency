@@ -147,7 +147,7 @@ import {
           link,
           "href =",
           href,
-          "\nControlla il file site.json per questo contatto."
+          "\nControlla il file site.json per questo contatto.",
         );
       }
     });
