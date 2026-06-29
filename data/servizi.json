@@ -1,0 +1,84 @@
+{
+  "titolo": "Cosa Facciamo",
+  "sottotitolo": "Soluzioni digitali complete per aziende e professionisti",
+  "servizi": [
+    {
+      "id": 1,
+      "titolo": "Siti Web",
+      "icona": "🌐",
+      "descrizione": "Realizziamo siti web professionali, veloci e ottimizzati per i motori di ricerca. Dal sito vetrina all'e-commerce completo.",
+      "dettagli": [
+        "Siti vetrina e istituzionali",
+        "E-commerce e negozi online",
+        "Landing page ad alta conversione",
+        "Ottimizzazione SEO on-page"
+      ],
+      "colore": "#1a6cff"
+    },
+    {
+      "id": 2,
+      "titolo": "Brand Identity",
+      "icona": "✏️",
+      "descrizione": "Costruiamo identità visive memorabili. Logo, palette colori, tipografia e materiali grafici coordinati.",
+      "dettagli": [
+        "Logo design e restyling",
+        "Manuale d'identità visiva",
+        "Biglietti da visita e carta intestata",
+        "Template per social e presentazioni"
+      ],
+      "colore": "#0d3fa6"
+    },
+    {
+      "id": 3,
+      "titolo": "App & Software",
+      "icona": "📱",
+      "descrizione": "Sviluppiamo applicazioni mobile e web custom per automatizzare processi e migliorare l'esperienza utente.",
+      "dettagli": [
+        "App iOS e Android",
+        "Web app e portali gestionali",
+        "Integrazione API e sistemi terzi",
+        "Dashboard e pannelli admin"
+      ],
+      "colore": "#00b4d8"
+    },
+    {
+      "id": 4,
+      "titolo": "Marketing Digitale",
+      "icona": "📊",
+      "descrizione": "Strategie di marketing online misurabili. Social media, campagne a pagamento, email marketing e analytics.",
+      "dettagli": [
+        "Gestione social media",
+        "Google Ads e Meta Ads",
+        "Email marketing e automazioni",
+        "Report mensili e analytics"
+      ],
+      "colore": "#0077b6"
+    },
+    {
+      "id": 5,
+      "titolo": "Grafica & Stampa",
+      "icona": "🎨",
+      "descrizione": "Materiali grafici per ogni esigenza: brochure, flyer, manifesti, packaging e tutto ciò che serve offline.",
+      "dettagli": [
+        "Brochure e cataloghi",
+        "Flyer e manifesti",
+        "Packaging e etichette",
+        "Grafica per fiere ed eventi"
+      ],
+      "colore": "#023e8a"
+    },
+    {
+      "id": 6,
+      "titolo": "Consulenza IT",
+      "icona": "💻",
+      "descrizione": "Supporto tecnico e consulenza informatica per aziende. Infrastruttura, sicurezza, cloud e assistenza continua.",
+      "dettagli": [
+        "Audit digitale aziendale",
+        "Migrazione cloud",
+        "Sicurezza informatica",
+        "Assistenza e manutenzione"
+      ],
+      "colore": "#1a6cff"
+    }
+  ]
+}

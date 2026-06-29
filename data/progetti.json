@@ -1,0 +1,72 @@
+{
+  "titolo": "I Nostri Lavori",
+  "sottotitolo": "Ogni progetto racconta una storia digitale",
+  "progetti": [
+    {
+      "id": 1,
+      "titolo": "Arredo Casa Milano",
+      "categoria": "Sito Web",
+      "descrizione": "E-commerce moderno per un'azienda di arredamento milanese. Design minimal, esperienza utente curata, integrazione con CRM.",
+      "tecnologie": ["HTML", "CSS", "JavaScript", "WooCommerce"],
+      "immagine": "img/progetti/progetto1.jpg",
+      "immagine_placeholder": "https://picsum.photos/seed/p1/600/400",
+      "anno": 2025,
+      "colore": "#1a6cff"
+    },
+    {
+      "id": 2,
+      "titolo": "Studio Legale Ferrara",
+      "categoria": "Brand Identity",
+      "descrizione": "Identità visiva completa per uno studio legale: logo, palette, biglietti da visita, carta intestata e sito istituzionale.",
+      "tecnologie": ["Illustrator", "Figma", "WordPress"],
+      "immagine": "img/progetti/progetto2.jpg",
+      "immagine_placeholder": "https://picsum.photos/seed/p2/600/400",
+      "anno": 2025,
+      "colore": "#0d3fa6"
+    },
+    {
+      "id": 3,
+      "titolo": "FoodRunner App",
+      "categoria": "App Mobile",
+      "descrizione": "App di food delivery per un ristorante locale. Interfaccia intuitiva, sistema di ordini in tempo reale, pannello gestionale.",
+      "tecnologie": ["React Native", "Node.js", "Firebase"],
+      "immagine": "img/progetti/progetto3.jpg",
+      "immagine_placeholder": "https://picsum.photos/seed/p3/600/400",
+      "anno": 2024,
+      "colore": "#00b4d8"
+    },
+    {
+      "id": 4,
+      "titolo": "Clinica Benessere Verona",
+      "categoria": "Sito Web",
+      "descrizione": "Sito vetrina con sistema di prenotazione online, blog dedicato al benessere e ottimizzazione SEO locale.",
+      "tecnologie": ["WordPress", "SEO", "Google Ads"],
+      "immagine": "img/progetti/progetto4.jpg",
+      "immagine_placeholder": "https://picsum.photos/seed/p4/600/400",
+      "anno": 2024,
+      "colore": "#0077b6"
+    },
+    {
+      "id": 5,
+      "titolo": "TechStart Venezia",
+      "categoria": "Brand Identity + Web",
+      "descrizione": "Startup tech: naming, brand identity da zero, pitch deck e landing page ad alto tasso di conversione.",
+      "tecnologie": ["Figma", "HTML", "GSAP", "Analytics"],
+      "immagine": "img/progetti/progetto5.jpg",
+      "immagine_placeholder": "https://picsum.photos/seed/p5/600/400",
+      "anno": 2025,
+      "colore": "#023e8a"
+    },
+    {
+      "id": 6,
+      "titolo": "Officina Meccanica Rossi",
+      "categoria": "Sito Web + Social",
+      "descrizione": "Presenza digitale completa per officina storica: sito, Google Business Profile, gestione social mensile.",
+      "tecnologie": ["WordPress", "Meta Ads", "Google Business"],
+      "immagine": "img/progetti/progetto6.jpg",
+      "immagine_placeholder": "https://picsum.photos/seed/p6/600/400",
+      "anno": 2024,
+      "colore": "#1a6cff"
+    }
+  ]
+}

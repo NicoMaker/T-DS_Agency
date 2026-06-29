@@ -1,0 +1,44 @@
+{
+  "azienda": {
+    "nome": "Nooo Agency",
+    "slogan": "Informatica & Grafica per il tuo business",
+    "descrizione": "Siamo un'agenzia specializzata in informatica e grafica digitale. Realizziamo siti web, app, identità visiva e soluzioni digitali su misura per aziende e professionisti.",
+    "baseUrl": "https://www.noooagency.com",
+    "anno_fondazione": 2018
+  },
+  "contatti": {
+    "whatsapp": {
+      "numero": "+393331234567",
+      "label": "WhatsApp",
+      "url": "https://wa.me/393331234567",
+      "icon": "whatsapp"
+    },
+    "telefono": {
+      "numero": "+39 333 123 4567",
+      "label": "Chiamaci",
+      "url": "tel:+393331234567",
+      "icon": "phone"
+    },
+    "email": {
+      "indirizzo": "info@noooagency.com",
+      "label": "Email",
+      "url": "mailto:info@noooagency.com",
+      "icon": "email"
+    },
+    "messaggio": {
+      "label": "Inviaci un messaggio",
+      "icon": "message"
+    }
+  },
+  "social": {
+    "instagram": "https://instagram.com/noooagency",
+    "linkedin": "https://linkedin.com/company/noooagency",
+    "behance": "https://behance.net/noooagency"
+  },
+  "nav": [
+    { "id": "home", "label": "Home", "href": "#home" },
+    { "id": "progetti", "label": "Progetti", "href": "#progetti" },
+    { "id": "servizi", "label": "Servizi", "href": "#servizi" },
+    { "id": "contatti", "label": "Contatti", "href": "#contatti" }
+  ]
+}

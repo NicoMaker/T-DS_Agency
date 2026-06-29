@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Nooo Agency – Informatica & Grafica per il tuo business. Siti web, brand identity, app e marketing digitale." />
+  <meta name="robots" content="index, follow" />
+  <title>Nooo Agency – Informatica & Grafica</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav id="navbar" role="navigation" aria-label="Navigazione principale">
+    <div class="container nav-inner">
+      <a href="#home" class="nav-logo">Nooo<span>.</span></a>
+
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#progetti">Progetti</a></li>
+        <li><a href="#servizi">Servizi</a></li>
+        <li><a href="#contatti" class="nav-cta">Contatti</a></li>
+      </ul>
+
+      <button class="hamburger" aria-label="Apri menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="nav-mobile" role="dialog" aria-modal="true" aria-label="Menu mobile">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#progetti">Progetti</a></li>
+      <li><a href="#servizi">Servizi</a></li>
+      <li><a href="#contatti">Contatti</a></li>
+    </ul>
+  </div>
+
+  <!-- ========== HOME / HERO ========== -->
+  <section id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">INFORMATICA &amp; GRAFICA</div>
+
+        <h1 class="hero-title">
+          Il digitale<br>
+          che fa la <span class="accent">differenza</span>
+        </h1>
+
+        <p class="hero-sub">
+          Siamo un'agenzia specializzata in siti web, brand identity e soluzioni informatiche.
+          Costruiamo presenze digitali che convertono, comunicano e crescono.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#progetti" class="btn btn-primary">I nostri lavori</a>
+          <a href="#contatti" class="btn btn-outline">Scrivici ora</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="number">80<span>+</span></div>
+            <div class="label">Progetti realizzati</div>
+          </div>
+          <div class="stat-item">
+            <div class="number">6<span>+</span></div>
+            <div class="label">Anni di esperienza</div>
+          </div>
+          <div class="stat-item">
+            <div class="number">98<span>%</span></div>
+            <div class="label">Clienti soddisfatti</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROGETTI ========== -->
+  <section id="progetti" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">// I Nostri Lavori</span>
+        <h2 class="section-title">Progetti che parlano<br>da soli</h2>
+        <p class="section-sub">Ogni progetto è una soluzione su misura. Ecco una selezione dei nostri lavori più recenti.</p>
+      </div>
+
+      <div class="progetti-grid" id="progetti-grid">
+        <!-- Popolato via JS da progetti.json -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CHI SIAMO BANNER ========== -->
+  <div class="chi-siamo-banner">
+    <div class="container">
+      <div class="banner-content">
+        <div class="banner-left reveal">
+          <span class="section-label">// Chi siamo</span>
+          <h2 class="banner-title">Informatica &amp; Grafica<br>dal 2018</h2>
+          <p class="banner-text">
+            Nooo Agency nasce dall'unione di competenze tecniche e creative.
+            Il nostro team combina sviluppo web, design visivo e strategia digitale
+            per offrire soluzioni complete a ogni tipo di azienda.
+          </p>
+          <a href="#contatti" class="btn btn-primary">Lavora con noi</a>
+        </div>
+
+        <div class="banner-features reveal">
+          <div class="feature-item">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-text">
+              <h4>Velocità & Performance</h4>
+              <p>Siti veloci, ottimizzati e pronti per ogni dispositivo.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🎨</div>
+            <div class="feature-text">
+              <h4>Design su misura</h4>
+              <p>Nessun template: ogni progetto è unico come il tuo brand.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔒</div>
+            <div class="feature-text">
+              <h4>Sicurezza & Assistenza</h4>
+              <p>Supporto continuativo e manutenzione professionale.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📈</div>
+            <div class="feature-text">
+              <h4>Risultati misurabili</h4>
+              <p>Strategie digitali con KPI chiari e report periodici.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SERVIZI ========== -->
+  <section id="servizi" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">// Cosa Facciamo</span>
+        <h2 class="section-title">Soluzioni digitali<br>complete</h2>
+        <p class="section-sub">Dall'idea alla realizzazione: copriamo ogni aspetto del tuo progetto digitale.</p>
+      </div>
+
+      <div class="servizi-grid" id="servizi-grid">
+        <!-- Popolato via JS da servizi.json -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTATTI ========== -->
+  <section id="contatti" class="section">
+    <div class="container">
+      <div class="contatti-layout">
+        <div class="contatti-intro">
+          <span class="section-label reveal">// Contatti</span>
+          <h2 class="reveal">Parliamo del<br>tuo progetto</h2>
+          <p class="reveal">
+            Sei pronto a portare la tua azienda online? Contattaci come preferisci:
+            rispondiamo entro poche ore.
+          </p>
+
+          <div class="contatti-cards" id="contatti-cards">
+            <!-- Popolato via JS da site.json -->
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div id="contatti-form" class="contatto-form reveal">
+          <h3 class="form-title">Inviaci un messaggio</h3>
+
+          <form id="contatto-form" novalidate>
+            <div class="form-group">
+              <label for="nome">Nome e cognome</label>
+              <input type="text" id="nome" name="nome" placeholder="Mario Rossi" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="mario@esempio.it" required />
+            </div>
+            <div class="form-group">
+              <label for="servizio">Servizio di interesse</label>
+              <select id="servizio" name="servizio">
+                <option value="">Seleziona un servizio…</option>
+                <option>Sito Web</option>
+                <option>Brand Identity</option>
+                <option>App & Software</option>
+                <option>Marketing Digitale</option>
+                <option>Grafica & Stampa</option>
+                <option>Consulenza IT</option>
+                <option>Altro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="messaggio">Messaggio</label>
+              <textarea id="messaggio" name="messaggio" placeholder="Raccontaci il tuo progetto…" required></textarea>
+            </div>
+            <button type="submit" class="form-submit">Invia messaggio →</button>
+          </form>
+
+          <div id="form-success" class="form-success">
+            <div class="icon">✅</div>
+            <h4>Messaggio inviato!</h4>
+            <p>Ti risponderemo entro poche ore. Grazie per averci contattato.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">Nooo<span>.</span></div>
+        <p class="footer-copy">© 2025 Nooo Agency – Informatica &amp; Grafica. P.IVA 00000000000</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/noooagency" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+          <a href="https://linkedin.com/company/noooagency" target="_blank" rel="noopener" aria-label="LinkedIn">LI</a>
+          <a href="https://behance.net/noooagency" target="_blank" rel="noopener" aria-label="Behance">BE</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script -->
+  <script src="js/main.js" type="module"></script>
+</body>
+</html>
