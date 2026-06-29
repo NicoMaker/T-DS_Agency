@@ -1224,3 +1224,40 @@ img { max-width: 100%; display: block; }
   padding: 0 24px;
   border-bottom: 1px solid var(--border);
 }
+
+/* ============================================
+   FIX: Mobile nav — logo con spazio sopra i link
+   ============================================ */
+
+/* Il menu non centra più verticalmente in modo cieco:
+   usa padding-top pari all'header logo + gap visivo */
+.nav-mobile {
+  justify-content: flex-start !important;
+  padding-top: 0;
+}
+
+/* Header logo: fisso in alto, altezza navbar */
+.nav-mobile-header {
+  position: relative !important; /* esce da absolute, occupa spazio nel flusso */
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  width: 100%;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+/* La lista link occupa lo spazio rimanente centrata verticalmente */
+.nav-mobile ul {
+  flex: 1;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center; /* centra verticalmente nello spazio sotto il logo */
+  align-items: center;
+  gap: 0;
+  width: 100%;
+}
