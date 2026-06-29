@@ -7,7 +7,6 @@
   <meta name="robots" content="index, follow" />
   <title>Nooo Agency – Informatica & Grafica</title>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -15,7 +14,6 @@
     rel="stylesheet"
   />
 
-  <!-- Stylesheet -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -23,7 +21,17 @@
   <!-- ========== NAVBAR ========== -->
   <nav id="navbar" role="navigation" aria-label="Navigazione principale">
     <div class="container nav-inner">
-      <a href="#home" class="nav-logo">Nooo<span>.</span></a>
+
+      <!-- LOGO (al posto di "Nooo.") -->
+      <a href="#home" class="nav-logo" aria-label="Nooo Agency - Home">
+        <svg class="nav-logo-icon" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- N stilizzata -->
+          <rect x="1" y="1" width="36" height="36" rx="8" fill="rgba(26,108,255,0.12)" stroke="rgba(26,108,255,0.35)" stroke-width="1.2"/>
+          <path d="M9 28V10L19 26V10M19 26V10L29 28" stroke="#e6f1ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="32" cy="32" r="3" fill="#1a6cff"/>
+        </svg>
+        <span class="nav-logo-text">Nooo<span class="nav-logo-dot">.</span></span>
+      </a>
 
       <ul class="nav-links">
         <li><a href="#home">Home</a></li>
@@ -40,8 +48,19 @@
     </div>
   </nav>
 
-  <!-- Mobile Nav Overlay — stile Da Prat: full-screen, link a lista centrata -->
+  <!-- Mobile Nav — stile Da Prat: full-screen, link in lista con bordi -->
   <div class="nav-mobile" role="dialog" aria-modal="true" aria-label="Menu mobile">
+    <!-- Logo in alto nel menu mobile -->
+    <div class="nav-mobile-header">
+      <a href="#home" class="nav-logo" aria-label="Nooo Agency - Home">
+        <svg class="nav-logo-icon" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="1" y="1" width="36" height="36" rx="8" fill="rgba(26,108,255,0.12)" stroke="rgba(26,108,255,0.35)" stroke-width="1.2"/>
+          <path d="M9 28V10L19 26V10M19 26V10L29 28" stroke="#e6f1ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="32" cy="32" r="3" fill="#1a6cff"/>
+        </svg>
+        <span class="nav-logo-text">Nooo<span class="nav-logo-dot">.</span></span>
+      </a>
+    </div>
     <ul>
       <li><a href="#home">Home</a></li>
       <li><a href="#progetti">Progetti</a></li>
@@ -99,6 +118,10 @@
         <h2 class="section-title">Progetti che parlano<br>da soli</h2>
         <p class="section-sub">Ogni progetto è una soluzione su misura. Ecco una selezione dei nostri lavori più recenti.</p>
       </div>
+
+      <!-- Filter bar: generata dinamicamente da render.js in base alle categorie del JSON -->
+      <div class="filter-bar reveal" id="filter-bar" role="group" aria-label="Filtra per categoria"></div>
+
       <div class="progetti-grid" id="progetti-grid">
         <!-- Popolato via render.js da progetti.json -->
       </div>
@@ -179,8 +202,6 @@
           Rispondiamo entro poche ore.
         </p>
       </div>
-
-      <!-- Griglia 2 persone — popolata via render.js -->
       <div class="contatti-persone-grid" id="contatti-persone"></div>
     </div>
   </section>
@@ -189,18 +210,24 @@
   <footer id="footer">
     <div class="container">
       <div class="footer-inner">
-        <div class="footer-logo">Nooo<span>.</span></div>
+        <!-- LOGO anche nel footer -->
+        <a href="#home" class="nav-logo footer-logo-link" aria-label="Nooo Agency - Home">
+          <svg class="nav-logo-icon" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="1" y="1" width="36" height="36" rx="8" fill="rgba(26,108,255,0.12)" stroke="rgba(26,108,255,0.35)" stroke-width="1.2"/>
+            <path d="M9 28V10L19 26V10M19 26V10L29 28" stroke="#e6f1ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="32" cy="32" r="3" fill="#1a6cff"/>
+          </svg>
+          <span class="nav-logo-text">Nooo<span class="nav-logo-dot">.</span></span>
+        </a>
+
         <p class="footer-copy">© 2025 Nooo Agency – Informatica &amp; Grafica. P.IVA 00000000000</p>
-        <div class="footer-social">
-          <a href="https://instagram.com/noooagency" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
-          <a href="https://linkedin.com/company/noooagency" target="_blank" rel="noopener" aria-label="LinkedIn">LI</a>
-          <a href="https://behance.net/noooagency" target="_blank" rel="noopener" aria-label="Behance">BE</a>
-        </div>
+
+        <!-- Social: IG + FB + altri — popolato da render.js -->
+        <div class="footer-social" id="footer-social"></div>
       </div>
     </div>
   </footer>
 
-  <!-- Entry point ES module -->
   <script src="js/main.js" type="module"></script>
 </body>
 </html>

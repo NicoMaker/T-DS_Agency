@@ -1069,3 +1069,158 @@ img { max-width: 100%; display: block; }
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ============================================
+   PATCH AGGIUNTIVE
+   ============================================ */
+
+/* --- Logo navbar (icona SVG + testo) --- */
+.nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--bianco);
+  letter-spacing: -0.03em;
+  text-decoration: none;
+}
+.nav-logo-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+.nav-logo:hover .nav-logo-icon {
+  filter: drop-shadow(0 0 6px rgba(26,108,255,0.5));
+}
+.nav-logo-text { line-height: 1; }
+.nav-logo-dot  { color: var(--blu-accent); }
+
+/* Footer logo link: nessun underline, stessa apparenza */
+.footer-logo-link {
+  text-decoration: none;
+  color: var(--bianco);
+}
+
+/* --- Filter bar --- */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.filter-btn {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--grigio-light);
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  padding: 8px 18px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: var(--transition);
+  letter-spacing: 0.02em;
+}
+.filter-btn:hover {
+  color: var(--bianco);
+  border-color: rgba(26,108,255,0.4);
+}
+.filter-btn.active {
+  background: var(--blu-accent);
+  color: #fff;
+  border-color: var(--blu-accent);
+  box-shadow: 0 4px 16px rgba(26,108,255,0.35);
+}
+
+/* Card nascosta dal filtro */
+.project-card.hidden { display: none; }
+
+/* Project link "Apri sito" in fondo alla card */
+.project-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.project-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--font-display);
+  color: var(--blu-accent);
+  border: 1px solid rgba(26,108,255,0.3);
+  padding: 6px 14px;
+  border-radius: 100px;
+  transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+.project-link-btn:hover {
+  background: var(--blu-accent);
+  color: #fff;
+  border-color: var(--blu-accent);
+}
+.project-link-btn svg {
+  width: 11px; height: 11px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Badge categoria — visibile solo su "Tutti", nascosto su filtro singolo */
+.project-tag { transition: opacity 0.2s; }
+.project-tag.hidden-badge { display: none; }
+
+/* --- Footer social con icone SVG --- */
+.footer-social {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.footer-social a {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--grigio);
+  transition: var(--transition);
+  text-decoration: none;
+}
+.footer-social a:hover {
+  border-color: var(--blu-accent);
+  color: var(--blu-accent);
+  transform: translateY(-2px);
+}
+.footer-social svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+  display: block;
+}
+
+/* --- Mobile nav header con logo --- */
+.nav-mobile-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--border);
+}
