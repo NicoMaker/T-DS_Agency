@@ -42,23 +42,24 @@ export function initNav() {
   });
 
   /* ---- Active link on scroll ---- */
-  const sections  = [...document.querySelectorAll("section[id]")];
-  const navLinks  = [...document.querySelectorAll(".nav-links a[href^='#']")];
+  /* Usa scrollY diretto: più affidabile con sezioni di altezze diverse */
+  const sections = [...document.querySelectorAll("section[id]")];
+  const navLinks = [...document.querySelectorAll(".nav-links a[href^='#']")];
 
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          navLinks.forEach((a) => a.classList.remove("active"));
-          const active = document.querySelector(
-            `.nav-links a[href="#${entry.target.id}"]`
-          );
-          if (active) active.classList.add("active");
-        }
-      });
-    },
-    { rootMargin: "-40% 0px -55% 0px" }
-  );
+  function setActive() {
+    const scrollY = window.scrollY + 120; // offset navbar
+    let current = sections[0]?.id || "";
 
-  sections.forEach((s) => io.observe(s));
+    sections.forEach((sec) => {
+      if (sec.offsetTop <= scrollY) current = sec.id;
+    });
+
+    navLinks.forEach((a) => {
+      const isActive = a.getAttribute("href") === `#${current}`;
+      a.classList.toggle("active", isActive);
+    });
+  }
+
+  window.addEventListener("scroll", setActive, { passive: true });
+  setActive(); // esegui subito al caricamento
 }

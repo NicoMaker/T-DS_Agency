@@ -94,7 +94,12 @@ export function renderContatti(siteData, revealObserver) {
     return `
       <div class="persona-block reveal">
         <div class="persona-header">
-          <span class="persona-emoji">${persona.emoji}</span>
+          <img
+            class="persona-foto"
+            src="${persona.foto}"
+            alt="Foto di ${persona.nome}"
+            loading="lazy"
+          >
           <div>
             <h3 class="persona-nome">${persona.nome}</h3>
             <span class="persona-ruolo">${persona.ruolo}</span>

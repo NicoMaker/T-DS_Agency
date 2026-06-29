@@ -943,17 +943,14 @@ img { max-width: 100%; display: block; }
   border-bottom: 1px solid var(--border);
 }
 
-.persona-emoji {
-  font-size: 2rem;
-  width: 52px;
-  height: 52px;
-  background: rgba(26, 108, 255, 0.1);
-  border: 1px solid rgba(26, 108, 255, 0.2);
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.persona-foto {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(26, 108, 255, 0.35);
   flex-shrink: 0;
+  background: var(--blu-mid);
 }
 
 .persona-nome {
