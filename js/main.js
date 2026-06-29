@@ -120,3 +120,9 @@ function updateYear() {
 updateYear();
 // fallback ogni secondo se il timer non parte
 setInterval(updateYear, 1000);
+
+// Forza l'hash a #home e scrolla in alto PRIMA di qualsiasi rendering
+if (window.location.hash !== "#home") {
+  history.replaceState(null, "", "#home");
+}
+window.scrollTo(0, 0);
