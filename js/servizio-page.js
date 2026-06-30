@@ -115,13 +115,16 @@ import {
 
     if (correlati.length) {
       correlatiGrid.innerHTML = correlati
-        .map(
-          (p) => `
-        <div class="project-card reveal" data-cat="${p.categoria}">
+        .map((p) => {
+          const isPresetCat =
+            servizio.categorie_correlate &&
+            servizio.categorie_correlate.includes(p.categoria);
+          return `
+        <div class="project-card reveal" data-cat="${p.categoria}" data-search="${p.titolo} ${p.descrizione} ${p.tecnologie.join(" ")}">
           <div class="project-img-wrap">
             <img src="${p.immagine_placeholder}" alt="${p.titolo}" loading="lazy">
             <div class="project-overlay"></div>
-            <span class="project-tag">${p.categoria}</span>
+            ${isPresetCat ? "" : `<span class="project-tag">${p.categoria}</span>`}
           </div>
           <div class="project-body">
             <p class="project-anno">${p.anno}</p>
@@ -129,14 +132,27 @@ import {
             <p class="project-desc">${p.descrizione}</p>
             <div class="project-card-footer">
               <div class="project-tech">${p.tecnologie.map((t) => `<span class="tech-tag">${t}</span>`).join("")}</div>
-              ${p.link ? `<a href="${p.link}" class="project-link-btn" target="_blank" rel="noopener" aria-label="Apri ${p.titolo}">Apri ${p.categoria} ${SVG_EXTERNAL}</a>` : ""}
+              ${p.link ? `<a href="${p.link}" class="project-link-btn" target="_blank" rel="noopener" aria-label="Apri ${p.titolo}">Apri ${SVG_EXTERNAL}</a>` : ""}
             </div>
           </div>
         </div>
-      `,
-        )
+      `;
+        })
         .join("");
       correlatiWrap.style.display = "";
+
+      // --- Ricerca nei progetti correlati ---
+      const searchCorrelatiInput = document.getElementById("sd-search-correlati");
+      if (searchCorrelatiInput) {
+        const correlatiCards = correlatiGrid.querySelectorAll(".project-card");
+        searchCorrelatiInput.addEventListener("input", function () {
+          const query = this.value.toLowerCase().trim();
+          correlatiCards.forEach((card) => {
+            const searchData = card.dataset.search.toLowerCase();
+            card.classList.toggle("hidden", query !== "" && !searchData.includes(query));
+          });
+        });
+      }
     } else {
       correlatiWrap.style.display = "none";
     }

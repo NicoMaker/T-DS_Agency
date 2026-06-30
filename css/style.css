@@ -736,7 +736,8 @@ img {
 }
 
 /* ---------- FILTER BAR STICKY ---------- */
-#progetti .filter-bar {
+#progetti .filter-bar,
+#sd-correlati-filter-bar {
   position: sticky;
   top: var(--nav-height);
   z-index: 5;
@@ -789,7 +790,8 @@ img {
   min-width: 150px;
 }
 
-#search-progetti {
+#search-progetti,
+#sd-search-correlati {
   width: 100%;
   padding: 10px 16px;
   border-radius: 100px;
@@ -801,17 +803,20 @@ img {
   transition: var(--transition);
   outline: none;
 }
-#search-progetti::placeholder {
+#search-progetti::placeholder,
+#sd-search-correlati::placeholder {
   color: var(--grigio);
 }
-#search-progetti:focus {
+#search-progetti:focus,
+#sd-search-correlati:focus {
   border-color: var(--blu-accent);
   box-shadow: 0 0 0 3px rgba(26, 108, 255, 0.2);
 }
 
 /* Responsive per la filter-bar */
 @media (max-width: 600px) {
-  #progetti .filter-bar {
+  #progetti .filter-bar,
+  #sd-correlati-filter-bar {
     flex-direction: column;
     align-items: stretch;
     gap: 10px;
