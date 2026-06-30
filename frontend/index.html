@@ -216,47 +216,94 @@
         <div class="contatti-form-wrap reveal">
           <div class="contatti-form-header">
             <h3>Oppure scrivici direttamente</h3>
-            <p>Compila il form: ti risponderemo via email il prima possibile.</p>
+            <p>
+              Compila il form: ti risponderemo via email il prima possibile.
+            </p>
           </div>
 
           <form id="form-contatti" class="form-contatti" novalidate>
             <div class="form-row">
               <div class="form-group">
                 <label for="f-nome">Nome *</label>
-                <input type="text" id="f-nome" name="nome" required autocomplete="given-name" />
+                <input
+                  type="text"
+                  id="f-nome"
+                  name="nome"
+                  required
+                  autocomplete="given-name"
+                  placeholder="il tuo nome"
+                />
               </div>
               <div class="form-group">
                 <label for="f-cognome">Cognome *</label>
-                <input type="text" id="f-cognome" name="cognome" required autocomplete="family-name" />
+                <input
+                  type="text"
+                  id="f-cognome"
+                  name="cognome"
+                  required
+                  autocomplete="family-name"
+                  placeholder="il tuo cognome"
+                />
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
                 <label for="f-email">Email *</label>
-                <input type="email" id="f-email" name="email" required autocomplete="email" />
+                <input
+                  type="email"
+                  id="f-email"
+                  name="email"
+                  required
+                  autocomplete="email"
+                  placeholder="la tua mail es. prova@gmail.com"
+                />
               </div>
               <div class="form-group">
                 <label for="f-telefono">Numero di cellulare *</label>
-                <input type="tel" id="f-telefono" name="telefono" required autocomplete="tel" placeholder="+39 333 1234567" />
+                <input
+                  type="tel"
+                  id="f-telefono"
+                  name="telefono"
+                  required
+                  autocomplete="tel"
+                  placeholder="+39 333 1234567"
+                />
               </div>
             </div>
 
             <div class="form-group">
               <label for="f-servizio">Servizio desiderato *</label>
               <select id="f-servizio" name="servizio" required>
-                <option value="" disabled selected>Seleziona un servizio…</option>
+                <option value="" disabled selected>
+                  Seleziona un servizio…
+                </option>
               </select>
             </div>
 
             <div class="form-group">
               <label for="f-messaggio">Messaggio *</label>
-              <textarea id="f-messaggio" name="messaggio" rows="5" required placeholder="Raccontaci il tuo progetto…"></textarea>
+              <textarea
+                id="f-messaggio"
+                name="messaggio"
+                rows="5"
+                required
+                placeholder="Raccontaci il tuo progetto…"
+              ></textarea>
             </div>
 
-            <div id="form-feedback" class="form-feedback" role="status" aria-live="polite"></div>
+            <div
+              id="form-feedback"
+              class="form-feedback"
+              role="status"
+              aria-live="polite"
+            ></div>
 
-            <button type="submit" class="btn btn-primary form-submit-btn" id="form-submit-btn">
+            <button
+              type="submit"
+              class="btn btn-primary form-submit-btn"
+              id="form-submit-btn"
+            >
               <span class="btn-text">Invia richiesta</span>
             </button>
           </form>
