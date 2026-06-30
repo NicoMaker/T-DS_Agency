@@ -41,7 +41,13 @@
               <!-- Le voci verranno generate da JS -->
             </ul>
           </li>
-          <li><a href="#servizi">Servizi</a></li>
+          <!-- DROPDOWN SERVIZI -->
+          <li class="nav-dropdown">
+            <a href="#servizi" class="nav-dropdown-toggle">Servizi ▾</a>
+            <ul class="nav-dropdown-menu" id="servizi-dropdown-menu">
+              <!-- Le voci verranno generate da JS -->
+            </ul>
+          </li>
           <li><a href="#contatti">Contatti</a></li>
         </ul>
 
@@ -71,7 +77,8 @@
       <div class="hero-bg"></div>
       <div class="hero-grid"></div>
       <div class="container">
-        <div class="hero-content">
+        <!-- ✅ Aggiunta classe hero-content--center per centrare -->
+        <div class="hero-content hero-content--center">
           <div class="hero-badge">INFORMATICA &amp; GRAFICA</div>
           <h1 class="hero-title">
             Il digitale<br />che fa la <span class="accent">differenza</span>
@@ -89,6 +96,43 @@
       </div>
     </section>
 
+    <!-- ========== SERVIZIO DETAIL (pagina singola servizio) ========== -->
+    <section id="servizio-detail" class="section" style="display:none;">
+      <div class="container">
+        <div class="servizio-detail-inner">
+          <a href="#servizi" class="btn-back" id="btn-back-servizi">
+            ← Tutti i servizi
+          </a>
+          <div class="servizio-detail-header reveal">
+            <div class="servizio-detail-icon" id="sd-icon"></div>
+            <div>
+              <h2 class="servizio-detail-title" id="sd-title"></h2>
+              <p class="servizio-detail-sub" id="sd-desc"></p>
+            </div>
+          </div>
+          <div class="servizio-detail-body">
+            <div class="servizio-detail-lista reveal">
+              <h3>Cosa include</h3>
+              <ul id="sd-lista"></ul>
+            </div>
+            <div class="servizio-detail-faq reveal">
+              <h3>Domande frequenti</h3>
+              <div id="sd-faq"></div>
+            </div>
+          </div>
+          <div class="servizio-detail-cta reveal">
+            <p>Hai bisogno di questo servizio?</p>
+            <a href="#contatti" class="btn btn-primary">Contattaci ora</a>
+          </div>
+          <!-- Progetti correlati -->
+          <div class="servizio-detail-correlati reveal">
+            <h3>Progetti correlati</h3>
+            <div class="progetti-grid" id="sd-correlati-grid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ========== PROGETTI ========== -->
     <section id="progetti" class="section">
       <div class="container">
@@ -98,11 +142,8 @@
         </div>
 
         <div class="filter-bar reveal" id="filter-bar">
-          <!-- Select per categoria -->
           <select id="categoria-select" aria-label="Filtra per categoria">
-            <!-- le opzioni verranno generate da JS -->
           </select>
-          <!-- Campo di ricerca testuale -->
           <div class="search-wrapper">
             <input
               type="text"

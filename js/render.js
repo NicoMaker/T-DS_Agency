@@ -5,9 +5,14 @@ const SVG_FB = `<svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12
 const SVG_LI = `<svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`;
 const SVG_BE = `<svg viewBox="0 0 24 24"><path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 3.211 3.483 3.312 4.588 2.029L23.726 17zm-5.101-7.5c-1.096 0-2.188.76-2.374 2.5h4.52c-.105-1.65-1.04-2.5-2.146-2.5zm-10.5.5h-3.125v-2h3.125v2zm.001 2v1.5h-3.126v-1.5h3.126zm-3.126 4v1.5H8.1v-1.5H5zm8.1-9C9.386 6 8 7.449 8 9.5c0 2.051 1.386 3.5 5.1 3.5 2.257 0 3.9-1.051 3.9-3.5s-1.643-3.5-3.9-3.5z"/></svg>`;
 
+// ─── Store globale dei dati servizi (per il routing) ──────────────────────────
+let _serviziData = null;
+let _progettiData = null;
+
+// ─── RENDER PROGETTI ─────────────────────────────────────────────────────────
 export function renderProgetti(progettiData, revealObserver) {
+  _progettiData = progettiData;
   const grid = document.querySelector("#progetti-grid");
-  const filterBar = document.querySelector("#filter-bar");
   const searchInput = document.getElementById("search-progetti");
   const select = document.getElementById("categoria-select");
   if (!grid || !progettiData || !select) return;
@@ -19,17 +24,14 @@ export function renderProgetti(progettiData, revealObserver) {
     countEl.textContent = `${total} progetti realizzati su misura per ogni esigenza.`;
   }
 
-  // Estraggo le categorie uniche, mantenendo l'ordine di comparsa
   const categorieSet = new Set(progetti.map((p) => p.categoria));
   const categorie = ["Tutti", ...Array.from(categorieSet)];
 
-  // Popolo il select
   select.innerHTML = categorie
     .map((cat) => `<option value="${cat}">${cat}</option>`)
     .join("");
   select.value = "Tutti";
 
-  // Genero le card
   grid.innerHTML = progetti
     .map(
       (p) => `
@@ -55,7 +57,6 @@ export function renderProgetti(progettiData, revealObserver) {
 
   const cards = grid.querySelectorAll(".project-card");
 
-  // Funzione di filtro combinato
   function filterProjects() {
     const categoria = select.value;
     const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
@@ -67,49 +68,157 @@ export function renderProgetti(progettiData, revealObserver) {
       const matchSearch = query === "" || searchData.includes(query);
       const visible = matchCat && matchSearch;
       card.classList.toggle("hidden", !visible);
-      // Nascondo il tag categoria se non siamo in "Tutti"
       const badge = card.querySelector(".project-tag");
       if (badge) badge.style.display = categoria === "Tutti" ? "" : "none";
     });
   }
 
-  // Event listener per il select
   select.addEventListener("change", filterProjects);
-  // Event listener per la ricerca
   if (searchInput) {
     searchInput.addEventListener("input", filterProjects);
   }
 
-  // Osserviamo le card per le animazioni
   if (revealObserver) {
     cards.forEach((el) => revealObserver.observe(el));
   }
 
-  // Eseguo il primo filtro (stato iniziale)
   filterProjects();
 }
 
+// ─── RENDER SERVIZI (griglia principale) ─────────────────────────────────────
 export function renderServizi(serviziData, revealObserver) {
+  _serviziData = serviziData;
   const grid = document.querySelector("#servizi-grid");
   if (!grid || !serviziData) return;
+
   grid.innerHTML = serviziData.servizi
     .map(
       (s) => `
-    <div class="servizio-card reveal">
+    <div class="servizio-card reveal" style="--servizio-color:${s.colore}">
       <span class="servizio-icon">${s.icona}</span>
       <h3 class="servizio-title">${s.titolo}</h3>
       <p class="servizio-desc">${s.descrizione}</p>
       <ul class="servizio-lista">${s.dettagli.map((d) => `<li>${d}</li>`).join("")}</ul>
+      <a href="#servizio/${s.slug}" class="btn-servizio-detail">Scopri di più →</a>
     </div>
   `,
     )
     .join("");
+
   if (revealObserver)
     grid
       .querySelectorAll(".reveal")
       .forEach((el) => revealObserver.observe(el));
 }
 
+// ─── RENDER PAGINA DETTAGLIO SERVIZIO ────────────────────────────────────────
+export function renderServizioDetail(slug, revealObserver) {
+  if (!_serviziData) return false;
+
+  const servizio = _serviziData.servizi.find((s) => s.slug === slug);
+  if (!servizio) return false;
+
+  // Popolo i campi
+  document.getElementById("sd-icon").textContent = servizio.icona;
+  document.getElementById("sd-title").textContent = servizio.titolo;
+  document.getElementById("sd-desc").textContent = servizio.descrizione;
+
+  // Lista dettagli
+  const lista = document.getElementById("sd-lista");
+  lista.innerHTML = servizio.dettagli
+    .map((d) => `<li><span class="lista-check">✓</span>${d}</li>`)
+    .join("");
+
+  // FAQ accordion
+  const faqWrap = document.getElementById("sd-faq");
+  if (servizio.faq && servizio.faq.length) {
+    faqWrap.innerHTML = servizio.faq
+      .map(
+        (f, i) => `
+      <div class="faq-item" id="faq-${i}">
+        <button class="faq-toggle" aria-expanded="false" aria-controls="faq-body-${i}">
+          <span>${f.domanda}</span>
+          <span class="faq-arrow">+</span>
+        </button>
+        <div class="faq-body" id="faq-body-${i}" hidden>
+          <p>${f.risposta}</p>
+        </div>
+      </div>
+    `,
+      )
+      .join("");
+
+    // Accordion logic
+    faqWrap.querySelectorAll(".faq-toggle").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        // Chiudi tutti
+        faqWrap.querySelectorAll(".faq-toggle").forEach((b) => {
+          b.setAttribute("aria-expanded", "false");
+          b.querySelector(".faq-arrow").textContent = "+";
+          document.getElementById(b.getAttribute("aria-controls")).hidden = true;
+        });
+        // Apri questo se era chiuso
+        if (!expanded) {
+          btn.setAttribute("aria-expanded", "true");
+          btn.querySelector(".faq-arrow").textContent = "−";
+          document.getElementById(btn.getAttribute("aria-controls")).hidden = false;
+        }
+      });
+    });
+  } else {
+    faqWrap.innerHTML = "";
+  }
+
+  // Progetti correlati
+  const correlatiGrid = document.getElementById("sd-correlati-grid");
+  const correlatiSection = document.querySelector(".servizio-detail-correlati");
+  if (_progettiData && servizio.categorie_correlate && servizio.categorie_correlate.length) {
+    const correlati = _progettiData.progetti.filter((p) =>
+      servizio.categorie_correlate.includes(p.categoria)
+    );
+    if (correlati.length) {
+      correlatiGrid.innerHTML = correlati
+        .map(
+          (p) => `
+        <div class="project-card reveal" data-cat="${p.categoria}">
+          <div class="project-img-wrap">
+            <img src="${p.immagine_placeholder}" alt="${p.titolo}" loading="lazy">
+            <div class="project-overlay"></div>
+            <span class="project-tag">${p.categoria}</span>
+          </div>
+          <div class="project-body">
+            <p class="project-anno">${p.anno}</p>
+            <h3 class="project-title">${p.titolo}</h3>
+            <p class="project-desc">${p.descrizione}</p>
+            <div class="project-tech">${p.tecnologie.map((t) => `<span class="tech-tag">${t}</span>`).join("")}</div>
+          </div>
+        </div>
+      `,
+        )
+        .join("");
+      correlatiSection.style.display = "";
+      if (revealObserver) {
+        correlatiGrid.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+      }
+    } else {
+      correlatiSection.style.display = "none";
+    }
+  } else {
+    correlatiSection.style.display = "none";
+  }
+
+  // Osservo gli elementi reveal della pagina dettaglio
+  if (revealObserver) {
+    document
+      .querySelectorAll("#servizio-detail .reveal")
+      .forEach((el) => revealObserver.observe(el));
+  }
+
+  return true;
+}
+
+// ─── RENDER CONTATTI ─────────────────────────────────────────────────────────
 export function renderContatti(siteData, revealObserver) {
   const wrap = document.querySelector("#contatti-persone");
   if (!wrap || !siteData) return;
@@ -171,6 +280,7 @@ export function renderContatti(siteData, revealObserver) {
       .forEach((el) => revealObserver.observe(el));
 }
 
+// ─── RENDER FOOTER SOCIAL ────────────────────────────────────────────────────
 export function renderFooterSocial(siteData) {
   const wrap = document.querySelector("#footer-social");
   if (!wrap || !siteData?.social) return;
