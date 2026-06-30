@@ -99,7 +99,7 @@ export function renderServizi(serviziData, revealObserver) {
       <h3 class="servizio-title">${s.titolo}</h3>
       <p class="servizio-desc">${s.descrizione}</p>
       <ul class="servizio-lista">${s.dettagli.map((d) => `<li>${d}</li>`).join("")}</ul>
-      <a href="#servizio/${s.slug}" class="btn-servizio-detail">Scopri di più →</a>
+      <a href="servizio.html?slug=${s.slug}" class="btn-servizio-detail">Scopri di più →</a>
     </div>
   `,
     )
@@ -109,113 +109,6 @@ export function renderServizi(serviziData, revealObserver) {
     grid
       .querySelectorAll(".reveal")
       .forEach((el) => revealObserver.observe(el));
-}
-
-// ─── RENDER PAGINA DETTAGLIO SERVIZIO ────────────────────────────────────────
-export function renderServizioDetail(slug, revealObserver) {
-  if (!_serviziData) return false;
-
-  const servizio = _serviziData.servizi.find((s) => s.slug === slug);
-  if (!servizio) return false;
-
-  // Popolo i campi
-  document.getElementById("sd-icon").textContent = servizio.icona;
-  document.getElementById("sd-title").textContent = servizio.titolo;
-  document.getElementById("sd-desc").textContent = servizio.descrizione;
-
-  // Lista dettagli
-  const lista = document.getElementById("sd-lista");
-  lista.innerHTML = servizio.dettagli
-    .map((d) => `<li><span class="lista-check">✓</span>${d}</li>`)
-    .join("");
-
-  // FAQ accordion
-  const faqWrap = document.getElementById("sd-faq");
-  if (servizio.faq && servizio.faq.length) {
-    faqWrap.innerHTML = servizio.faq
-      .map(
-        (f, i) => `
-      <div class="faq-item" id="faq-${i}">
-        <button class="faq-toggle" aria-expanded="false" aria-controls="faq-body-${i}">
-          <span>${f.domanda}</span>
-          <span class="faq-arrow">+</span>
-        </button>
-        <div class="faq-body" id="faq-body-${i}" hidden>
-          <p>${f.risposta}</p>
-        </div>
-      </div>
-    `,
-      )
-      .join("");
-
-    // Accordion logic
-    faqWrap.querySelectorAll(".faq-toggle").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const expanded = btn.getAttribute("aria-expanded") === "true";
-        // Chiudi tutti
-        faqWrap.querySelectorAll(".faq-toggle").forEach((b) => {
-          b.setAttribute("aria-expanded", "false");
-          b.querySelector(".faq-arrow").textContent = "+";
-          document.getElementById(b.getAttribute("aria-controls")).hidden = true;
-        });
-        // Apri questo se era chiuso
-        if (!expanded) {
-          btn.setAttribute("aria-expanded", "true");
-          btn.querySelector(".faq-arrow").textContent = "−";
-          document.getElementById(btn.getAttribute("aria-controls")).hidden = false;
-        }
-      });
-    });
-  } else {
-    faqWrap.innerHTML = "";
-  }
-
-  // Progetti correlati
-  const correlatiGrid = document.getElementById("sd-correlati-grid");
-  const correlatiSection = document.querySelector(".servizio-detail-correlati");
-  if (_progettiData && servizio.categorie_correlate && servizio.categorie_correlate.length) {
-    const correlati = _progettiData.progetti.filter((p) =>
-      servizio.categorie_correlate.includes(p.categoria)
-    );
-    if (correlati.length) {
-      correlatiGrid.innerHTML = correlati
-        .map(
-          (p) => `
-        <div class="project-card reveal" data-cat="${p.categoria}">
-          <div class="project-img-wrap">
-            <img src="${p.immagine_placeholder}" alt="${p.titolo}" loading="lazy">
-            <div class="project-overlay"></div>
-            <span class="project-tag">${p.categoria}</span>
-          </div>
-          <div class="project-body">
-            <p class="project-anno">${p.anno}</p>
-            <h3 class="project-title">${p.titolo}</h3>
-            <p class="project-desc">${p.descrizione}</p>
-            <div class="project-tech">${p.tecnologie.map((t) => `<span class="tech-tag">${t}</span>`).join("")}</div>
-          </div>
-        </div>
-      `,
-        )
-        .join("");
-      correlatiSection.style.display = "";
-      if (revealObserver) {
-        correlatiGrid.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
-      }
-    } else {
-      correlatiSection.style.display = "none";
-    }
-  } else {
-    correlatiSection.style.display = "none";
-  }
-
-  // Osservo gli elementi reveal della pagina dettaglio
-  if (revealObserver) {
-    document
-      .querySelectorAll("#servizio-detail .reveal")
-      .forEach((el) => revealObserver.observe(el));
-  }
-
-  return true;
 }
 
 // ─── RENDER CONTATTI ─────────────────────────────────────────────────────────

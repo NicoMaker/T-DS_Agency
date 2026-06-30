@@ -26,7 +26,12 @@
     <nav id="navbar" role="navigation" aria-label="Navigazione principale">
       <div class="container nav-inner">
         <a href="#home" class="nav-logo" aria-label="Nooo Agency - Home">
-          <img class="nav-logo-icon" src="img/logo.png" alt="Nooo Agency" />
+          <img
+            class="nav-logo-icon"
+            src="img/logo.png"
+            alt="Nooo Agency"
+            onerror="this.style.display='none'"
+          />
           <span class="nav-logo-text"
             >Nooo<span class="nav-logo-dot">.</span></span
           >
@@ -91,43 +96,6 @@
           <div class="hero-actions">
             <a href="#progetti" class="btn btn-primary">I nostri lavori</a>
             <a href="#contatti" class="btn btn-outline">Scrivici ora</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== SERVIZIO DETAIL (pagina singola servizio) ========== -->
-    <section id="servizio-detail" class="section" style="display:none;">
-      <div class="container">
-        <div class="servizio-detail-inner">
-          <a href="#servizi" class="btn-back" id="btn-back-servizi">
-            ← Tutti i servizi
-          </a>
-          <div class="servizio-detail-header reveal">
-            <div class="servizio-detail-icon" id="sd-icon"></div>
-            <div>
-              <h2 class="servizio-detail-title" id="sd-title"></h2>
-              <p class="servizio-detail-sub" id="sd-desc"></p>
-            </div>
-          </div>
-          <div class="servizio-detail-body">
-            <div class="servizio-detail-lista reveal">
-              <h3>Cosa include</h3>
-              <ul id="sd-lista"></ul>
-            </div>
-            <div class="servizio-detail-faq reveal">
-              <h3>Domande frequenti</h3>
-              <div id="sd-faq"></div>
-            </div>
-          </div>
-          <div class="servizio-detail-cta reveal">
-            <p>Hai bisogno di questo servizio?</p>
-            <a href="#contatti" class="btn btn-primary">Contattaci ora</a>
-          </div>
-          <!-- Progetti correlati -->
-          <div class="servizio-detail-correlati reveal">
-            <h3>Progetti correlati</h3>
-            <div class="progetti-grid" id="sd-correlati-grid"></div>
           </div>
         </div>
       </div>
@@ -250,7 +218,12 @@
             class="nav-logo footer-logo-link"
             aria-label="Nooo Agency - Home"
           >
-            <img class="nav-logo-icon" src="img/logo.png" alt="Nooo Agency" />
+            <img
+              class="nav-logo-icon"
+              src="img/logo.png"
+              alt="Nooo Agency"
+              onerror="this.style.display='none'"
+            />
             <span class="nav-logo-text"
               >Nooo<span class="nav-logo-dot">.</span></span
             >

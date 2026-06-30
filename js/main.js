@@ -4,7 +4,6 @@ import { initReveal } from "./reveal.js";
 import {
   renderProgetti,
   renderServizi,
-  renderServizioDetail,
   renderContatti,
   renderFooterSocial,
 } from "./render.js";
@@ -16,63 +15,20 @@ import {
   initMouseGlow,
 } from "./animations.js";
 
-// ─── Sezioni principali (usate dal router) ───────────────────────────────────
-const MAIN_SECTIONS = ["home", "progetti", "servizi", "contatti"];
-
-// ─── Riferimento globale al revealObserver ───────────────────────────────────
-let revealIO = null;
-
-// ─── ROUTER ─────────────────────────────────────────────────────────────────
-// Gestisce #servizio/<slug> vs hash normali (#home, #progetti, ecc.)
-function router(hash) {
-  const detailSection = document.getElementById("servizio-detail");
-
-  // Pagina dettaglio servizio: #servizio/<slug>
-  if (hash && hash.startsWith("#servizio/")) {
-    const slug = hash.replace("#servizio/", "");
-    const ok = renderServizioDetail(slug, revealIO);
-    if (ok) {
-      // Nascondi le sezioni normali, mostra la pagina dettaglio
-      MAIN_SECTIONS.forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = id === "home" ? "" : "none";
-      });
-      detailSection.style.display = "";
-      detailSection.scrollIntoView({ behavior: "smooth" });
-      return;
-    }
-  }
-
-  // Navigazione normale: mostra tutto, nascondi servizio-detail
-  detailSection.style.display = "none";
-  MAIN_SECTIONS.forEach((id) => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = "";
-  });
-
-  // Scroll all'ancora
-  if (hash && hash.length > 1) {
-    const targetId = hash.substring(1);
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-      setTimeout(() => targetElement.scrollIntoView({ behavior: "smooth" }), 100);
-    }
-  }
-}
-
-// ─── MAIN ────────────────────────────────────────────────────────────────────
 (async function () {
   "use strict";
 
+  // --- Inizializzazioni che non dipendono dal DOM dei contenuti ---
   initParticles();
   initTypewriter();
   initParallax();
   initMouseGlow();
 
   try {
+    // --- Caricamento dati ---
     const { siteData, progettiData, serviziData } = await loadAllData();
 
-    // Contatore progetti
+    // --- Contatore progetti ---
     const totalProgetti = progettiData.progetti.length;
     const statItems = document.querySelectorAll(".stat-item");
     statItems.forEach((item) => {
@@ -83,23 +39,26 @@ function router(hash) {
     });
     initCounter();
 
-    // Observer animazioni
-    revealIO = initReveal();
+    // --- Inizializzo l'Observer per le animazioni di comparsa ---
+    const revealIO = initReveal();
 
-    // Render contenuti
+    // --- Render dei contenuti (popola le sezioni) ---
     renderProgetti(progettiData, revealIO);
     renderServizi(serviziData, revealIO);
     renderContatti(siteData, revealIO);
     renderFooterSocial(siteData);
 
-    // Nav
+    // --- NAVIGAZIONE: ora che il DOM è completo, attivo il nav ---
     initNav();
 
-    // ── Dropdown PROGETTI ──────────────────────────────────────────────────
+    // --- Popolamento dropdown categorie progetti ---
     const dropdownMenu = document.querySelector(".nav-dropdown-menu");
     if (dropdownMenu && progettiData) {
-      const categorieSet = new Set(progettiData.progetti.map((p) => p.categoria));
+      const categorieSet = new Set(
+        progettiData.progetti.map((p) => p.categoria),
+      );
       const categorie = ["Tutti", ...Array.from(categorieSet)];
+
       dropdownMenu.innerHTML = "";
       categorie.forEach((cat) => {
         const li = document.createElement("li");
@@ -111,12 +70,18 @@ function router(hash) {
         dropdownMenu.appendChild(li);
       });
 
+      // Delegazione eventi per il dropdown progetti
       dropdownMenu.addEventListener("click", (e) => {
         const link = e.target.closest("a");
         if (!link || !link.dataset.cat) return;
         e.preventDefault();
+
         const categoria = link.dataset.cat;
-        document.getElementById("progetti")?.scrollIntoView({ behavior: "smooth" });
+        const progettiSection = document.getElementById("progetti");
+        if (progettiSection) {
+          progettiSection.scrollIntoView({ behavior: "smooth" });
+        }
+
         const select = document.getElementById("categoria-select");
         if (select) {
           select.value = categoria;
@@ -125,85 +90,84 @@ function router(hash) {
       });
     }
 
-    // ── Dropdown SERVIZI ───────────────────────────────────────────────────
+    // --- Popolamento dropdown SERVIZI (link a pagine separate) ---
     const serviziDropdown = document.getElementById("servizi-dropdown-menu");
     if (serviziDropdown && serviziData) {
       serviziDropdown.innerHTML = "";
       serviziData.servizi.forEach((s) => {
         const li = document.createElement("li");
         const a = document.createElement("a");
-        a.href = `#servizio/${s.slug}`;
+        a.href = `servizio.html?slug=${s.slug}`;
         a.textContent = `${s.icona} ${s.titolo}`;
         li.appendChild(a);
         serviziDropdown.appendChild(li);
       });
     }
 
-    // ── Bottone "← Tutti i servizi" ───────────────────────────────────────
-    const btnBack = document.getElementById("btn-back-servizi");
-    if (btnBack) {
-      btnBack.addEventListener("click", (e) => {
-        e.preventDefault();
-        history.pushState(null, "", "#servizi");
-        router("#servizi");
-      });
+    // --- SCROLL AUTOMATICO PER QUALSIASI HASH ALL'AVVIO ---
+    const hash = window.location.hash;
+    if (hash && hash.length > 1) {
+      const targetId = hash.substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        setTimeout(() => {
+          targetElement.scrollIntoView({ behavior: "smooth" });
+        }, 500);
+      }
     }
 
-    // ── Listener click su carte servizi (delegazione) ─────────────────────
-    document.addEventListener("click", (e) => {
-      const link = e.target.closest("a[href^='#servizio/']");
-      if (!link) return;
-      e.preventDefault();
-      const hash = link.getAttribute("href");
-      history.pushState(null, "", hash);
-      router(hash);
-    });
+    // --- FORZO L'AGGIORNAMENTO DELLA CLASSE ACTIVE SUI LINK DI NAV ---
+    setTimeout(() => {
+      const currentHash = window.location.hash || "#home";
+      const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+      navLinks.forEach((a) => {
+        a.classList.toggle("active", a.getAttribute("href") === currentHash);
+      });
+      const mobileLinks = document.querySelectorAll('.nav-mobile a[href^="#"]');
+      mobileLinks.forEach((a) => {
+        a.classList.toggle("active", a.getAttribute("href") === currentHash);
+      });
+    }, 600);
 
-    // ── Listener select filtro progetti ───────────────────────────────────
+    // --- Listener di filtro per il select progetti ---
     const select = document.getElementById("categoria-select");
     if (select) {
       select.addEventListener("change", function () {
         const categoria = this.value;
         const cards = document.querySelectorAll("#progetti-grid .project-card");
         cards.forEach((card) => {
-          card.style.display =
-            categoria === "Tutti" || card.dataset.cat === categoria ? "" : "none";
+          const cardCat = card.dataset.cat;
+          if (categoria === "Tutti" || cardCat === categoria) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
         });
       });
     }
 
-    // ── Router iniziale + ascolto hashchange ──────────────────────────────
-    router(window.location.hash || "#home");
-    window.addEventListener("hashchange", () => router(window.location.hash));
-
-    // ── Protezione link contatti vuoti ────────────────────────────────────
+    // --- PROTEZIONE PER I LINK DEI CONTATTI ---
     document.querySelectorAll(".contatto-card").forEach((link) => {
       const href = link.getAttribute("href");
       if (!href || href === "#" || href === "#progetti" || href === "") {
         link.style.pointerEvents = "none";
         link.style.opacity = "0.5";
         link.title = "Link non valido (controlla i dati)";
-        console.warn("⚠️ Link contatto non valido:", href);
+        console.warn(
+          "⚠️ Link contatto non valido:",
+          link,
+          "href =",
+          href,
+          "\nControlla il file site.json per questo contatto.",
+        );
       }
     });
-
-    // ── Aggiornamento classe active nav ───────────────────────────────────
-    setTimeout(() => {
-      const currentHash = window.location.hash || "#home";
-      document.querySelectorAll('.nav-links a[href^="#"]').forEach((a) => {
-        a.classList.toggle("active", a.getAttribute("href") === currentHash);
-      });
-      document.querySelectorAll('.nav-mobile a[href^="#"]').forEach((a) => {
-        a.classList.toggle("active", a.getAttribute("href") === currentHash);
-      });
-    }, 600);
-
   } catch (err) {
     console.error("Errore caricamento dati:", err);
   }
 })();
 
-// ─── Anno footer ─────────────────────────────────────────────────────────────
+// --- Gestione anno nel footer ---
 document.getElementById("current-year").textContent = new Date().getFullYear();
 
 function updateYear() {
@@ -211,16 +175,20 @@ function updateYear() {
   if (!yearEl) return;
   const now = new Date();
   const currentYear = now.getFullYear();
-  if (yearEl.textContent !== currentYear.toString()) yearEl.textContent = currentYear;
-  const nextJan1 = new Date(currentYear + 1, 0, 1);
-  const ms = nextJan1 - now;
-  if (ms > 0 && ms < 86400000) {
+  if (yearEl.textContent !== currentYear.toString()) {
+    yearEl.textContent = currentYear;
+  }
+  const nextYear = currentYear + 1;
+  const nextJan1 = new Date(nextYear, 0, 1, 0, 0, 0, 0);
+  const msUntilMidnight = nextJan1 - now;
+  if (msUntilMidnight > 0 && msUntilMidnight < 86400000) {
     clearTimeout(window._yearTimer);
     window._yearTimer = setTimeout(() => {
       updateYear();
       setInterval(updateYear, 1000);
-    }, ms + 10);
+    }, msUntilMidnight + 10);
   }
 }
+
 updateYear();
 setInterval(updateYear, 1000);

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Nooo Agency – Scopri nel dettaglio le nostre soluzioni: siti web, brand identity, app, marketing e molto altro."
+    />
+    <meta name="robots" content="index, follow" />
+    <title>Servizio – Nooo Agency</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- ===== PARTICLES CANVAS ===== -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- ========== NAVBAR ========== -->
+    <nav id="navbar" role="navigation" aria-label="Navigazione principale">
+      <div class="container nav-inner">
+        <a href="index.html#home" class="nav-logo" aria-label="Nooo Agency - Home">
+          <img
+            class="nav-logo-icon"
+            src="img/logo.png"
+            alt="Nooo Agency"
+            onerror="this.style.display='none'"
+          />
+          <span class="nav-logo-text"
+            >Nooo<span class="nav-logo-dot">.</span></span
+          >
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="index.html#home">Home</a></li>
+          <li><a href="index.html#progetti">Progetti</a></li>
+          <li><a href="index.html#servizi" class="active">Servizi</a></li>
+          <li><a href="index.html#contatti">Contatti</a></li>
+        </ul>
+
+        <button class="hamburger" aria-label="Apri menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Nav -->
+    <div
+      class="nav-mobile"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Menu mobile"
+    >
+      <ul>
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="index.html#progetti">Progetti</a></li>
+        <li><a href="index.html#servizi">Servizi</a></li>
+        <li><a href="index.html#contatti">Contatti</a></li>
+      </ul>
+    </div>
+
+    <!-- ========== SERVIZIO DETAIL ========== -->
+    <section id="servizio-detail" class="section">
+      <div class="container">
+        <div class="servizio-detail-inner">
+          <a href="index.html#servizi" class="btn-back">← Tutti i servizi</a>
+
+          <!-- Stato di caricamento -->
+          <div id="sd-loading" style="padding: 60px 0; text-align: center; color: var(--grigio);">
+            Caricamento…
+          </div>
+
+          <!-- Stato "servizio non trovato" -->
+          <div id="sd-notfound" style="display:none; padding: 60px 0; text-align: center;">
+            <h2 style="margin-bottom: 16px;">Servizio non trovato</h2>
+            <p style="margin-bottom: 32px; color: var(--grigio);">
+              Il servizio che cerchi non esiste o è stato rimosso.
+            </p>
+            <a href="index.html#servizi" class="btn btn-primary">Torna ai servizi</a>
+          </div>
+
+          <!-- Contenuto servizio (popolato via JS) -->
+          <div id="sd-content" style="display:none;">
+            <div class="servizio-detail-header reveal">
+              <div class="servizio-detail-icon" id="sd-icon"></div>
+              <div>
+                <h2 class="servizio-detail-title" id="sd-title"></h2>
+                <p class="servizio-detail-sub" id="sd-desc"></p>
+              </div>
+            </div>
+            <div class="servizio-detail-body">
+              <div class="servizio-detail-lista reveal">
+                <h3>Cosa include</h3>
+                <ul id="sd-lista"></ul>
+              </div>
+              <div class="servizio-detail-faq reveal">
+                <h3>Domande frequenti</h3>
+                <div id="sd-faq"></div>
+              </div>
+            </div>
+            <div class="servizio-detail-cta reveal">
+              <p>Hai bisogno di questo servizio?</p>
+              <a href="index.html#contatti" class="btn btn-primary">Contattaci ora</a>
+            </div>
+            <!-- Progetti correlati -->
+            <div class="servizio-detail-correlati reveal" id="sd-correlati-wrap">
+              <h3>Progetti correlati</h3>
+              <div class="progetti-grid" id="sd-correlati-grid"></div>
+            </div>
+            <!-- Altri servizi -->
+            <div class="servizio-detail-altri reveal">
+              <h3>Altre soluzioni</h3>
+              <div class="servizi-grid" id="sd-altri-grid"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer id="footer">
+      <div class="container">
+        <div class="footer-inner">
+          <a
+            href="index.html#home"
+            class="nav-logo footer-logo-link"
+            aria-label="Nooo Agency - Home"
+          >
+            <img
+              class="nav-logo-icon"
+              src="img/logo.png"
+              alt="Nooo Agency"
+              onerror="this.style.display='none'"
+            />
+            <span class="nav-logo-text"
+              >Nooo<span class="nav-logo-dot">.</span></span
+            >
+          </a>
+          <p class="footer-copy">
+            © <span id="current-year"></span> Nooo Agency – Informatica &amp;
+            Grafica. P.IVA 00000000000
+          </p>
+          <div class="footer-social" id="footer-social"></div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/servizio-page.js" type="module"></script>
+  </body>
+</html>
