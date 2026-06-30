@@ -1,7 +1,7 @@
 import { loadJSON } from "./data.js";
 import { initNav } from "./nav.js";
 import { initReveal } from "./reveal.js";
-import { renderFooterSocial } from "./render.js";
+import { renderFooterSocial, SVG_EXTERNAL } from "./render.js";
 import {
   initParticles,
   initParallax,
@@ -98,12 +98,20 @@ import {
     // Progetti correlati
     const correlatiWrap = document.getElementById("sd-correlati-wrap");
     const correlatiGrid = document.getElementById("sd-correlati-grid");
-    const correlati =
+    let correlati =
       servizio.categorie_correlate && servizio.categorie_correlate.length
         ? progettiData.progetti.filter((p) =>
             servizio.categorie_correlate.includes(p.categoria),
           )
         : [];
+
+    // Fallback: se non ci sono progetti correlati per categoria,
+    // mostro comunque alcuni progetti (i più recenti) invece di nascondere la sezione
+    if (!correlati.length) {
+      correlati = [...progettiData.progetti]
+        .sort((a, b) => b.anno - a.anno)
+        .slice(0, 3);
+    }
 
     if (correlati.length) {
       correlatiGrid.innerHTML = correlati
@@ -119,7 +127,10 @@ import {
             <p class="project-anno">${p.anno}</p>
             <h3 class="project-title">${p.titolo}</h3>
             <p class="project-desc">${p.descrizione}</p>
-            <div class="project-tech">${p.tecnologie.map((t) => `<span class="tech-tag">${t}</span>`).join("")}</div>
+            <div class="project-card-footer">
+              <div class="project-tech">${p.tecnologie.map((t) => `<span class="tech-tag">${t}</span>`).join("")}</div>
+              ${p.link ? `<a href="${p.link}" class="project-link-btn" target="_blank" rel="noopener" aria-label="Apri ${p.titolo}">Apri ${p.categoria} ${SVG_EXTERNAL}</a>` : ""}
+            </div>
           </div>
         </div>
       `,
