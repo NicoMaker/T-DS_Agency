@@ -1,7 +1,6 @@
 // ============================================================
 // progetti-filter.js — Ricerca + filtro categorie riutilizzabile
-// Usato sia nella sezione "I Nostri Lavori" della home, sia nei
-// "Progetti correlati" della pagina di dettaglio servizio.
+// Versione ottimizzata per mobile con scroll controllato
 // ============================================================
 
 /**
@@ -27,6 +26,9 @@ function initFilterGrid({ grid, searchInput, catWrap, emptyEl, cardSelector, cat
       : [...new Set([...getCards()].map((c) => c.dataset.cat).filter(Boolean))];
 
   let categoriaAttiva = "Tutti";
+
+  // ── Rilevazione mobile ──
+  const isMobile = () => window.innerWidth < 640 || ('ontouchstart' in window);
 
   function applyFilter() {
     const query = searchInput.value.toLowerCase().trim();
@@ -64,20 +66,32 @@ function initFilterGrid({ grid, searchInput, catWrap, emptyEl, cardSelector, cat
     });
   }
 
-  // ── Ricerca "automatica": appena inizi a scrivere, la pagina scorre
-  // da sola all'inizio della sezione risultati (utile soprattutto da
-  // mobile, dove la tastiera copre la griglia). Scorre una sola volta
-  // per digitazione (non ad ogni tasto), quando il campo passa da
-  // vuoto a pieno.
+  // ── Ricerca con scroll intelligente ──
   let eraVuoto = true;
+  let scrollCooldown = false;
+
   searchInput.addEventListener("input", () => {
     const vuoto = !searchInput.value.trim();
-    if (eraVuoto && !vuoto) {
+
+    // Scroll solo su desktop e solo quando si passa da vuoto a pieno
+    if (!isMobile() && eraVuoto && !vuoto && !scrollCooldown) {
+      scrollCooldown = true;
       const target = grid.closest("section") || grid;
       target.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Evita scroll multipli ravvicinati
+      setTimeout(() => { scrollCooldown = false; }, 600);
     }
+
     eraVuoto = vuoto;
     applyFilter();
   });
+
+  // ── Riapplica filtro al resize (cambio orientamento) ──
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(applyFilter, 200);
+  });
+
   applyFilter();
 }
