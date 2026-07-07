@@ -3,6 +3,14 @@
 // (site.json, servizi.json, progetti.json, video.json)
 // ============================================================
 
+// ── Social SVG icons ──────────────────────────────────────────
+const SOCIAL_ICONS = {
+  instagram: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/><circle cx="18.5" cy="5.5" r="1.2" fill="currentColor"/></svg>`,
+  linkedin: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M8 10v6M8 8v.01M12 16v-4.5M12 12c0-1.5 1-2 2-2s2 .5 2 2v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+  facebook: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M14 9h3l-.4 2.5H14V21h-3v-9.5H9V9h2V7a3 3 0 0 1 3-3v2h-1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>`,
+  behance: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M8 8h5v1.5H8V8zm0 3.5h6.5V13H8v-1.5zm0 3h8.5v1.5H8v-1.5zM16 8h3v1.5h-3V8zm.5 4.5c1.5 0 3 .8 3 2.5 0 2-1.8 3-3.5 3-1.5 0-3-.8-3-2.5h1.5c0 .8.8 1.5 1.5 1.5s1.5-.7 1.5-1.5c0-.8-.8-1.5-1.5-1.5h-.5v-1.5h.5z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+};
+
 // ── Marquee: generato dai titoli dei servizi ────────────────
 function renderMarquee(datiServizi) {
   const parole = (datiServizi.servizi || []).map((s) => s.titolo);
@@ -260,11 +268,12 @@ function contattoTeam(c, icona, valore) {
 // ── Footer social (riutilizzato anche da servizio.html) ─────
 const SVG_EXTERNAL = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
+// Mappatura piattaforme con chiave, label e icona SVG
 const SOCIAL_PLATFORMS = [
-  { key: "instagram", label: "Instagram", short: "IG" },
-  { key: "linkedin", label: "LinkedIn", short: "in" },
-  { key: "facebook", label: "Facebook", short: "f" },
-  { key: "behance", label: "Behance", short: "Be" },
+  { key: "instagram", label: "Instagram", icon: SOCIAL_ICONS.instagram },
+  { key: "linkedin", label: "LinkedIn", icon: SOCIAL_ICONS.linkedin },
+  { key: "facebook", label: "Facebook", icon: SOCIAL_ICONS.facebook },
+  { key: "behance", label: "Behance", icon: SOCIAL_ICONS.behance },
 ];
 
 function renderFooterSocial(site) {
@@ -282,7 +291,10 @@ function renderFooterSocial(site) {
         class="footer-social-link"
         aria-label="${p.label}"
         title="${p.label}"
-        >${p.short}</a>`,
+      >
+        ${p.icon}
+        <span class="footer-social-label">${p.label}</span>
+      </a>`,
     )
     .join("");
 }

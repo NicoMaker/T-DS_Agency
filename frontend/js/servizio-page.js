@@ -111,8 +111,13 @@ document.addEventListener("DOMContentLoaded", async () => {
           const isPresetCat =
             servizio.categorie_correlate &&
             servizio.categorie_correlate.includes(p.categoria);
+          const apribile = isUrlValida(p.link);
+          const tag = apribile ? "a" : "div";
+          const attrLink = apribile
+            ? ` href="${p.link}" target="_blank" rel="noopener" aria-label="Apri il progetto ${p.titolo}"`
+            : "";
           return `
-        <div class="project-card" data-cat="${p.categoria}" data-search="${(`${p.titolo} ${p.descrizione} ${(p.tecnologie || []).join(" ")}`).toLowerCase()}">
+        <${tag} class="project-card" data-cat="${p.categoria}" data-search="${(`${p.titolo} ${p.descrizione} ${(p.tecnologie || []).join(" ")}`).toLowerCase()}"${attrLink}>
           <div class="project-img-wrap">
             <img src="${p.immagine_placeholder}" alt="${p.titolo}" loading="lazy">
             <div class="project-overlay"></div>
@@ -124,10 +129,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             <p class="project-desc">${p.descrizione}</p>
             <div class="project-card-footer">
               <div class="project-tech">${(p.tecnologie || []).map((t) => `<span class="tech-tag">${t}</span>`).join("")}</div>
-              ${p.link ? `<a href="${p.link}" class="project-link-btn" target="_blank" rel="noopener" aria-label="Apri ${p.titolo}">Apri ${SVG_EXTERNAL}</a>` : ""}
+              ${apribile ? `<span class="project-link-btn">Apri ${SVG_EXTERNAL}</span>` : ""}
             </div>
           </div>
-        </div>
+        </${tag}>
       `;
         })
         .join("");
