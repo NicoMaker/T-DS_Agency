@@ -1342,3 +1342,41 @@ button { font-family: inherit; }
   .hero-in { opacity: 1; transform: none; }
   .marquee-track { animation: none !important; }
 }
+
+/* ── Filtro progetti: select per categorie ── */
+.category-filter select {
+  width: 100%;
+  max-width: 260px;
+  background: var(--bg);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px 40px 12px 16px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234d8dff' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  cursor: pointer;
+  min-height: var(--touch-target);
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.category-filter select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(26, 108, 255, 0.2);
+}
+.category-filter select option {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+@media (max-width: 640px) {
+  .category-filter select {
+    max-width: 100%;
+    padding: 14px 40px 14px 16px;
+    font-size: 1rem;
+  }
+}

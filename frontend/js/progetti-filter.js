@@ -1,20 +1,7 @@
 // ============================================================
-// progetti-filter.js — Ricerca + filtro categorie riutilizzabile
-// Versione ottimizzata per mobile con scroll controllato
+// progetti-filter.js — Ricerca + filtro categorie con select
 // ============================================================
 
-/**
- * Collega ricerca testuale + pillole categoria a una griglia di card.
- * Ogni card deve avere data-cat="Categoria" e data-search="testo utile".
- *
- * @param {Object} opts
- * @param {HTMLElement} opts.grid          - contenitore delle card
- * @param {HTMLInputElement} opts.searchInput
- * @param {HTMLElement} [opts.catWrap]     - contenitore delle pillole categoria
- * @param {HTMLElement} [opts.emptyEl]     - messaggio "nessun risultato"
- * @param {string} opts.cardSelector       - selettore delle singole card
- * @param {string[]} [opts.categorie]      - elenco categorie (auto se omesso)
- */
 function initFilterGrid({ grid, searchInput, catWrap, emptyEl, cardSelector, categorie }) {
   if (!grid || !searchInput) return;
 
@@ -26,9 +13,6 @@ function initFilterGrid({ grid, searchInput, catWrap, emptyEl, cardSelector, cat
       : [...new Set([...getCards()].map((c) => c.dataset.cat).filter(Boolean))];
 
   let categoriaAttiva = "Tutti";
-
-  // ── Rilevazione mobile ──
-  const isMobile = () => window.innerWidth < 640 || ('ontouchstart' in window);
 
   function applyFilter() {
     const query = searchInput.value.toLowerCase().trim();
@@ -47,38 +31,50 @@ function initFilterGrid({ grid, searchInput, catWrap, emptyEl, cardSelector, cat
     if (emptyEl) emptyEl.style.display = visibili === 0 ? "" : "none";
   }
 
-  if (catWrap && elencoCategorie.length) {
-    catWrap.innerHTML = ["Tutti", ...elencoCategorie]
-      .map(
-        (c, i) =>
-          `<button type="button" class="cat-pill${i === 0 ? " active" : ""}" data-cat="${c}">${c}</button>`,
-      )
-      .join("");
+  // ── Creazione del select per le categorie ──
+  if (catWrap) {
+    // Svuota il contenitore
+    catWrap.innerHTML = '';
 
-    catWrap.addEventListener("click", (e) => {
-      const btn = e.target.closest(".cat-pill");
-      if (!btn) return;
-      categoriaAttiva = btn.dataset.cat;
-      catWrap
-        .querySelectorAll(".cat-pill")
-        .forEach((b) => b.classList.toggle("active", b === btn));
+    const select = document.createElement('select');
+    select.id = 'categoria-select';
+    select.setAttribute('aria-label', 'Filtra per categoria');
+
+    // Opzione "Tutti"
+    const allOpt = document.createElement('option');
+    allOpt.value = 'Tutti';
+    allOpt.textContent = 'Tutte le categorie';
+    select.appendChild(allOpt);
+
+    // Opzioni per ogni categoria
+    elencoCategorie.forEach(cat => {
+      const opt = document.createElement('option');
+      opt.value = cat;
+      opt.textContent = cat;
+      select.appendChild(opt);
+    });
+
+    // Evento change
+    select.addEventListener('change', () => {
+      categoriaAttiva = select.value;
       applyFilter();
     });
+
+    catWrap.appendChild(select);
   }
 
-  // ── Ricerca con scroll intelligente ──
+  // ── Ricerca con scroll intelligente (solo desktop) ──
   let eraVuoto = true;
   let scrollCooldown = false;
+  const isMobile = () => window.innerWidth < 640 || ('ontouchstart' in window);
 
-  searchInput.addEventListener("input", () => {
+  searchInput.addEventListener('input', () => {
     const vuoto = !searchInput.value.trim();
 
-    // Scroll solo su desktop e solo quando si passa da vuoto a pieno
     if (!isMobile() && eraVuoto && !vuoto && !scrollCooldown) {
       scrollCooldown = true;
-      const target = grid.closest("section") || grid;
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-      // Evita scroll multipli ravvicinati
+      const target = grid.closest('section') || grid;
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setTimeout(() => { scrollCooldown = false; }, 600);
     }
 
@@ -86,9 +82,9 @@ function initFilterGrid({ grid, searchInput, catWrap, emptyEl, cardSelector, cat
     applyFilter();
   });
 
-  // ── Riapplica filtro al resize (cambio orientamento) ──
+  // Riapplica al resize
   let resizeTimer;
-  window.addEventListener("resize", () => {
+  window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(applyFilter, 200);
   });
