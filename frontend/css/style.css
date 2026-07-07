@@ -1,5 +1,5 @@
 /* ============================================================
-   Nooo Agency — style.css (bianco e nero)
+   T‑DS Agency — style.css (bianco e nero)
    ============================================================ */
 
 :root {
@@ -45,8 +45,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Compensa la navbar fissa quando si salta a un'ancora (#servizi, #team, ecc.),
-   sia con click interni sia arrivando da un'altra pagina (es. servizio.html) */
 section[id] {
   scroll-margin-top: var(--navbar-offset);
 }
@@ -111,8 +109,6 @@ button {
   object-fit: cover;
   z-index: 0;
 }
-/* Velo scuro sopra al video, aggiunto via JS solo quando il video parte
-   davvero (classe "has-video"): senza video il loader resta come prima */
 .page-loader.has-video::after {
   content: "";
   position: absolute;
@@ -133,8 +129,6 @@ button {
     opacity 0.25s ease,
     transform 0.25s ease;
 }
-/* La scritta compare solo quando il video ha finito di girare
-   (classe aggiunta via JS: vedi "initIntroVideo" in animations.js) */
 .page-loader.show-word .loader-word {
   opacity: 1;
   transform: translateY(0);
@@ -180,47 +174,25 @@ button {
   align-items: center;
   gap: 12px;
   margin-right: auto;
-}
-.nav-logo-mark {
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  border-radius: 12px;
-  background: var(--accent);
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.15rem;
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.4s var(--ease);
   flex-shrink: 0;
 }
-.nav-logo:hover .nav-logo-mark {
-  transform: rotate(-6deg) scale(1.05);
+
+/* ── LOGO IMMAGINE (200px di larghezza) ── */
+.nav-logo-img {
+  width: 150px;
+  height: auto;
+  display: block;
+  transition: transform 0.4s var(--ease);
 }
-.nav-logo-textwrap {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.15;
+.nav-logo:hover .nav-logo-img {
+  transform: scale(1.04);
 }
-.nav-logo-text {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.3rem;
-  letter-spacing: -0.02em;
-  color: var(--accent-bright);
+/* Nel footer vogliamo il logo leggermente più grande */
+.footer-logo-link .nav-logo-img {
+  width: 220px;
+  height: auto;
 }
-.nav-logo-dot {
-  color: var(--accent-bright);
-}
-.nav-logo-tagline {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: var(--muted);
-}
+
 .nav-links {
   display: flex;
   gap: 6px;
@@ -404,9 +376,6 @@ button {
   background-size: cover;
   background-position: center;
   will-change: transform;
-  /* Sfondo astratto: bagliori tenui + trama a puntini, niente foto
-     esterne (nessun file fornito) ma comunque "qualcosa" dietro al testo.
-     Il bagliore arancione resta in basso a destra, lontano dalla navbar. */
   background-image:
     radial-gradient(36rem 30rem at 78% 78%, rgba(var(--accent-bright-rgb), 0.14), transparent 62%),
     radial-gradient(34rem 28rem at 8% 88%, rgba(24, 24, 24, 0.07), transparent 60%),
@@ -456,10 +425,6 @@ button {
     );
 }
 
-/* ── Video di sfondo attivo: velo scuro su tutta l'area + testi chiari ──
-   Senza questo, qualsiasi cosa mostri il video (loghi, scritte, colori
-   accesi) si scontra con il testo sopra e diventa illeggibile. Velo
-   piuttosto forte apposta, per coprire bene loghi/scritte del video. */
 #home.hero-has-video .hero-veil {
   background: linear-gradient(
     180deg,
@@ -693,7 +658,6 @@ button {
   font-size: 1.05rem;
 }
 
-/* Reveal on scroll */
 .reveal {
   opacity: 0;
   transform: translateY(34px);
@@ -799,7 +763,6 @@ button {
   color: var(--accent-bright);
 }
 
-/* FAQ a fisarmonica dentro le card */
 .servizio-faq {
   margin-top: auto;
   border-top: 1px solid var(--line);
@@ -1365,7 +1328,6 @@ button {
   font-weight: 600;
 }
 
-/* Telefono con bandiera */
 .phone-label-row {
   display: flex;
   align-items: baseline;
@@ -1416,8 +1378,6 @@ button {
   min-height: var(--touch-target);
   padding: 14px 16px 14px 8px;
 }
-/* Modalità "Fisso (senza prefisso)": il selettore nazione sparisce e
-   il campo numero occupa tutta la larghezza */
 .phone-field.solo-numero .phone-country {
   display: none;
 }
@@ -1445,8 +1405,6 @@ button {
   line-height: 1;
 }
 
-/* Bandiere nazionali come immagini reali (niente più emoji "IT" testuali,
-   che su alcuni sistemi/browser non mostrano la bandiera a colori) */
 .flag-icon {
   display: inline-block;
   border-radius: 3px;
@@ -1668,10 +1626,6 @@ button {
   color: var(--accent-bright);
   transform: translateY(-3px);
 }
-/* L'etichetta testuale (es. "Instagram") serve solo per screen reader:
-   il cerchio è pensato per la sola icona, "aria-label"/"title" bastano
-   già a dare il nome accessibile. Prima non c'era questa regola e il
-   testo restava visibile, sovrapponendosi all'icona successiva. */
 .footer-social-label {
   position: absolute;
   width: 1px;
@@ -1848,7 +1802,6 @@ button {
   color: var(--accent-bright);
 }
 
-/* Card progetti correlati */
 .project-card {
   --card-accent: var(--accent);
   position: relative;
@@ -1946,7 +1899,6 @@ button {
   white-space: nowrap;
 }
 
-/* Select "servizi correlati" */
 .servizio-correlati-hint {
   color: var(--muted);
   font-size: 0.92rem;
@@ -2002,12 +1954,10 @@ button {
   color: var(--ink);
 }
 
-/* ── Nasconde filtro categorie nei progetti correlati ── */
 #sd-correlati-categorie {
   display: none;
 }
 
-/* ── Form nella pagina servizio ── */
 #contatti-form-servizio {
   border-top: 1px solid var(--line);
   margin-top: 40px;
@@ -2057,7 +2007,15 @@ button {
   }
 }
 
-/* ── Motion ridotta ── */
+@media (max-width: 480px) {
+  .nav-logo-img {
+    width: 140px; /* più compatto su mobile */
+  }
+  .footer-logo-link .nav-logo-img {
+    width: 160px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -2082,7 +2040,6 @@ button {
   }
 }
 
-/* ── Filtro progetti: select per categorie ── */
 .category-filter select {
   width: 100%;
   max-width: 260px;
