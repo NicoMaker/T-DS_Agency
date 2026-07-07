@@ -8,15 +8,20 @@
     "anno_fondazione": 2018,
     "apiUrl": "https://formspree.io/f/il-tuo-id",
     "contattiAzienda": {
-      "email": {
-        "indirizzo": "info@noooagency.com",
-        "label": "Email Aziendale",
-        "url": "mailto:info@noooagency.com"
+      "whatsapp": {
+        "numero": "+393331234567",
+        "label": "WhatsApp Azienda",
+        "url": "https://wa.me/393331234567"
       },
       "telefono": {
         "numero": "+39 333 123 4567",
         "label": "Telefono Azienda",
         "url": "tel:+393331234567"
+      },
+      "email": {
+        "indirizzo": "info@noooagency.com",
+        "label": "Email Aziendale",
+        "url": "mailto:info@noooagency.com"
       }
     }
   },

@@ -1,6 +1,5 @@
 // ============================================================
 // render.js — Costruzione delle sezioni dai JSON originali
-// (site.json, servizi.json, progetti.json, video.json)
 // ============================================================
 
 // ── Social SVG icons ──────────────────────────────────────────
@@ -252,15 +251,17 @@ function renderTeam(site) {
   // ── Card aziendale (se presente) ──
   if (azienda.contattiAzienda) {
     const ca = azienda.contattiAzienda;
+    // Costruisce i contatti nello stesso ordine: WhatsApp, Telefono, Email
     const contattiAzienda = [
-      ca.email && { icona: "email", valore: ca.email.indirizzo, url: ca.email.url, label: ca.email.label },
-      ca.telefono && { icona: "call", valore: formatNumeroVisuale(ca.telefono.numero), url: ca.telefono.url, label: ca.telefono.label },
+      ca.whatsapp && contattoTeam(ca.whatsapp, WHATSAPP_ICON_SVG, formatNumeroVisuale(ca.whatsapp.numero)),
+      ca.telefono && contattoTeam(ca.telefono, "call", formatNumeroVisuale(ca.telefono.numero)),
+      ca.email && contattoTeam(ca.email, "email", ca.email.indirizzo),
     ].filter(Boolean);
 
     const delayIndex = (site.team || []).length % 3;
 
     html += `
-      <article class="team-card reveal reveal-delay-${delayIndex}" style="border-color: rgba(26,108,255,0.4);">
+      <article class="team-card azienda reveal reveal-delay-${delayIndex}" style="border-color: rgba(26,108,255,0.4);">
         <div class="team-foto" style="background: linear-gradient(135deg, var(--accent), #0d3fa6); display: grid; place-items: center; font-size: 2.2rem; color: #fff;">
           <span style="font-weight: 800;">N.</span>
         </div>
@@ -268,12 +269,7 @@ function renderTeam(site) {
           <h3>${azienda.nome || "Azienda"}</h3>
           <div class="team-ruolo">${ca.ruolo || "Contatti generali"}</div>
           <div class="team-contatti-list">
-            ${contattiAzienda.map(c => `
-              <a class="team-contatto-riga" href="${c.url}" target="_blank" rel="noopener" title="${c.label}" aria-label="${c.label}">
-                <span class="material-icons" aria-hidden="true">${c.icona}</span>
-                <span class="team-contatto-testo">${c.valore}</span>
-              </a>
-            `).join("")}
+            ${contattiAzienda.join("")}
           </div>
         </div>
       </article>
