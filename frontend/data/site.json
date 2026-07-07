@@ -5,7 +5,20 @@
     "descrizione": "Siamo un'agenzia specializzata in informatica e grafica digitale.",
     "baseUrl": "https://www.noooagency.com",
     "email": "info@noooagency.com",
-    "anno_fondazione": 2018
+    "anno_fondazione": 2018,
+    "apiUrl": "https://formspree.io/f/il-tuo-id",
+    "contattiAzienda": {
+      "email": {
+        "indirizzo": "info@noooagency.com",
+        "label": "Email Aziendale",
+        "url": "mailto:info@noooagency.com"
+      },
+      "telefono": {
+        "numero": "+39 333 123 4567",
+        "label": "Telefono Azienda",
+        "url": "tel:+393331234567"
+      }
+    }
   },
   "team": [
     {

@@ -1518,3 +1518,21 @@ button { font-family: inherit; }
   margin-top: 40px;
   padding-top: 40px;
 }
+
+/* ── Team ───────────────────────────────────────────────── */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+  /* max-width: 820px;  ← RIMUOVI o AUMENTA a 900px */
+  max-width: 960px; /* aumenta per far stare 3 card su una riga */
+}
+
+/* ── Team ───────────────────────────────────────────────── */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+  max-width: 960px; /* ora le 3 card entrano sulla stessa riga */
+  margin-inline: auto; /* centra la griglia nel container */
+}
