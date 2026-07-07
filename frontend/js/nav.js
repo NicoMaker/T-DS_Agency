@@ -73,45 +73,66 @@ function initNav() {
   const isHome = path.endsWith("index.html") || path === "/" || path === "";
 
   if (isHome) {
-    const sections = document.querySelectorAll("section[id]");
+    const sections = Array.from(document.querySelectorAll("section[id]"));
     const links = document.querySelectorAll(".nav-links a, .nav-mobile a");
 
-    // Imposta il link attivo in base all'hash all'avvio
-    const setActiveFromHash = () => {
-      const hash = window.location.hash.replace("#", "");
-      if (hash) {
-        links.forEach((l) => {
-          const href = l.getAttribute("href");
-          if (href && href.split("#")[1] === hash) {
-            l.classList.add("active");
-          } else {
-            l.classList.remove("active");
-          }
-        });
-      }
+    const setActiveLink = (id) => {
+      links.forEach((l) => {
+        const href = l.getAttribute("href");
+        const targetId = href ? href.split("#")[1] : null;
+        l.classList.toggle("active", !!id && targetId === id);
+      });
     };
-    setActiveFromHash();
 
-    // Osservatore per lo scroll – con soglia più permissiva
-    const spy = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          links.forEach((l) => {
-            const href = l.getAttribute("href");
-            if (href) {
-              const targetId = href.split("#")[1];
-              // Aggiunge/rimuove la classe active in base all'ID
-              l.classList.toggle("active", targetId === entry.target.id);
-            }
-          });
-        });
+    // ── Scrollspy basato sulla posizione di scroll ─────────────
+    // (non sull'IntersectionObserver: con soglie basate sulla % di
+    // sezione visibile, le sezioni molto più alte della finestra —
+    // Servizi, Progetti — non raggiungevano mai quella soglia e il
+    // link attivo restava bloccato sulla prima sezione).
+    // Consideriamo "attiva" la sezione il cui inizio ha già superato
+    // la riga di riferimento appena sotto la navbar.
+    const getReferenceY = () => {
+      const h = navbar ? navbar.offsetHeight : 0;
+      return h + 40;
+    };
+
+    let ticking = false;
+    const aggiornaSezioneAttiva = () => {
+      ticking = false;
+      const refY = getReferenceY();
+      let corrente = sections.length ? sections[0].id : null;
+
+      for (const sec of sections) {
+        if (sec.getBoundingClientRect().top <= refY) {
+          corrente = sec.id;
+        } else {
+          break; // le sezioni sono in ordine dall'alto verso il basso
+        }
+      }
+
+      // In fondo alla pagina forza sempre l'ultima sezione (contatti)
+      const inFondo =
+        Math.ceil(window.innerHeight + window.scrollY) >=
+        document.documentElement.scrollHeight - 2;
+      if (inFondo && sections.length) corrente = sections[sections.length - 1].id;
+
+      setActiveLink(corrente);
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(aggiornaSezioneAttiva);
+        }
       },
-      // Soglia: almeno il 30% della sezione deve essere visibile
-      { threshold: 0.3 },
+      { passive: true },
     );
+    window.addEventListener("resize", aggiornaSezioneAttiva);
 
-    sections.forEach((s) => spy.observe(s));
+    // Stato iniziale (anche se la pagina è già scrollata all'apertura)
+    aggiornaSezioneAttiva();
   } else {
     // Su pagine secondarie (es. servizio.html): evidenzia "Servizi"
     // sia nella navbar desktop sia nel menu mobile

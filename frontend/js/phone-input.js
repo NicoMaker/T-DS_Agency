@@ -3,32 +3,18 @@
 // - Bandiera + prefisso internazionale selezionabile
 // - Nel campo si possono digitare SOLO cifre (e spazi)
 // - Espone PhoneInput.getFullNumber() e PhoneInput.isValid()
+// - L'elenco paesi/prefissi arriva da data/paesi-telefono.json
 // ============================================================
 
-const PHONE_COUNTRIES = [
-  { iso: "IT", nome: "Italia", dial: "+39", min: 8, max: 11 },
-  { iso: "AT", nome: "Austria", dial: "+43", min: 7, max: 13 },
-  { iso: "BE", nome: "Belgio", dial: "+32", min: 8, max: 10 },
-  { iso: "CH", nome: "Svizzera", dial: "+41", min: 9, max: 9 },
-  { iso: "DE", nome: "Germania", dial: "+49", min: 7, max: 13 },
-  { iso: "ES", nome: "Spagna", dial: "+34", min: 9, max: 9 },
-  { iso: "FR", nome: "Francia", dial: "+33", min: 9, max: 9 },
-  { iso: "GB", nome: "Regno Unito", dial: "+44", min: 9, max: 10 },
-  { iso: "HR", nome: "Croazia", dial: "+385", min: 8, max: 9 },
-  { iso: "NL", nome: "Paesi Bassi", dial: "+31", min: 9, max: 9 },
-  { iso: "PL", nome: "Polonia", dial: "+48", min: 9, max: 9 },
-  { iso: "PT", nome: "Portogallo", dial: "+351", min: 9, max: 9 },
-  { iso: "RO", nome: "Romania", dial: "+40", min: 9, max: 9 },
-  { iso: "SI", nome: "Slovenia", dial: "+386", min: 8, max: 8 },
-  { iso: "SM", nome: "San Marino", dial: "+378", min: 6, max: 10 },
-  { iso: "US", nome: "Stati Uniti", dial: "+1", min: 10, max: 10 },
-];
+// Paese di riserva, usato solo se data/paesi-telefono.json non si carica
+const PHONE_COUNTRY_FALLBACK = { iso: "IT", nome: "Italia", dial: "+39", min: 8, max: 11 };
 
 const PhoneInput = {
-  paese: PHONE_COUNTRIES[0], // default: Italia
+  paese: PHONE_COUNTRY_FALLBACK, // sostituito appena il JSON è caricato
+  countries: [PHONE_COUNTRY_FALLBACK],
   input: null,
 
-  init() {
+  async init() {
     this.input = document.getElementById("f-telefono");
     const btn = document.getElementById("phone-country-btn");
     const dropdown = document.getElementById("phone-dropdown");
@@ -36,18 +22,32 @@ const PhoneInput = {
     const dialEl = document.getElementById("phone-dial");
     if (!this.input || !btn || !dropdown) return;
 
+    try {
+      const lista = await SiteData.load("paesi-telefono");
+      if (Array.isArray(lista) && lista.length) this.countries = lista;
+    } catch (err) {
+      console.error("Impossibile caricare data/paesi-telefono.json:", err);
+      // Resta l'elenco di riserva con la sola Italia
+    }
+
+    this.paese =
+      this.countries.find((c) => c.iso === "IT") || this.countries[0];
+
     // ── Costruisce la lista nazioni (bandiere reali, non emoji) ──
-    dropdown.innerHTML = PHONE_COUNTRIES.map(
-      (c) => `
+    dropdown.innerHTML = this.countries
+      .map(
+        (c) => `
       <li role="option" data-iso="${c.iso}" aria-selected="${c.iso === this.paese.iso}">
         <span class="dd-flag">${flagImgHtml(c.iso, { width: 20, height: 15 })}</span>
         <span>${c.nome}</span>
         <span class="dd-dial">${c.dial}</span>
       </li>`,
-    ).join("");
+      )
+      .join("");
 
-    // Imposta subito la bandiera reale al posto del placeholder statico in HTML
+    // Imposta subito la bandiera/prefisso reali al posto del placeholder statico in HTML
     flagEl.innerHTML = flagImgHtml(this.paese.iso, { width: 20, height: 15 });
+    dialEl.textContent = this.paese.dial;
 
     const chiudi = () => {
       dropdown.classList.remove("open");
@@ -63,7 +63,7 @@ const PhoneInput = {
     dropdown.addEventListener("click", (e) => {
       const li = e.target.closest("li[data-iso]");
       if (!li) return;
-      const paese = PHONE_COUNTRIES.find((c) => c.iso === li.dataset.iso);
+      const paese = this.countries.find((c) => c.iso === li.dataset.iso);
       if (paese) {
         this.paese = paese;
         flagEl.innerHTML = flagImgHtml(paese.iso, { width: 20, height: 15 });
@@ -126,3 +126,4 @@ const PhoneInput = {
     return `Numero non valido per ${this.paese.nome}: servono da ${this.paese.min} a ${this.paese.max} cifre.`;
   },
 };
+
