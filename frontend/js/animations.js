@@ -43,6 +43,7 @@ function initIntroVideo() {
 // astratto già impostato via CSS su .hero-media.
 function initHeroVideo() {
   const video = document.getElementById("hero-video");
+  const home = document.getElementById("home");
   if (!video) return;
 
   const nascondi = () => {
@@ -54,6 +55,13 @@ function initHeroVideo() {
   } else {
     video.addEventListener("error", nascondi);
   }
+
+  // Con un video attivo il contenuto sopra deve restare leggibile a
+  // prescindere da cosa mostra il filmato: passiamo a testi/velo scuri
+  // pensati apposta (vedi regole "#home.hero-has-video" nel CSS).
+  video.addEventListener("playing", () => {
+    if (home) home.classList.add("hero-has-video");
+  });
 }
 
 // Attivati il prima possibile: l'attributo "autoplay" fa già partire il

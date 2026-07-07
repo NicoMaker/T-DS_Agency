@@ -450,6 +450,45 @@ button {
       rgba(0, 0, 0, 0.03) 71px 72px
     );
 }
+
+/* ── Video di sfondo attivo: velo scuro su tutta l'area + testi chiari ──
+   Senza questo, qualsiasi cosa mostri il video (loghi, scritte, colori
+   accesi) si scontra con il testo sopra e diventa illeggibile. */
+#home.hero-has-video .hero-veil {
+  background:
+    linear-gradient(180deg, rgba(var(--bg-rgb), 0.65) 0, transparent 150px),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.42) 0%,
+      rgba(0, 0, 0, 0.58) 45%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+}
+#home.hero-has-video .hero-eyebrow {
+  color: var(--accent-bright);
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+}
+#home.hero-has-video .hero-title {
+  color: #fff;
+}
+#home.hero-has-video .hero-title .accent {
+  color: var(--accent-bright);
+}
+#home.hero-has-video .hero-title .accent::after {
+  background: var(--accent-bright);
+}
+#home.hero-has-video .hero-sub {
+  color: rgba(255, 255, 255, 0.85);
+}
+#home.hero-has-video .btn-outline {
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+#home.hero-has-video .btn-outline:hover {
+  border-color: var(--accent-bright);
+  color: var(--accent-bright);
+}
 .hero-content {
   padding-top: 90px;
   max-width: 880px;
