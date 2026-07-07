@@ -431,9 +431,6 @@ button {
   inset: 0;
   z-index: -1;
   background:
-    /* Fascia neutra dietro alla navbar: qui il testo dei link deve
-       restare leggibile a prescindere da cosa c'è nello sfondo sotto */
-    linear-gradient(180deg, rgba(var(--bg-rgb), 0.65) 0, transparent 150px),
     radial-gradient(60% 55% at 78% 42%, rgba(0, 0, 0, 0.05), transparent 65%),
     radial-gradient(45% 45% at 12% 80%, rgba(0, 0, 0, 0.05), transparent 60%),
     linear-gradient(180deg, transparent 55%, var(--bg) 100%),
@@ -451,16 +448,15 @@ button {
 
 /* ── Video di sfondo attivo: velo scuro su tutta l'area + testi chiari ──
    Senza questo, qualsiasi cosa mostri il video (loghi, scritte, colori
-   accesi) si scontra con il testo sopra e diventa illeggibile. */
+   accesi) si scontra con il testo sopra e diventa illeggibile. Velo
+   piuttosto forte apposta, per coprire bene loghi/scritte del video. */
 #home.hero-has-video .hero-veil {
-  background:
-    linear-gradient(180deg, rgba(var(--bg-rgb), 0.65) 0, transparent 150px),
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.42) 0%,
-      rgba(0, 0, 0, 0.58) 45%,
-      rgba(0, 0, 0, 0.7) 100%
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.72) 45%,
+    rgba(0, 0, 0, 0.82) 100%
+  );
 }
 #home.hero-has-video .hero-eyebrow {
   color: var(--accent-bright);
