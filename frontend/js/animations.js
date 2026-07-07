@@ -92,6 +92,45 @@ function initParallax() {
   );
 }
 
+// ── Pulsanti "magnetici" (si spostano leggermente verso il cursore) ──
+function initMagneticButtons() {
+  if (prefersReducedMotion) return;
+  if (window.matchMedia("(hover: none)").matches) return; // no touch
+
+  document.querySelectorAll(".btn").forEach((btn) => {
+    btn.addEventListener("mousemove", (e) => {
+      const r = btn.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width / 2;
+      const y = e.clientY - r.top - r.height / 2;
+      btn.style.transform = `translate(${x * 0.18}px, ${y * 0.35}px)`;
+    });
+    btn.addEventListener("mouseleave", () => {
+      btn.style.transform = "";
+    });
+  });
+}
+
+// ── Glow che segue il cursore nell'hero (profondità, stile agency) ──
+function initHeroGlow() {
+  if (prefersReducedMotion) return;
+  const hero = document.getElementById("home");
+  const media = document.getElementById("hero-media");
+  if (!hero || !media || window.matchMedia("(hover: none)").matches) return;
+
+  let raf = null;
+  hero.addEventListener("mousemove", (e) => {
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      const r = hero.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width) * 100;
+      const y = ((e.clientY - r.top) / r.height) * 100;
+      media.style.setProperty("--glow-x", `${x}%`);
+      media.style.setProperty("--glow-y", `${y}%`);
+      raf = null;
+    });
+  });
+}
+
 // ── Marquee (duplicazione contenuto per loop infinito) ──────
 function buildMarquee(parole) {
   const track = document.getElementById("marquee-track");

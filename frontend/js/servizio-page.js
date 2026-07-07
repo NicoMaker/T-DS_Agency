@@ -145,24 +145,37 @@ document.addEventListener("DOMContentLoaded", async () => {
       correlatiWrap.style.display = "none";
     }
 
-    // Altri servizi (escluso quello corrente)
-    const altriGrid = document.getElementById("sd-altri-grid");
-    const altri = serviziData.servizi.filter((s) => s.slug !== slug);
-    altriGrid.innerHTML = altri
-      .map(
-        (s) => `
-      <a href="servizio.html?slug=${s.slug}" class="servizio-card" style="--card-accent:${s.colore || "var(--accent)"}">
-        <div class="servizio-icona" aria-hidden="true">${s.icona}</div>
-        <h3>${s.titolo}</h3>
-        <p>${s.descrizione}</p>
-        <span class="servizio-cta">
-          Scopri i dettagli
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-      </a>
-    `,
-      )
-      .join("");
+    // Servizi correlati (solo quelli pertinenti a questa attività, non tutti)
+    const altriSelect = document.getElementById("sd-altri-select");
+    let correlatiServizi = (servizio.correlati || [])
+      .map((relSlug) => serviziData.servizi.find((s) => s.slug === relSlug))
+      .filter(Boolean);
+
+    // Fallback: se il servizio non ha una lista "correlati" in servizi.json,
+    // mostro comunque un paio di alternative invece di nascondere il blocco
+    if (!correlatiServizi.length) {
+      correlatiServizi = serviziData.servizi
+        .filter((s) => s.slug !== slug)
+        .slice(0, 3);
+    }
+
+    if (altriSelect) {
+      altriSelect.innerHTML =
+        `<option value="" disabled selected>Scegli un servizio correlato…</option>` +
+        correlatiServizi
+          .map(
+            (s) =>
+              `<option value="${s.slug}">${s.icona ? s.icona + " " : ""}${s.titolo}</option>`,
+          )
+          .join("");
+
+      // Navigazione automatica: appena selezioni, si va subito
+      // all'inizio del dettaglio del nuovo servizio (nessun bottone da premere).
+      altriSelect.addEventListener("change", () => {
+        const nuovoSlug = altriSelect.value;
+        if (nuovoSlug) window.location.href = `servizio.html?slug=${nuovoSlug}`;
+      });
+    }
 
     // --- Mostro il contenuto ---
     loadingEl.style.display = "none";
@@ -171,6 +184,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // --- Nav + reveal animations ---
     initNav();
     initReveal();
+    if (typeof initMagneticButtons === "function") initMagneticButtons();
   } catch (err) {
     console.error("Errore caricamento servizio:", err);
     loadingEl.style.display = "none";

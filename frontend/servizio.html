@@ -141,39 +141,44 @@
                 Nessun progetto trovato per questa ricerca.
               </p>
             </div>
-            <!-- Altri servizi -->
+            <!-- Servizi correlati -->
             <div class="servizio-detail-altri reveal">
-              <h3>Altre soluzioni</h3>
-              <div class="servizi-grid" id="sd-altri-grid"></div>
+              <h3>Servizi correlati</h3>
+              <p class="servizio-correlati-hint">
+                Scegli un altro servizio per vederlo subito nel dettaglio.
+              </p>
+              <div class="servizio-select-wrap">
+                <select id="sd-altri-select" aria-label="Vai a un altro servizio">
+                  <option value="" disabled selected>Scegli un servizio correlato…</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ========== FOOTER ========== -->
-    <footer id="footer">
-      <div class="container">
-        <div class="footer-inner">
-          <a href="index.html#home" class="nav-logo footer-logo-link" aria-label="Nooo Agency - Home">
-            <span class="nav-logo-mark" aria-hidden="true">N.</span>
-            <span class="nav-logo-text">Nooo<span class="nav-logo-dot">.</span></span>
-          </a>
-          <p class="footer-copy">
-            © <span id="current-year"></span> Nooo Agency – Informatica &amp;
-            Grafica.
-          </p>
-          <div class="footer-social" id="footer-social"></div>
-        </div>
+    <!-- ========== FOOTER (orari live, come index.html) ========== -->
+    <footer class="site-footer">
+      <div id="Contatti">
+        <p style="text-align: center; opacity: 0.6">Caricamento…</p>
       </div>
     </footer>
 
-    <!-- ── Script (classici, coerenti con la home) ── -->
+    <!-- ── Script frontend ── -->
     <script src="js/data.js"></script>
     <script src="js/nav.js"></script>
     <script src="js/animations.js"></script>
     <script src="js/render.js"></script>
     <script src="js/progetti-filter.js"></script>
     <script src="js/servizio-page.js"></script>
+
+    <!-- ── Script footer orari (ordine importante) ── -->
+    <script src="js/footer/date-utils.js"></script>
+    <script src="js/footer/gestisci_chiusure.js"></script>
+    <script src="js/footer/gestisci_apertura.js"></script>
+    <script src="js/footer/creazione_html.js"></script>
+    <script src="js/footer/aggiorna-orari.js"></script>
+    <script src="js/footer/footer-main.js"></script>
   </body>
 </html>

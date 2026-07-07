@@ -29,12 +29,27 @@ const FormContatti = {
     tel.addEventListener("blur", () => this.validaCampo("telefono"));
     tel.addEventListener("input", () => this.pulisciErrore("telefono"));
 
-    // Blocca caratteri non ammessi nell'email in tempo reale (niente spazi)
+    // Blocca caratteri non ammessi nell'email in tempo reale:
+    // si può digitare SOLO ciò che è valido in un indirizzo email
+    // (lettere, numeri, . _ % + - e una sola @). Niente spazi o simboli strani.
     const email = document.getElementById("f-email");
+    const EMAIL_CHARS = /^[a-zA-Z0-9._%+-@]+$/;
     email.addEventListener("beforeinput", (e) => {
-      if (e.inputType.startsWith("insert") && e.data && /\s/.test(e.data)) {
-        e.preventDefault();
+      if (e.inputType.startsWith("insert") && e.data) {
+        if (!EMAIL_CHARS.test(e.data)) {
+          e.preventDefault();
+          return;
+        }
+        // Una sola @ ammessa nell'indirizzo
+        if (e.data.includes("@") && email.value.includes("@")) {
+          e.preventDefault();
+        }
       }
+    });
+    // Ripulisce anche testo incollato con caratteri non ammessi
+    email.addEventListener("input", () => {
+      const pulito = email.value.replace(/[^a-zA-Z0-9._%+@-]/g, "");
+      if (pulito !== email.value) email.value = pulito;
     });
 
     this.form.addEventListener("submit", (e) => this.invia(e));

@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     initReveal();
     initCounters();
     initParallax();
+    initMagneticButtons();
+    initHeroGlow();
     hidePageLoader();
   }
 });
