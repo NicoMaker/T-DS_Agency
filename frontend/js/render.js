@@ -190,24 +190,29 @@ function formatNumeroVisuale(numero) {
   return `${prefisso} ${gruppi.join(" ")}`;
 }
 
-// Icona WhatsApp in grigio (senza colori)
-const WHATSAPP_ICON_SVG = `<svg class="icon-whatsapp" width="19" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-  <path d="M8.6 8.4c.2-.5.4-.5.7-.5h.5c.2 0 .4 0 .6.4.2.5.7 1.7.7 1.8.1.1.1.3 0 .4-.1.2-.2.3-.3.4l-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.6-.7c.2-.2.4-.2.6-.1l1.6.8c.2.1.4.2.4.4.1.4-.1 1.1-.5 1.5-.5.5-1.5.8-2.5.5-2.4-.6-4.4-2.3-5.9-4.3-.6-.8-1-1.7-1-2.7 0-.9.4-1.6.6-1.9Z" fill="currentColor"/>
+// Icona WhatsApp in grigio (senza colori), tratto pulito e proporzioni curate
+const WHATSAPP_ICON_SVG = `<svg class="icon-whatsapp" width="21" height="21" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M16.02 4C9.4 4 4.05 9.35 4.05 16c0 2.24.6 4.34 1.66 6.15L4 28l6.02-1.58A11.93 11.93 0 0 0 16.02 28C22.64 28 28 22.65 28 16S22.64 4 16.02 4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M11.6 10.75c.3-.66.55-.7.9-.71.28-.02.6-.02.87 0 .3.02.65-.06.95.7.3.79 1.03 2.5 1.12 2.68.1.19.16.4.03.63-.12.23-.19.35-.38.55l-.55.63c-.18.2-.38.4-.16.79.23.4 1.02 1.7 2.24 2.79 1.55 1.34 2.8 1.78 3.2 1.98.4.19.65.16.9-.1.27-.28.87-.98 1.1-1.32.24-.32.48-.27.8-.15l2.5 1.22c.3.14.5.22.56.35.1.2.1.83-.2 1.62-.3.8-1.67 1.54-2.32 1.64-.6.1-1.3.14-2.1-.13-.48-.16-1.1-.36-1.9-.71-3.35-1.5-5.56-4.86-5.73-5.1-.18-.23-1.37-1.83-1.37-3.48 0-1.66.85-2.48 1.14-2.8Z" fill="currentColor"/>
 </svg>`;
 
-function isoToFlag(iso) {
+// ── Bandiere nazionali (immagine reale, non emoji) ─────────────
+// Le emoji-bandiera su alcuni sistemi/browser (es. Windows meno recenti)
+// non vengono renderizzate a colori e appaiono come semplice testo ("IT",
+// "GB", ecc.). Usiamo quindi una vera immagine SVG della bandiera.
+function flagImgHtml(iso, opts = {}) {
   if (!iso || iso.length !== 2) return "";
-  return iso
-    .toUpperCase()
-    .replace(/./g, (c) => String.fromCodePoint(127397 + c.charCodeAt(0)));
+  const { width = 20, height = 15, className = "flag-icon" } = opts;
+  const code = iso.toLowerCase();
+  return `<img src="https://flagcdn.com/${code}.svg" alt="${iso.toUpperCase()}" class="${className}" width="${width}" height="${height}" loading="lazy" />`;
 }
 
 function renderPiva(piva) {
   const match = String(piva).match(/^([A-Za-z]{2})(.*)$/);
   if (!match) return `P.IVA ${piva}`;
-  const flag = isoToFlag(match[1]);
-  return `<span class="team-piva-flag" aria-hidden="true">${flag || match[1]}</span> P.IVA ${match[2]}`;
+  const iso = match[1].toUpperCase();
+  const flagHtml = flagImgHtml(iso, { width: 18, height: 13 });
+  return `<span class="team-piva-flag" aria-hidden="true">${flagHtml || iso}</span> P.IVA ${match[2]}`;
 }
 
 function contattoTeam(c, icona, valore) {
@@ -275,7 +280,7 @@ function renderTeam(site) {
 
     html += `
       <article class="team-card azienda reveal reveal-delay-${delayIndex}" style="border-color: var(--line-strong);">
-        <div class="team-foto" style="background: #ccc; display: grid; place-items: center; font-size: 2.2rem; color: #fff; font-weight: 800;">
+        <div class="team-foto" style="background: var(--accent); display: grid; place-items: center; font-size: 2.2rem; color: #fff; font-weight: 800;">
           <span>N.</span>
         </div>
         <div class="team-body">

@@ -6,22 +6,22 @@
 // ============================================================
 
 const PHONE_COUNTRIES = [
-  { iso: "IT", nome: "Italia", dial: "+39", flag: "🇮🇹", min: 8, max: 11 },
-  { iso: "AT", nome: "Austria", dial: "+43", flag: "🇦🇹", min: 7, max: 13 },
-  { iso: "BE", nome: "Belgio", dial: "+32", flag: "🇧🇪", min: 8, max: 10 },
-  { iso: "CH", nome: "Svizzera", dial: "+41", flag: "🇨🇭", min: 9, max: 9 },
-  { iso: "DE", nome: "Germania", dial: "+49", flag: "🇩🇪", min: 7, max: 13 },
-  { iso: "ES", nome: "Spagna", dial: "+34", flag: "🇪🇸", min: 9, max: 9 },
-  { iso: "FR", nome: "Francia", dial: "+33", flag: "🇫🇷", min: 9, max: 9 },
-  { iso: "GB", nome: "Regno Unito", dial: "+44", flag: "🇬🇧", min: 9, max: 10 },
-  { iso: "HR", nome: "Croazia", dial: "+385", flag: "🇭🇷", min: 8, max: 9 },
-  { iso: "NL", nome: "Paesi Bassi", dial: "+31", flag: "🇳🇱", min: 9, max: 9 },
-  { iso: "PL", nome: "Polonia", dial: "+48", flag: "🇵🇱", min: 9, max: 9 },
-  { iso: "PT", nome: "Portogallo", dial: "+351", flag: "🇵🇹", min: 9, max: 9 },
-  { iso: "RO", nome: "Romania", dial: "+40", flag: "🇷🇴", min: 9, max: 9 },
-  { iso: "SI", nome: "Slovenia", dial: "+386", flag: "🇸🇮", min: 8, max: 8 },
-  { iso: "SM", nome: "San Marino", dial: "+378", flag: "🇸🇲", min: 6, max: 10 },
-  { iso: "US", nome: "Stati Uniti", dial: "+1", flag: "🇺🇸", min: 10, max: 10 },
+  { iso: "IT", nome: "Italia", dial: "+39", min: 8, max: 11 },
+  { iso: "AT", nome: "Austria", dial: "+43", min: 7, max: 13 },
+  { iso: "BE", nome: "Belgio", dial: "+32", min: 8, max: 10 },
+  { iso: "CH", nome: "Svizzera", dial: "+41", min: 9, max: 9 },
+  { iso: "DE", nome: "Germania", dial: "+49", min: 7, max: 13 },
+  { iso: "ES", nome: "Spagna", dial: "+34", min: 9, max: 9 },
+  { iso: "FR", nome: "Francia", dial: "+33", min: 9, max: 9 },
+  { iso: "GB", nome: "Regno Unito", dial: "+44", min: 9, max: 10 },
+  { iso: "HR", nome: "Croazia", dial: "+385", min: 8, max: 9 },
+  { iso: "NL", nome: "Paesi Bassi", dial: "+31", min: 9, max: 9 },
+  { iso: "PL", nome: "Polonia", dial: "+48", min: 9, max: 9 },
+  { iso: "PT", nome: "Portogallo", dial: "+351", min: 9, max: 9 },
+  { iso: "RO", nome: "Romania", dial: "+40", min: 9, max: 9 },
+  { iso: "SI", nome: "Slovenia", dial: "+386", min: 8, max: 8 },
+  { iso: "SM", nome: "San Marino", dial: "+378", min: 6, max: 10 },
+  { iso: "US", nome: "Stati Uniti", dial: "+1", min: 10, max: 10 },
 ];
 
 const PhoneInput = {
@@ -36,15 +36,18 @@ const PhoneInput = {
     const dialEl = document.getElementById("phone-dial");
     if (!this.input || !btn || !dropdown) return;
 
-    // ── Costruisce la lista nazioni ──
+    // ── Costruisce la lista nazioni (bandiere reali, non emoji) ──
     dropdown.innerHTML = PHONE_COUNTRIES.map(
       (c) => `
       <li role="option" data-iso="${c.iso}" aria-selected="${c.iso === this.paese.iso}">
-        <span class="dd-flag">${c.flag}</span>
+        <span class="dd-flag">${flagImgHtml(c.iso, { width: 20, height: 15 })}</span>
         <span>${c.nome}</span>
         <span class="dd-dial">${c.dial}</span>
       </li>`,
     ).join("");
+
+    // Imposta subito la bandiera reale al posto del placeholder statico in HTML
+    flagEl.innerHTML = flagImgHtml(this.paese.iso, { width: 20, height: 15 });
 
     const chiudi = () => {
       dropdown.classList.remove("open");
@@ -63,7 +66,7 @@ const PhoneInput = {
       const paese = PHONE_COUNTRIES.find((c) => c.iso === li.dataset.iso);
       if (paese) {
         this.paese = paese;
-        flagEl.textContent = paese.flag;
+        flagEl.innerHTML = flagImgHtml(paese.iso, { width: 20, height: 15 });
         dialEl.textContent = paese.dial;
         dropdown
           .querySelectorAll("li")

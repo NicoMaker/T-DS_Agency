@@ -26,6 +26,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     FormContatti.init();
+
+    // Ora che marquee/grid hanno la loro altezza reale, corregge l'eventuale
+    // scroll all'ancora (#servizi, #team, ecc.) fatto in anticipo dal browser
+    requestAnimationFrame(() => requestAnimationFrame(scrollToCurrentHash));
   } catch (err) {
     console.error("Errore nel caricamento dei dati del sito:", err);
   } finally {
@@ -37,7 +41,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     initMagneticButtons();
     initHeroGlow();
     hidePageLoader();
-    const yearEl = document.getElementById("current-year");
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
   }
 });
+
+// Ulteriore correzione di sicurezza a caricamento completato (font/immagini
+// possono ancora spostare leggermente il layout dopo il primo controllo)
+window.addEventListener("load", scrollToCurrentHash);
+

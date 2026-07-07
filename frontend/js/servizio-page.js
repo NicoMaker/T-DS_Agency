@@ -213,6 +213,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     initNav();
     initReveal();
     if (typeof initMagneticButtons === "function") initMagneticButtons();
+
+    // Corregge un eventuale arrivo con ancora (es. link diretto con #hash)
+    // ora che il contenuto dinamico ha la sua altezza reale
+    requestAnimationFrame(() => requestAnimationFrame(scrollToCurrentHash));
   } catch (err) {
     console.error("Errore caricamento servizio:", err);
     loadingEl.style.display = "none";
@@ -221,7 +225,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const yearEl = document.getElementById("current-year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-});
+// Ulteriore correzione di sicurezza a caricamento completato
+window.addEventListener("load", scrollToCurrentHash);
+

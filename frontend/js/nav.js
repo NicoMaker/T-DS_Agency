@@ -2,7 +2,46 @@
 // nav.js — Navbar sticky, menu mobile, evidenziazione sezione
 // ============================================================
 
+// ── Scroll corretto verso l'ancora richiesta ───────────────────
+// Le sezioni (#servizi, #team, ecc.) vengono popolate via JS dopo il
+// caricamento dei JSON: se si arriva da un'altra pagina (es. servizio.html
+// → index.html#servizi) il browser salta all'ancora PRIMA che i contenuti
+// dinamici (marquee, grid, ecc.) abbiano la loro altezza definitiva, e la
+// pagina finisce per mostrare la sezione sbagliata. Richiamando questa
+// funzione a rendering completato correggiamo la posizione.
+function scrollToCurrentHash() {
+  const hash = window.location.hash;
+  if (!hash || hash.length < 2) return;
+  let target;
+  try {
+    target = document.querySelector(hash);
+  } catch (e) {
+    return;
+  }
+  if (target) target.scrollIntoView({ behavior: "auto", block: "start" });
+}
+
+// ── Anno corrente nel footer, sempre aggiornato ────────────────
+// Si aggiorna da solo appena scocca la mezzanotte del 1° gennaio,
+// senza bisogno che l'utente ricarichi la pagina.
+function initFooterYear() {
+  const yearEl = document.getElementById("current-year");
+  if (!yearEl) return;
+
+  const aggiornaAnno = () => {
+    const annoReale = String(new Date().getFullYear());
+    if (yearEl.textContent !== annoReale) yearEl.textContent = annoReale;
+  };
+
+  aggiornaAnno();
+  // Ricontrolla ogni minuto: overhead trascurabile, aggiornamento
+  // comunque quasi istantaneo al cambio d'anno.
+  setInterval(aggiornaAnno, 60 * 1000);
+}
+
 function initNav() {
+  initFooterYear();
+
   const navbar = document.getElementById("navbar");
   const hamburger = document.querySelector(".hamburger");
   const mobileNav = document.querySelector(".nav-mobile");

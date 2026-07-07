@@ -1,7 +1,5 @@
-in alto se si sposto tra sezioni non mi da sezione giusta da ogni parte dove ci sono le scritte it ecc voglio le banmdiera della nazione
+in alto se si sposto tra sezioni non mi da sezione giusta da ogni parte dove ci sono le scritte it ecc voglio le banmdiera della nazione  e poi infine vorrei anche che l'icona di whastapp sia bella ù  e tutto bella bianco e nero professionale usando bianco sporco grigio nero e arancione per i testi   se mi sposto di sezione da servizio.html a index.html con navbar nelle sezioni non va nella sezione giusta 
 
-e poi infine vorrei anche che l'icona di whastapp sia bella ù
 
-e tutto bella bianco e nero professionale usando bianco sporco grigio ecc
 
-se mi sposto di sezione da servizio.html a index.html con navbar nelle sezioni non va nella sezione gisuta
+dammi zip completo con tutto e sistema anche con l'anno nel footer sotto alla 00:00 del 1 gennaio deve prendere già anno nuovo senza aggiornare la pagina 

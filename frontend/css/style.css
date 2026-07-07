@@ -3,15 +3,20 @@
    ============================================================ */
 
 :root {
-  --bg: #ffffff;
-  --bg-2: #f7f7f7;
-  --panel: #f0f0f0;
-  --panel-2: #e8e8e8;
-  --ink: #222222;
-  --ink-dim: #555555;
-  --muted: #999999;
-  --accent: #333333;
-  --accent-bright: #666666;
+  /* Bianco sporco / grigi / nero: base professionale bianco e nero */
+  --bg: #f8f6f2;
+  --bg-rgb: 248, 246, 242;
+  --bg-2: #efece6;
+  --panel: #f1efe9;
+  --panel-2: #e7e4dd;
+  --ink: #1c1c1c;
+  --ink-dim: #4a4a4a;
+  --muted: #8c8a84;
+  /* Nero strutturale: bottoni, bordi, elementi solidi */
+  --accent: #181818;
+  /* Arancione: riservato ai testi/accenti (eyebrow, hover, titoli evidenziati) */
+  --accent-bright: #d9600c;
+  --accent-bright-2: #f0740f;
   --line: rgba(0, 0, 0, 0.1);
   --line-strong: rgba(0, 0, 0, 0.2);
   --error: #d32f2f;
@@ -26,6 +31,7 @@
   --container: 1180px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --touch-target: 44px;
+  --navbar-offset: 100px;
 }
 
 * {
@@ -36,6 +42,12 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Compensa la navbar fissa quando si salta a un'ancora (#servizi, #team, ecc.),
+   sia con click interni sia arrivando da un'altra pagina (es. servizio.html) */
+section[id] {
+  scroll-margin-top: var(--navbar-offset);
 }
 
 body {
@@ -97,7 +109,7 @@ button {
   animation: loaderPulse 1.4s ease-in-out infinite;
 }
 .loader-dot {
-  color: var(--accent);
+  color: var(--accent-bright);
 }
 @keyframes loaderPulse {
   0%,
@@ -124,7 +136,7 @@ button {
 }
 #navbar.scrolled {
   padding: 12px 0;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(var(--bg-rgb), 0.85);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 1px 0 var(--line);
@@ -146,7 +158,7 @@ button {
   display: grid;
   place-items: center;
   border-radius: 12px;
-  background: #ccc;
+  background: var(--accent);
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 1.15rem;
@@ -170,7 +182,7 @@ button {
   letter-spacing: -0.02em;
 }
 .nav-logo-dot {
-  color: var(--accent);
+  color: var(--accent-bright);
 }
 .nav-logo-tagline {
   font-family: var(--font-mono);
@@ -234,7 +246,7 @@ button {
   position: fixed;
   inset: 0;
   z-index: 90;
-  background: rgba(255, 255, 255, 0.97);
+  background: rgba(var(--bg-rgb), 0.97);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   display: grid;
@@ -752,7 +764,7 @@ button {
   gap: 16px;
   margin-bottom: 32px;
   padding: 14px 18px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(var(--bg-rgb), 0.8);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid var(--line);
@@ -1051,7 +1063,7 @@ button {
   margin: 0 auto 18px;
   border-radius: 50%;
   padding: 3px;
-  background: #ccc;
+  background: var(--panel-2);
   flex-shrink: 0;
 }
 .team-foto img {
@@ -1062,7 +1074,7 @@ button {
   border: 3px solid var(--panel);
 }
 .team-card.azienda .team-foto {
-  background: #ccc;
+  background: var(--accent);
   display: grid;
   place-items: center;
   font-size: 2.2rem;
@@ -1099,7 +1111,8 @@ button {
   margin-bottom: 10px;
 }
 .team-piva-flag {
-  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
   line-height: 1;
 }
 .team-contatti-list {
@@ -1286,8 +1299,20 @@ button {
   flex-shrink: 0;
 }
 .phone-flag {
-  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
   line-height: 1;
+}
+
+/* Bandiere nazionali come immagini reali (niente più emoji "IT" testuali,
+   che su alcuni sistemi/browser non mostrano la bandiera a colori) */
+.flag-icon {
+  display: inline-block;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.14);
+  object-fit: cover;
+  vertical-align: middle;
+  background: var(--panel-2);
 }
 .phone-dial {
   font-variant-numeric: tabular-nums;
@@ -1347,7 +1372,8 @@ button {
   background: rgba(0, 0, 0, 0.05);
 }
 .phone-dropdown .dd-flag {
-  font-size: 1.15rem;
+  display: inline-flex;
+  align-items: center;
 }
 .phone-dropdown .dd-dial {
   margin-left: auto;
@@ -1675,7 +1701,7 @@ button {
   letter-spacing: 0.1em;
   padding: 5px 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(var(--bg-rgb), 0.8);
   border: 1px solid var(--line-strong);
   color: var(--ink);
 }
