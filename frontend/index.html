@@ -117,7 +117,26 @@
           <h2 id="progetti-titolo">I Nostri Lavori</h2>
           <p class="section-sub" id="progetti-sottotitolo"></p>
         </div>
+
+        <div class="filter-bar reveal" id="progetti-filter-bar">
+          <div class="search-wrapper">
+            <span class="search-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            <input
+              type="text"
+              id="progetti-search"
+              placeholder="Cerca un progetto…"
+              aria-label="Cerca nei progetti"
+            />
+          </div>
+          <div class="category-filter" id="progetti-categorie" role="group" aria-label="Filtra per categoria"></div>
+        </div>
+
         <div class="progetti-grid" id="progetti-grid"></div>
+        <p class="filter-empty" id="progetti-empty" style="display: none">
+          Nessun progetto trovato per questa ricerca.
+        </p>
       </div>
     </section>
 
@@ -264,6 +283,7 @@
     <script src="js/nav.js"></script>
     <script src="js/animations.js"></script>
     <script src="js/render.js"></script>
+    <script src="js/progetti-filter.js"></script>
     <script src="js/phone-input.js"></script>
     <script src="js/form.js"></script>
     <script src="js/main.js"></script>

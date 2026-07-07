@@ -22,29 +22,25 @@ function renderServizi(dati) {
   grid.innerHTML = (dati.servizi || [])
     .map(
       (s, i) => `
-      <article class="servizio-card reveal reveal-delay-${i % 3}" style="--card-accent:${s.colore || "var(--accent)"}">
+      <a
+        href="servizio.html?slug=${s.slug}"
+        class="servizio-card reveal reveal-delay-${i % 3}"
+        style="--card-accent:${s.colore || "var(--accent)"}"
+        aria-label="Scopri i dettagli di ${s.titolo}"
+      >
         <div class="servizio-icona" aria-hidden="true">${s.icona || "◆"}</div>
         <h3>${s.titolo}</h3>
         <p>${s.descrizione}</p>
         <ul class="servizio-dettagli">
           ${(s.dettagli || []).map((d) => `<li>${d}</li>`).join("")}
         </ul>
-        ${renderFaq(s.faq)}
-      </article>`,
+        <span class="servizio-cta">
+          Scopri i dettagli
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>`,
     )
     .join("");
-
-  // FAQ a fisarmonica
-  grid.querySelectorAll(".faq-toggle").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const item = btn.closest(".faq-item");
-      const wasOpen = item.classList.contains("open");
-      // Chiude le altre FAQ della stessa card
-      item.closest(".servizio-faq").querySelectorAll(".faq-item.open")
-        .forEach((el) => el.classList.remove("open"));
-      item.classList.toggle("open", !wasOpen);
-    });
-  });
 
   // Popola anche il select del form
   const select = document.getElementById("f-servizio");
@@ -62,26 +58,6 @@ function renderServizi(dati) {
   }
 }
 
-function renderFaq(faq) {
-  if (!faq || !faq.length) return "";
-  return `
-    <div class="servizio-faq">
-      <div class="faq-label">Domande frequenti</div>
-      ${faq
-        .map(
-          (f) => `
-        <div class="faq-item">
-          <button type="button" class="faq-toggle">
-            <span>${f.domanda}</span>
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-risposta"><p>${f.risposta}</p></div>
-        </div>`,
-        )
-        .join("")}
-    </div>`;
-}
-
 // ── Progetti ────────────────────────────────────────────────
 function renderProgetti(dati) {
   const grid = document.getElementById("progetti-grid");
@@ -95,7 +71,12 @@ function renderProgetti(dati) {
   grid.innerHTML = (dati.progetti || [])
     .map(
       (p, i) => `
-      <article class="progetto-card reveal reveal-delay-${i % 3}" style="--card-accent:${p.colore || "var(--accent)"}">
+      <article
+        class="progetto-card reveal reveal-delay-${i % 3}"
+        style="--card-accent:${p.colore || "var(--accent)"}"
+        data-cat="${p.categoria || ""}"
+        data-search="${(`${p.titolo} ${p.descrizione || ""} ${(p.tecnologie || []).join(" ")}`).replace(/"/g, "&quot;").toLowerCase()}"
+      >
         <div class="progetto-media">
           <img
             src="${p.immagine}"
@@ -190,11 +171,11 @@ function renderTeam(site) {
         <div class="team-body">
           <h3>${m.nome}</h3>
           <div class="team-ruolo">${m.ruolo || ""}</div>
-          ${m.piva ? `<div class="team-piva">P.IVA ${m.piva}</div>` : ""}
-          <div class="team-contatti">
-            ${contattoTeam(m.contatti && m.contatti.whatsapp, "chat")}
-            ${contattoTeam(m.contatti && m.contatti.telefono, "phone")}
-            ${contattoTeam(m.contatti && m.contatti.email, "email")}
+          ${m.piva ? `<div class="team-piva">${renderPiva(m.piva)}</div>` : ""}
+          <div class="team-contatti-list">
+            ${contattoTeam(m.contatti && m.contatti.whatsapp, "chat", m.contatti && m.contatti.whatsapp && m.contatti.whatsapp.numero)}
+            ${contattoTeam(m.contatti && m.contatti.telefono, "call", m.contatti && m.contatti.telefono && m.contatti.telefono.numero)}
+            ${contattoTeam(m.contatti && m.contatti.email, "email", m.contatti && m.contatti.email && m.contatti.email.indirizzo)}
           </div>
         </div>
       </article>`,
@@ -202,9 +183,57 @@ function renderTeam(site) {
     .join("");
 }
 
-function contattoTeam(c, icona) {
+// Converte un prefisso ISO a 2 lettere (es. "IT") nella relativa bandiera emoji
+function isoToFlag(iso) {
+  if (!iso || iso.length !== 2) return "";
+  return iso
+    .toUpperCase()
+    .replace(/./g, (c) => String.fromCodePoint(127397 + c.charCodeAt(0)));
+}
+
+// Mostra la bandiera al posto del prefisso testuale "IT", "DE", ecc. nella P.IVA
+function renderPiva(piva) {
+  const match = String(piva).match(/^([A-Za-z]{2})(.*)$/);
+  if (!match) return `P.IVA ${piva}`;
+  const flag = isoToFlag(match[1]);
+  return `<span class="team-piva-flag" aria-hidden="true">${flag || match[1]}</span> P.IVA ${match[2]}`;
+}
+
+// Riga di contatto con icona + numero/indirizzo visibile (non solo icona)
+function contattoTeam(c, icona, valore) {
   if (!c || !c.url) return "";
-  return `<a href="${c.url}" target="_blank" rel="noopener" title="${c.label || ""}" aria-label="${c.label || ""}">
-    <span class="material-icons">${icona}</span>
+  return `<a class="team-contatto-riga" href="${c.url}" target="_blank" rel="noopener" title="${c.label || ""}" aria-label="${c.label || ""}">
+    <span class="material-icons" aria-hidden="true">${icona}</span>
+    <span class="team-contatto-testo">${valore || c.label || ""}</span>
   </a>`;
+}
+
+// ── Footer social (riutilizzato anche da servizio.html) ─────
+const SVG_EXTERNAL = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+const SOCIAL_PLATFORMS = [
+  { key: "instagram", label: "Instagram", short: "IG" },
+  { key: "linkedin", label: "LinkedIn", short: "in" },
+  { key: "facebook", label: "Facebook", short: "f" },
+  { key: "behance", label: "Behance", short: "Be" },
+];
+
+function renderFooterSocial(site) {
+  const wrap = document.getElementById("footer-social");
+  if (!wrap) return;
+  const social = (site && site.social) || {};
+
+  wrap.innerHTML = SOCIAL_PLATFORMS.filter((p) => social[p.key])
+    .map(
+      (p) => `
+      <a
+        href="${social[p.key]}"
+        target="_blank"
+        rel="noopener"
+        class="footer-social-link"
+        aria-label="${p.label}"
+        title="${p.label}"
+        >${p.short}</a>`,
+    )
+    .join("");
 }
