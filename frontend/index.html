@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link
@@ -25,26 +25,11 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <!-- ========== BARRA DI CARICAMENTO ========== -->
-    <div class="page-loader" id="page-loader" aria-hidden="true">
-      <video
-        class="loader-video"
-        id="intro-video"
-        autoplay
-        muted
-        playsinline
-        preload="auto"
-      >
-        <source src="video/Intro.mp4" type="video/mp4" />
-      </video>
-      <img src="img/Logo.png" alt="T‑DS Agency" class="loader-logo" />
-    </div>
-
     <!-- ========== NAVBAR ========== -->
     <nav id="navbar" role="navigation" aria-label="Navigazione principale">
       <div class="container nav-inner">
         <a href="#home" class="nav-logo" aria-label="T‑DS Agency - Home">
-          <img src="img/Logo.png" alt="T‑DS Agency" class="nav-logo-img" />
+          <img src="img/logo-tds.png" alt="T‑DS Agency" class="nav-logo-img" />
         </a>
 
         <ul class="nav-links">
@@ -81,28 +66,23 @@
     </div>
 
     <!-- ========== HERO ========== -->
-    <section id="home">
-      <div class="hero-media" id="hero-media" aria-hidden="true">
-        <video id="hero-video" autoplay muted loop playsinline preload="auto">
-          <source src="video/hero.mp4" type="video/mp4" />
-        </video>
-      </div>
+    <section id="home" class="hero-ready">
+      <div class="hero-media" id="hero-media" aria-hidden="true"></div>
       <div class="hero-veil" aria-hidden="true"></div>
       <div class="container hero-content">
         <div class="hero-brand" aria-hidden="true">
-          <img src="img/Logo.png" alt="" />
+          <img src="img/logo-tds.png" alt="" />
         </div>
         <div class="hero-text">
-          <span class="hero-eyebrow hero-in">Informatica &amp; Grafica</span>
-          <h1 class="hero-title hero-in">
+          <h1 class="hero-title">
             Il digitale che fa la <span class="accent">differenza</span>.
           </h1>
-          <p class="hero-sub hero-in">
+          <p class="hero-sub">
             Siamo un'agenzia specializzata in siti web, brand identity e
             soluzioni informatiche. Costruiamo presenze digitali che convertono,
             comunicano e crescono.
           </p>
-          <div class="hero-actions hero-in">
+          <div class="hero-actions">
             <a href="#progetti" class="btn btn-primary">I nostri lavori</a>
             <a href="#contatti-form" class="btn btn-outline">Scrivici ora</a>
           </div>
@@ -122,7 +102,6 @@
     <section id="servizi" class="section">
       <div class="container">
         <div class="section-header reveal">
-          <span class="eyebrow">Servizi</span>
           <h2 id="servizi-titolo">Cosa Facciamo</h2>
           <p class="section-sub" id="servizi-sottotitolo"></p>
         </div>
@@ -134,7 +113,6 @@
     <section id="progetti" class="section section-alt">
       <div class="container">
         <div class="section-header reveal">
-          <span class="eyebrow">Portfolio</span>
           <h2 id="progetti-titolo">I Nostri Lavori</h2>
           <p class="section-sub" id="progetti-sottotitolo"></p>
         </div>
@@ -190,7 +168,6 @@
     <section id="video" class="section">
       <div class="container">
         <div class="section-header reveal">
-          <span class="eyebrow">Video</span>
           <h2 id="video-titolo">I nostri progetti in movimento</h2>
           <p class="section-sub" id="video-sottotitolo"></p>
         </div>
@@ -202,7 +179,6 @@
     <section id="team" class="section section-alt">
       <div class="container">
         <div class="section-header reveal">
-          <span class="eyebrow">Chi siamo</span>
           <h2>Il Team</h2>
           <p class="section-sub" id="team-sottotitolo"></p>
         </div>
@@ -214,7 +190,6 @@
     <section id="contatti-form" class="section section-form">
       <div class="container">
         <div class="section-header reveal">
-          <span class="eyebrow">Contatti</span>
           <h2>Parlaci del tuo progetto</h2>
           <p class="section-sub">
             Rispondiamo entro un giorno lavorativo. Il preventivo è sempre
@@ -389,7 +364,7 @@
             class="nav-logo footer-logo-link"
             aria-label="T‑DS Agency - Home"
           >
-            <img src="img/Logo.png" alt="T‑DS Agency" class="nav-logo-img" />
+            <img src="img/logo-tds.png" alt="T‑DS Agency" class="nav-logo-img" />
           </a>
           <p class="footer-copy">
             © <span id="current-year"></span> T‑DS Agency – Informatica &amp;
