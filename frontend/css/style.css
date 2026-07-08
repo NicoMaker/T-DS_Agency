@@ -1289,7 +1289,7 @@ body.hero-has-video #navbar:not(.scrolled) .hamburger span {
   width: 116px;
   height: 116px;
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: 26px;
   overflow: hidden;
   display: grid;
   place-items: center;
@@ -1318,8 +1318,9 @@ body.hero-has-video #navbar:not(.scrolled) .hamburger span {
   color: var(--accent-2);
 }
 .team-piva {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   font-family: var(--font-mono);
   font-size: 0.72rem;
