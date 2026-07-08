@@ -9,7 +9,9 @@ async function sendCliente(dati) {
   return transporter.sendMail({
     from: `"${config.mailFrom.name}" <${config.mailFrom.email}>`,
     to: dati.email,
-    subject: `Abbiamo ricevuto la tua richiesta — ${config.azienda.nome}`,
+    subject: dati.servizio
+      ? `Abbiamo ricevuto la tua richiesta per ${dati.servizio} — ${config.azienda.nome}`
+      : `Abbiamo ricevuto la tua richiesta — ${config.azienda.nome}`,
     html: templateCliente(dati),
   });
 }

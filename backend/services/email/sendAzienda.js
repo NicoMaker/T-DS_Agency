@@ -1,19 +1,18 @@
 // ============================================================
-// services/email/sendCliente.js — Conferma automatica al cliente
+// services/email/sendAzienda.js — Notifica all'azienda
 // ============================================================
 const transporter = require("./transporter");
 const config = require("../../config");
-const { templateCliente } = require("./templates");
+const { templateAzienda } = require("./templates");
 
-async function sendCliente(dati) {
+async function sendAzienda(dati) {
   return transporter.sendMail({
     from: `"${config.mailFrom.name}" <${config.mailFrom.email}>`,
-    to: dati.email,
-    subject: dati.servizio
-      ? `Abbiamo ricevuto la tua richiesta per ${dati.servizio} — ${config.azienda.nome}`
-      : `Abbiamo ricevuto la tua richiesta — ${config.azienda.nome}`,
-    html: templateCliente(dati),
+    to: config.mailTo,
+    replyTo: dati.email, // "Rispondi" va direttamente al cliente
+    subject: `📩 Nuova richiesta: ${dati.servizio} — ${dati.nomeCompleto}`,
+    html: templateAzienda(dati),
   });
 }
 
-module.exports = sendCliente;
+module.exports = sendAzienda;
