@@ -46,6 +46,10 @@ const PhoneInput = {
     try {
       const lista = await SiteData.load("paesi-telefono");
       if (Array.isArray(lista) && lista.length) this.countries = lista;
+      // Nazioni in ordine alfabetico (italiano)
+      this.countries.sort((a, b) =>
+        (a.nome || "").localeCompare(b.nome || "", "it"),
+      );
     } catch (err) {
       console.error("Impossibile caricare data/paesi-telefono.json:", err);
       // Resta l'elenco di riserva con la sola Italia

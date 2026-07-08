@@ -1289,7 +1289,7 @@ body.hero-has-video #navbar:not(.scrolled) .hamburger span {
   width: 116px;
   height: 116px;
   flex-shrink: 0;
-  border-radius: 22px;
+  border-radius: 12px;
   overflow: hidden;
   display: grid;
   place-items: center;
