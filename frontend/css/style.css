@@ -505,22 +505,20 @@ button {
   inset: 0;
   z-index: -1;
   transition: opacity 1.3s var(--ease);
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(var(--bg-rgb), 0.55) 0%,
-      rgba(var(--bg-rgb), 0.35) 40%,
-      rgba(var(--bg-rgb), 0.92) 100%
-    );
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--bg-rgb), 0.55) 0%,
+    rgba(var(--bg-rgb), 0.35) 40%,
+    rgba(var(--bg-rgb), 0.92) 100%
+  );
 }
 #home.hero-has-video .hero-veil {
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(10, 12, 18, 0.72) 0%,
-      rgba(10, 12, 18, 0.45) 45%,
-      rgba(255, 255, 255, 1) 100%
-    );
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 12, 18, 0.72) 0%,
+    rgba(10, 12, 18, 0.45) 45%,
+    rgba(255, 255, 255, 1) 100%
+  );
 }
 #home.hero-has-video .hero-title,
 #home.hero-has-video .hero-sub {
@@ -823,7 +821,13 @@ button {
     #000 92%,
     transparent
   );
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
 }
 .marquee-track {
   display: inline-flex;
@@ -864,8 +868,7 @@ button {
   position: relative;
 }
 .section-alt {
-  background:
-    linear-gradient(to bottom, var(--bg-2), var(--bg));
+  background: linear-gradient(to bottom, var(--bg-2), var(--bg));
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
@@ -1228,11 +1231,7 @@ button {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(10, 12, 18, 0.28),
-    transparent 45%
-  );
+  background: linear-gradient(to top, rgba(10, 12, 18, 0.28), transparent 45%);
 }
 .progetto-body {
   position: relative;
@@ -1357,11 +1356,7 @@ button {
 }
 .team-card.azienda {
   background:
-    linear-gradient(
-      160deg,
-      rgba(var(--accent-rgb), 0.1),
-      transparent 55%
-    ),
+    linear-gradient(160deg, rgba(var(--accent-rgb), 0.1), transparent 55%),
     var(--panel);
   border-color: rgba(var(--accent-rgb), 0.3);
 }

@@ -306,8 +306,7 @@ function initCardSpotlight() {
   if (prefersReducedMotion) return;
   if (window.matchMedia("(hover: none)").matches) return;
 
-  const selettori =
-    ".servizio-card, .progetto-card, .team-card, .project-card";
+  const selettori = ".servizio-card, .progetto-card, .team-card, .project-card";
 
   document.addEventListener("pointermove", (e) => {
     const card = e.target.closest(selettori);
