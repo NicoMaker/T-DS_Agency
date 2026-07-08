@@ -3,12 +3,13 @@
 // ============================================================
 const { validaForm } = require("../utils/validators");
 const { sendAzienda, sendCliente } = require("../services/email");
+const config = require("../config");
 
 exports.inviaFormContatti = async (req, res) => {
   try {
     const { nome, cognome, email, servizio, telefono, messaggio } = req.body;
 
-    // 1. Validazione lato server (mai fidarsi del client)
+    // 1. Validazione
     const errori = validaForm(req.body);
     if (errori.length) {
       return res.status(400).json({ ok: false, errori });
@@ -25,14 +26,18 @@ exports.inviaFormContatti = async (req, res) => {
       messaggio: messaggio.trim(),
     };
 
-    // 2. Notifica all'azienda
+    // 2. Notifica all'azienda (deve funzionare)
     await sendAzienda(dati);
 
-    // 3. Conferma automatica al cliente (se fallisce non blocca la risposta)
+    // 3. Conferma al cliente (se fallisce, logghiamo ma non blocchiamo la risposta)
     try {
       await sendCliente(dati);
     } catch (err) {
-      console.warn("⚠️  Conferma al cliente non inviata:", err.message);
+      console.error("⚠️  Conferma al cliente NON INVIATA:", err.message);
+      // Opzionale: invia una notifica all'admin via email (solo se l'azienda ha ricevuto)
+      // In produzione, potresti inviare un'email di avviso a te stesso
+      // Esempio:
+      // await transporter.sendMail({ ... });
     }
 
     return res.json({

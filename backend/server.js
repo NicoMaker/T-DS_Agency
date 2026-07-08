@@ -10,7 +10,7 @@ async function avvia() {
   const publicIP = await getPublicIP();
 
   app.listen(config.port, "0.0.0.0", () => {
-    console.log(`\n🚀 Nooo Agency — server avviato!`);
+    console.log(`\n🚀 T-DS — server avviato!`);
     console.log(`🌐 IP Pubblico: http://${publicIP}:${config.port}`);
     console.log(`🏠 IP Locale:   http://${localIP}:${config.port}`);
     console.log(`📍 Localhost:   http://localhost:${config.port}`);
