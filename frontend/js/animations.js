@@ -100,10 +100,22 @@ function initIntroVideo() {
 function initHeroVideo() {
   const video = document.getElementById("hero-video");
   const home = document.getElementById("home");
-  if (!video) return;
+
+  // Il testo dell'hero parte con la sua animazione solo quando il video
+  // è in riproduzione (classe .hero-ready). Se il video manca o non
+  // parte, il testo compare comunque subito / dopo un tempo massimo.
+  const avviaTestoHero = () => {
+    if (home) home.classList.add("hero-ready");
+  };
+
+  if (!video) {
+    avviaTestoHero();
+    return;
+  }
 
   const nascondi = () => {
     video.style.display = "none";
+    avviaTestoHero();
   };
 
   if (video.error || video.networkState === 3 /* NETWORK_NO_SOURCE */) {
@@ -120,7 +132,14 @@ function initHeroVideo() {
     document.body.classList.add("hero-has-video");
   };
   video.addEventListener("loadeddata", attivaStileVideo);
-  video.addEventListener("playing", attivaStileVideo);
+  video.addEventListener("playing", () => {
+    attivaStileVideo();
+    // Prima parte il video, subito dopo entra il testo con l'animazione
+    setTimeout(avviaTestoHero, 250);
+  });
+
+  // Rete di sicurezza: se il video non parte entro 3s, mostra il testo
+  setTimeout(avviaTestoHero, 3000);
 }
 
 // Attivati il prima possibile: l'attributo "autoplay" fa già partire il

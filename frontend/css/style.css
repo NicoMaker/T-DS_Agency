@@ -196,7 +196,7 @@ button {
   padding: 8px 0;
 }
 #navbar.scrolled .nav-logo-img {
-  height: 48px;
+  height: 58px;
 }
 #navbar.scrolled {
   background: rgba(var(--bg-rgb), 0.72);
@@ -215,7 +215,7 @@ button {
   margin-right: auto;
 }
 .nav-logo-img {
-  height: 64px;
+  height: 74px;
   width: auto;
   border-radius: 10px;
   transition:
@@ -521,11 +521,15 @@ button {
 }
 #home.hero-has-video .btn-outline {
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.55);
+  background: rgba(10, 12, 18, 0.5);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 #home.hero-has-video .btn-outline:hover {
   border-color: #ff8a4d;
-  color: #ff8a4d;
+  color: #ffb27d;
+  background: rgba(10, 12, 18, 0.65);
 }
 #home.hero-has-video .hero-scroll-line::after {
   background: #ffffff;
@@ -638,6 +642,12 @@ body.hero-has-video #navbar:not(.scrolled) .hamburger span {
   transform-origin: left;
   animation: underline-sweep 0.9s var(--ease) 1s forwards;
 }
+.hero-title .accent::after {
+  animation-play-state: paused;
+}
+#home.hero-ready .hero-title .accent::after {
+  animation-play-state: running;
+}
 @keyframes underline-sweep {
   to {
     transform: scaleX(1);
@@ -663,6 +673,10 @@ body.hero-has-video #navbar:not(.scrolled) .hamburger span {
   transform: translateY(26px);
   filter: blur(6px);
   animation: hero-in 0.9s var(--ease) forwards;
+  animation-play-state: paused;
+}
+#home.hero-ready .hero-in {
+  animation-play-state: running;
 }
 .hero-in:nth-child(1) {
   animation-delay: 0.15s;
@@ -1255,6 +1269,7 @@ body.hero-has-video #navbar:not(.scrolled) .hamburger span {
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  height: 100%;
 }
 .team-card > * {
   position: relative;
@@ -1271,18 +1286,16 @@ body.hero-has-video #navbar:not(.scrolled) .hamburger span {
   border-color: rgba(var(--accent-rgb), 0.3);
 }
 .team-foto {
-  width: 108px;
-  height: 108px;
-  border-radius: 50%;
+  width: 116px;
+  height: 116px;
+  border-radius: 22px;
   object-fit: cover;
-  border: 2px solid rgba(var(--accent-rgb), 0.5);
-  padding: 4px;
-  background: var(--bg);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  box-shadow: 0 12px 30px rgba(23, 26, 33, 0.14);
   transition: transform 0.4s var(--ease-spring);
 }
 .team-card:hover .team-foto {
-  transform: scale(1.06) rotate(2deg);
+  transform: scale(1.05) rotate(-1.5deg);
 }
 .team-card h3 {
   font-family: var(--font-display);
@@ -1310,7 +1323,8 @@ body.hero-has-video #navbar:not(.scrolled) .hamburger span {
 }
 .team-body {
   width: 100%;
-  margin-top: 14px;
+  margin-top: auto;
+  padding-top: 18px;
 }
 .team-contatti-list {
   display: grid;
@@ -1321,8 +1335,8 @@ body.hero-has-video #navbar:not(.scrolled) .hamburger span {
   display: flex;
   align-items: center;
   gap: 12px;
-  min-height: var(--touch-target);
-  padding: 8px 14px;
+  min-height: 52px;
+  padding: 8px 16px;
   border: 1px solid var(--line);
   border-radius: 12px;
   background: rgba(var(--ink-rgb), 0.02);
@@ -2102,6 +2116,7 @@ body.hero-has-video #navbar:not(.scrolled) .hamburger span {
     opacity: 1;
     transform: none;
     filter: none;
+    animation-play-state: running !important;
   }
   .marquee-track {
     animation: none;
