@@ -279,7 +279,7 @@ function renderTeam(site) {
     html += `
       <article class="team-card azienda reveal reveal-delay-${delayIndex}" style="border-color: var(--line-strong);">
         <div class="team-foto" style="background: var(--accent); display: grid; place-items: center; font-size: 2.2rem; color: #fff; font-weight: 800;">
-          <span>N.</span>
+          <span>${(azienda.nome || "A").trim().charAt(0)}.</span>
         </div>
         <div class="team-body">
           <h3>${azienda.nome || "Azienda"}</h3>
