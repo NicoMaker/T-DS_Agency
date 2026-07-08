@@ -1,10 +1,10 @@
 {
   "azienda": {
-    "nome": "Nooo Agency",
+    "nome": "T-DS Agency",
     "slogan": "Informatica & Grafica per il tuo business",
     "descrizione": "Siamo un'agenzia specializzata in informatica e grafica digitale.",
-    "baseUrl": "https://www.noooagency.com",
-    "email": "info@noooagency.com",
+    "baseUrl": "https://www.tdsagency.it",
+    "email": "info@tdsagency.it",
     "anno_fondazione": 2018,
     "apiUrl": "https://formspree.io/f/il-tuo-id",
     "contattiAzienda": {
@@ -19,9 +19,9 @@
         "url": "tel:+393331234567"
       },
       "email": {
-        "indirizzo": "info@noooagency.com",
+        "indirizzo": "info@tdsagency.it",
         "label": "Email Aziendale",
-        "url": "mailto:info@noooagency.com"
+        "url": "mailto:info@tdsagency.it"
       }
     }
   },
@@ -44,9 +44,9 @@
           "url": "tel:+393331234567"
         },
         "email": {
-          "indirizzo": "marco@noooagency.com",
+          "indirizzo": "marco@tdsagency.it",
           "label": "Email Marco",
-          "url": "mailto:marco@noooagency.com"
+          "url": "mailto:marco@tdsagency.it"
         }
       }
     },
@@ -68,17 +68,17 @@
           "url": "tel:+393339876543"
         },
         "email": {
-          "indirizzo": "giulia@noooagency.com",
+          "indirizzo": "giulia@tdsagency.it",
           "label": "Email Giulia",
-          "url": "mailto:giulia@noooagency.com"
+          "url": "mailto:giulia@tdsagency.it"
         }
       }
     }
   ],
   "social": {
-    "instagram": "https://instagram.com/noooagency",
-    "linkedin": "https://linkedin.com/company/noooagency",
-    "behance": "https://behance.net/noooagency",
-    "facebook": "https://facebook.com/noooagency"
+    "instagram": "https://instagram.com/tdsagency",
+    "linkedin": "https://linkedin.com/company/tdsagency",
+    "behance": "https://behance.net/tdsagency",
+    "facebook": "https://facebook.com/tdsagency"
   }
 }

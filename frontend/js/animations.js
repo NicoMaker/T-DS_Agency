@@ -115,9 +115,12 @@ function initHeroVideo() {
   // Con un video attivo il contenuto sopra deve restare leggibile a
   // prescindere da cosa mostra il filmato: passiamo a testi/velo scuri
   // pensati apposta (vedi regole "#home.hero-has-video" nel CSS).
-  video.addEventListener("playing", () => {
+  const attivaStileVideo = () => {
     if (home) home.classList.add("hero-has-video");
-  });
+    document.body.classList.add("hero-has-video");
+  };
+  video.addEventListener("loadeddata", attivaStileVideo);
+  video.addEventListener("playing", attivaStileVideo);
 }
 
 // Attivati il prima possibile: l'attributo "autoplay" fa già partire il
@@ -242,3 +245,53 @@ function buildMarquee(parole) {
   // Due copie identiche per un loop continuo (translateX -50%)
   track.innerHTML = blocco + blocco;
 }
+
+// ── Barra di progresso scroll in cima alla pagina ────────────
+function initScrollProgress() {
+  if (prefersReducedMotion) return;
+  const bar = document.createElement("div");
+  bar.className = "scroll-progress";
+  bar.setAttribute("aria-hidden", "true");
+  document.body.appendChild(bar);
+
+  let ticking = false;
+  const update = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const p = max > 0 ? window.scrollY / max : 0;
+    bar.style.transform = `scaleX(${Math.min(Math.max(p, 0), 1)})`;
+    ticking = false;
+  };
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true },
+  );
+  update();
+}
+
+// ── Spotlight sulle card: un alone arancio segue il cursore ──
+// (le card leggono --mx / --my nel CSS via radial-gradient)
+function initCardSpotlight() {
+  if (prefersReducedMotion) return;
+  if (window.matchMedia("(hover: none)").matches) return;
+
+  const selettori =
+    ".servizio-card, .progetto-card, .team-card, .project-card";
+
+  document.addEventListener("pointermove", (e) => {
+    const card = e.target.closest(selettori);
+    if (!card) return;
+    const r = card.getBoundingClientRect();
+    card.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    card.style.setProperty("--my", `${e.clientY - r.top}px`);
+  });
+}
+
+initScrollProgress();
+// Delegato sul documento: funziona anche sulle card generate dopo il render
+initCardSpotlight();

@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    document.title = `${servizio.titolo} – Nooo Agency`;
+    document.title = `${servizio.titolo} – T-DS Agency`;
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute("content", servizio.descrizione);
 
