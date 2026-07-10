@@ -10,6 +10,15 @@ const SOCIAL_ICONS = {
   behance: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M8 8h5v1.5H8V8zm0 3.5h6.5V13H8v-1.5zm0 3h8.5v1.5H8v-1.5zM16 8h3v1.5h-3V8zm.5 4.5c1.5 0 3 .8 3 2.5 0 2-1.8 3-3.5 3-1.5 0-3-.8-3-2.5h1.5c0 .8.8 1.5 1.5 1.5s1.5-.7 1.5-1.5c0-.8-.8-1.5-1.5-1.5h-.5v-1.5h.5z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
 };
 
+const SVG_EXTERNAL = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+const SOCIAL_PLATFORMS = [
+  { key: "instagram", label: "Instagram", icon: SOCIAL_ICONS.instagram },
+  { key: "linkedin", label: "LinkedIn", icon: SOCIAL_ICONS.linkedin },
+  { key: "facebook", label: "Facebook", icon: SOCIAL_ICONS.facebook },
+  { key: "behance", label: "Behance", icon: SOCIAL_ICONS.behance },
+];
+
 // ── Marquee ───────────────────────────────────────────────────
 function renderMarquee(datiServizi) {
   const parole = (datiServizi.servizi || []).map((s) => s.titolo);
@@ -27,15 +36,24 @@ function renderServizi(dati) {
   if (sotto && dati.sottotitolo) sotto.textContent = dati.sottotitolo;
 
   grid.innerHTML = (dati.servizi || [])
-    .map(
-      (s, i) => `
+    .map((s, i) => {
+      let iconHtml = "◆";
+      if (s.icona) {
+        const isUrl = /^https?:\/\/|\//i.test(s.icona);
+        if (isUrl) {
+          iconHtml = `<img src="${s.icona}" alt="${s.titolo}" loading="lazy" class="servizio-icona-img" />`;
+        } else {
+          iconHtml = s.icona;
+        }
+      }
+      return `
       <a
         href="servizio.html?slug=${s.slug}"
         class="servizio-card reveal reveal-delay-${i % 3}"
         style="--card-accent:${s.colore || "var(--accent)"}"
         aria-label="Scopri i dettagli di ${s.titolo}"
       >
-        <div class="servizio-icona" aria-hidden="true">${s.icona || "◆"}</div>
+        <div class="servizio-icona" aria-hidden="true">${iconHtml}</div>
         <h3>${s.titolo}</h3>
         <p>${s.descrizione}</p>
         <ul class="servizio-dettagli">
@@ -45,8 +63,8 @@ function renderServizi(dati) {
           Scopri i dettagli
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
-      </a>`,
-    )
+      </a>`;
+    })
     .join("");
 
   const select = document.getElementById("f-servizio");
@@ -65,9 +83,6 @@ function renderServizi(dati) {
 }
 
 // ── Progetti ─────────────────────────────────────────────────
-// Ogni card ha un pulsante "+" (stesso linguaggio visivo delle FAQ):
-// cliccandolo si apre il pannello con TUTTE le informazioni del
-// progetto — dettagli, tecnologie e i pulsanti "Apri" / "Codice".
 function renderProgetti(dati) {
   const grid = document.getElementById("progetti-grid");
   const titolo = document.getElementById("progetti-titolo");
@@ -82,8 +97,6 @@ function renderProgetti(dati) {
       const linkValido = isUrlValida(p.link);
       const codiceValido = isUrlValida(p.codice);
       const isBehance = linkValido && /behance\.net/i.test(p.link);
-
-      // Testo del pulsante principale in base al tipo di progetto
       const labelLink = isBehance ? "Guarda su Behance" : "Apri il sito";
 
       const testoRicerca =
@@ -168,9 +181,7 @@ function renderProgetti(dati) {
   initProgettiToggle(grid);
 }
 
-// Apertura/chiusura del pannello "Più informazioni" (delegazione:
-// funziona anche se le card vengono rigenerate). Il "+" ruota a "×"
-// come nelle FAQ; ogni card si apre/chiude in modo indipendente.
+// Apertura/chiusura del pannello "Più informazioni"
 function initProgettiToggle(grid) {
   if (grid.dataset.toggleInit) return;
   grid.dataset.toggleInit = "true";
@@ -260,14 +271,6 @@ function formatNumeroVisuale(numero) {
   return `${prefisso} ${gruppi.join(" ")}`;
 }
 
-// Per l'icona WhatsApp usiamo lo stesso set Material Icons di "call" ed
-// "email" (vedi contattoTeam più sotto): stesso font, stesso spessore,
-// stessa resa — dopo due tentativi di SVG custom, la coerenza visiva con
-// le icone accanto è la scelta più sicura.
-// ── Bandiere nazionali (immagine reale, non emoji) ─────────────
-// Le emoji-bandiera su alcuni sistemi/browser (es. Windows meno recenti)
-// non vengono renderizzate a colori e appaiono come semplice testo ("IT",
-// "GB", ecc.). Usiamo quindi una vera immagine SVG della bandiera.
 function flagImgHtml(iso, opts = {}) {
   if (!iso || iso.length !== 2) return "";
   const { width = 20, height = 15, className = "flag-icon" } = opts;
@@ -294,7 +297,7 @@ function contattoTeam(c, icona, valore) {
   </a>`;
 }
 
-// ── Team (con card aziendale) ──────────────────────────────
+// ── Team ──────────────────────────────────────────────────────
 function renderTeam(site) {
   const grid = document.getElementById("team-grid");
   const sotto = document.getElementById("team-sottotitolo");
@@ -304,8 +307,8 @@ function renderTeam(site) {
   if (sotto && azienda.descrizione) sotto.textContent = azienda.descrizione;
 
   let html = (site.team || [])
-    .map(
-      (m, i) => `
+    .map((m, i) => {
+      return `
       <article class="team-card reveal reveal-delay-${i % 3}">
         <div class="team-foto">
           <img src="${m.foto}" alt="${m.nome}" loading="lazy" />
@@ -321,8 +324,8 @@ function renderTeam(site) {
           </div>
         </div>
       </article>
-    `,
-    )
+    `;
+    })
     .join("");
 
   // ── Card aziendale ──
@@ -346,7 +349,6 @@ function renderTeam(site) {
 
     const delayIndex = (site.team || []).length % 3;
 
-    // Sceglie il contenuto della foto: immagine se presente, altrimenti iniziale
     let fotoHtml;
     if (azienda.foto) {
       fotoHtml = `<img src="${azienda.foto}" alt="${azienda.nome || "Azienda"}" loading="lazy" />`;
@@ -374,23 +376,13 @@ function renderTeam(site) {
 }
 
 // ── Footer social ────────────────────────────────────────────
-const SVG_EXTERNAL = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-
-const SOCIAL_PLATFORMS = [
-  { key: "instagram", label: "Instagram", icon: SOCIAL_ICONS.instagram },
-  { key: "linkedin", label: "LinkedIn", icon: SOCIAL_ICONS.linkedin },
-  { key: "facebook", label: "Facebook", icon: SOCIAL_ICONS.facebook },
-  { key: "behance", label: "Behance", icon: SOCIAL_ICONS.behance },
-];
-
 function renderFooterSocial(site) {
   const wrap = document.getElementById("footer-social");
   if (!wrap) return;
   const social = (site && site.social) || {};
 
   wrap.innerHTML = SOCIAL_PLATFORMS.filter((p) => social[p.key])
-    .map(
-      (p) => `
+    .map((p) => `
       <a
         href="${social[p.key]}"
         target="_blank"
@@ -401,7 +393,7 @@ function renderFooterSocial(site) {
       >
         ${p.icon}
         <span class="footer-social-label">${p.label}</span>
-      </a>`,
-    )
+      </a>
+    `)
     .join("");
 }

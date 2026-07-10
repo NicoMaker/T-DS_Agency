@@ -6,7 +6,7 @@
       "id": 1,
       "slug": "siti-web",
       "titolo": "Siti Web",
-      "icona": "🌐",
+      "icona": "img/icone/siti-web.png",
       "descrizione": "Realizziamo siti web professionali, veloci e ottimizzati per i motori di ricerca. Dal sito vetrina all'e-commerce completo.",
       "dettagli": [
         "Siti vetrina e istituzionali",
@@ -40,7 +40,7 @@
       "id": 2,
       "slug": "brand-identity",
       "titolo": "Brand Identity",
-      "icona": "✏️",
+      "icona": "img/icone/brand.png",
       "descrizione": "Costruiamo identità visive memorabili. Logo, palette colori, tipografia e materiali grafici coordinati.",
       "dettagli": [
         "Logo design e restyling",
@@ -74,7 +74,7 @@
       "id": 3,
       "slug": "app-software",
       "titolo": "App & Software",
-      "icona": "📱",
+      "icona": "img/icone/app.png",
       "descrizione": "Sviluppiamo applicazioni web custom per automatizzare processi e migliorare l'esperienza utente.",
       "dettagli": [
         "Web app e portali gestionali",
@@ -107,7 +107,7 @@
       "id": 4,
       "slug": "marketing-digitale",
       "titolo": "Marketing Digitale",
-      "icona": "📊",
+      "icona": "img/icone/marketing.png",
       "descrizione": "Strategie di marketing online misurabili. Social media, campagne a pagamento, email marketing e analytics.",
       "dettagli": [
         "Gestione social media",
@@ -141,7 +141,7 @@
       "id": 5,
       "slug": "grafica-stampa",
       "titolo": "Grafica & Stampa",
-      "icona": "🎨",
+      "icona": "img/icone/grafica.png",
       "descrizione": "Materiali grafici per ogni esigenza: brochure, flyer, manifesti, packaging e tutto ciò che serve offline.",
       "dettagli": [
         "Brochure e cataloghi",
@@ -175,7 +175,7 @@
       "id": 6,
       "slug": "consulenza-it",
       "titolo": "Consulenza IT",
-      "icona": "💻",
+      "icona": "img/icone/consulenza.png",
       "descrizione": "Supporto tecnico e consulenza informatica per aziende. Infrastruttura, sicurezza, cloud e assistenza continua.",
       "dettagli": [
         "Audit digitale aziendale",

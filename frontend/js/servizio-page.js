@@ -36,23 +36,33 @@ document.addEventListener("DOMContentLoaded", async () => {
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute("content", servizio.descrizione);
 
-    document.getElementById("sd-icon").textContent = servizio.icona;
+    // Icona
+    const iconEl = document.getElementById("sd-icon");
+    if (servizio.icona) {
+      const isUrl = /^https?:\/\/|\//i.test(servizio.icona);
+      if (isUrl) {
+        iconEl.innerHTML = `<img src="${servizio.icona}" alt="${servizio.titolo}" loading="lazy" class="servizio-icona-img" />`;
+      } else {
+        iconEl.textContent = servizio.icona;
+      }
+    } else {
+      iconEl.textContent = "◆";
+    }
+
     document.getElementById("sd-title").textContent = servizio.titolo;
     document.getElementById("sd-desc").textContent = servizio.descrizione;
 
     const lista = document.getElementById("sd-lista");
-    // La classe va sull'UL: è il CSS (li::before) a disegnare la ✓
-    // arancione dentro il cerchio, allineata al testo.
     lista.classList.add("lista-check");
     lista.innerHTML = (servizio.dettagli || [])
       .map((d) => `<li>${d}</li>`)
       .join("");
 
+    // FAQ
     const faqWrap = document.getElementById("sd-faq");
     if (servizio.faq && servizio.faq.length) {
       faqWrap.innerHTML = servizio.faq
-        .map(
-          (f, i) => `
+        .map((f, i) => `
         <div class="faq-item">
           <button class="faq-toggle" aria-expanded="false" aria-controls="faq-body-${i}">
             <span class="faq-label">${f.domanda}</span>
@@ -62,14 +72,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             <p>${f.risposta}</p>
           </div>
         </div>
-      `,
-        )
+      `)
         .join("");
 
-      // Il CSS espande .faq-body SOLO quando .faq-item ha la classe
-      // "open": è quella che va attivata/disattivata (il vecchio codice
-      // toglieva solo l'attributo hidden e la risposta restava invisibile).
-      // Una sola FAQ aperta alla volta; il "+" ruota a "×" via CSS.
       faqWrap.querySelectorAll(".faq-toggle").forEach((btn) => {
         btn.addEventListener("click", () => {
           const item = btn.closest(".faq-item");
@@ -94,9 +99,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // ── Progetti correlati ──────────────────────────────────
-    // SOLO i progetti delle categorie del servizio corrente:
-    // niente riempitivi di altre categorie. Se il servizio non ha
-    // progetti, l'intera sezione viene nascosta.
     const correlatiWrap = document.getElementById("sd-correlati-wrap");
     const correlatiGrid = document.getElementById("sd-correlati-grid");
     const correlati =
@@ -109,9 +111,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (correlati.length) {
       correlatiGrid.innerHTML = correlati
         .map((p, i) => {
-          const isPresetCat =
-            servizio.categorie_correlate &&
-            servizio.categorie_correlate.includes(p.categoria);
           const linkValido = isUrlValida(p.link);
           const codiceValido = isUrlValida(p.codice);
           const isBehance = linkValido && /behance\.net/i.test(p.link);
@@ -126,7 +125,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           <div class="project-img-wrap">
             <img src="${p.immagine || p.immagine_placeholder}" alt="${p.titolo}" loading="lazy" onerror="this.onerror=null;this.src='${p.immagine_placeholder || ""}'">
             <div class="project-overlay"></div>
-            ${isPresetCat ? "" : `<span class="project-tag">${p.categoria}</span>`}
           </div>
           <div class="project-body">
             <p class="project-anno">${p.anno}</p>
@@ -185,7 +183,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         .join("");
       correlatiWrap.style.display = "";
 
-      // Stesso comportamento del "+" della home (definito in render.js)
       initProgettiToggle(correlatiGrid);
 
       initFilterGrid({
@@ -198,7 +195,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       correlatiWrap.style.display = "none";
     }
 
-    // ── Servizi correlati: TUTTI tranne il corrente ────────
+    // ── Servizi correlati (TUTTI tranne il corrente) ────────
     const altriGrid = document.getElementById("sd-altri-servizi-grid");
     if (altriGrid) {
       const serviziDaMostrare = serviziData.servizi.filter(
@@ -206,15 +203,24 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
 
       altriGrid.innerHTML = serviziDaMostrare
-        .map(
-          (s, i) => `
+        .map((s, i) => {
+          let iconHtml = "◆";
+          if (s.icona) {
+            const isUrl = /^https?:\/\/|\//i.test(s.icona);
+            if (isUrl) {
+              iconHtml = `<img src="${s.icona}" alt="${s.titolo}" loading="lazy" class="servizio-icona-img" />`;
+            } else {
+              iconHtml = s.icona;
+            }
+          }
+          return `
           <a
             href="servizio.html?slug=${s.slug}"
             class="servizio-card reveal reveal-delay-${i % 3}"
             style="--card-accent:${s.colore || "var(--accent)"}"
             aria-label="Scopri i dettagli di ${s.titolo}"
           >
-            <div class="servizio-icona" aria-hidden="true">${s.icona || "◆"}</div>
+            <div class="servizio-icona" aria-hidden="true">${iconHtml}</div>
             <h3>${s.titolo}</h3>
             <p>${s.descrizione}</p>
             <span class="servizio-cta">
@@ -222,8 +228,8 @@ document.addEventListener("DOMContentLoaded", async () => {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
           </a>
-        `,
-        )
+        `;
+        })
         .join("");
     }
 
@@ -269,8 +275,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     initReveal();
     if (typeof initMagneticButtons === "function") initMagneticButtons();
 
-    // Corregge un eventuale arrivo con ancora (es. link diretto con #hash)
-    // ora che il contenuto dinamico ha la sua altezza reale
     requestAnimationFrame(() => requestAnimationFrame(scrollToCurrentHash));
   } catch (err) {
     console.error("Errore caricamento servizio:", err);
@@ -280,5 +284,4 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-// Ulteriore correzione di sicurezza a caricamento completato
 window.addEventListener("load", scrollToCurrentHash);
