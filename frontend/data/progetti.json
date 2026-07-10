@@ -13,7 +13,7 @@
         "Sezioni prodotti e contatti sempre aggiornate"
       ],
       "tecnologie": ["HTML", "CSS", "JavaScript"],
-      "immagine": "Web_Site/Macelleria_da_Ketti.png",
+      "immagine": "Img/Web_Site/Macelleria_da_Ketti.png",
       "immagine_placeholder": "https://picsum.photos/seed/ketti/600/400",
       "anno": 2025,
       "colore": "#e85d1f",
@@ -23,14 +23,13 @@
       "id": 2,
       "titolo": "IdeaLegno",
       "categoria": "Sito Web",
-      "descrizione": "Sito istituzionale per un'azienda di lavorazione del legno in Friuli-Venezia Giulia: portfolio lavori e richiesta preventivi.",
+      "descrizione": "Sito istituzionale per un'azienda di lavorazione del legno in Friuli-Venezia Giulia: portfolio lavori",
       "dettagli": [
         "Galleria dei lavori realizzati",
-        "Modulo di contatto per preventivi",
         "Immagine coordinata con il brand"
       ],
       "tecnologie": ["HTML", "CSS", "JavaScript"],
-      "immagine": "Web_Site/IDEALEGNO.jpg",
+      "immagine": "Img/Web_Site/IDEALEGNO.jpg",
       "immagine_placeholder": "https://picsum.photos/seed/idealegno/600/400",
       "anno": 2025,
       "colore": "#c2470e",
@@ -47,7 +46,7 @@
         "Codice open source consultabile"
       ],
       "tecnologie": ["HTML", "CSS", "JavaScript", "Netlify"],
-      "immagine": "Web_Site/Pagina_Generale_Siti.jpg",
+      "immagine": "Img/Web_Site/Pagina_Generale_Siti.jpg",
       "immagine_placeholder": "https://picsum.photos/seed/paginagenerale/600/400",
       "anno": 2025,
       "colore": "#e85d1f",
@@ -65,7 +64,7 @@
         "Codice open source su GitHub"
       ],
       "tecnologie": ["HTML", "CSS", "JavaScript", "Netlify"],
-      "immagine": "Web_Site/Giri_in_Bici.jpg",
+      "immagine": "Img/Web_Site/Giri_in_Bici.jpg",
       "immagine_placeholder": "https://picsum.photos/seed/giribici/600/400",
       "anno": 2025,
       "colore": "#c2470e",
