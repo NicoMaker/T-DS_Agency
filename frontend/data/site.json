@@ -1,27 +1,24 @@
 {
   "azienda": {
-    "nome": "T-DS Agency",
+    "nome": "T-DS Studio",
     "slogan": "Informatica & Grafica per il tuo business",
-    "descrizione": "Siamo un'agenzia specializzata in informatica e grafica digitale.",
-    "baseUrl": "https://www.tdsagency.it",
-    "email": "info@tdsagency.it",
-    "anno_fondazione": 2018,
-    "apiUrl": "https://formspree.io/f/il-tuo-id",
+    "email": "tds.comunicationstudio@gmail.com",
+        "foto": "Img/T-DS.png",
     "contattiAzienda": {
       "whatsapp": {
-        "numero": "+393331234567",
+        "numero": "+39 340 495 2592",
         "label": "WhatsApp Azienda",
-        "url": "https://wa.me/393331234567"
+        "url": "https://wa.me/393404952592"
       },
       "telefono": {
-        "numero": "+39 333 123 4567",
+        "numero": "+39 340 495 2592",
         "label": "Telefono Azienda",
-        "url": "tel:+393331234567"
+        "url": "tel:+393404952592"
       },
       "email": {
-        "indirizzo": "info@tdsagency.it",
+        "indirizzo": "tds.comunicationstudio@gmail.com",
         "label": "Email Aziendale",
-        "url": "mailto:info@tdsagency.it"
+        "url": "mailto:tds.comunicationstudio@gmail.com"
       }
     }
   },

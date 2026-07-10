@@ -325,7 +325,7 @@ function renderTeam(site) {
     )
     .join("");
 
-  // ── Card aziendale (senza gradienti) ──
+  // ── Card aziendale ──
   if (azienda.contattiAzienda) {
     const ca = azienda.contattiAzienda;
     const contattiAzienda = [
@@ -346,10 +346,18 @@ function renderTeam(site) {
 
     const delayIndex = (site.team || []).length % 3;
 
+    // Sceglie il contenuto della foto: immagine se presente, altrimenti iniziale
+    let fotoHtml;
+    if (azienda.foto) {
+      fotoHtml = `<img src="${azienda.foto}" alt="${azienda.nome || 'Azienda'}" loading="lazy" />`;
+    } else {
+      fotoHtml = `<span style="background: var(--accent); display: grid; place-items: center; font-size: 2.2rem; color: #fff; font-weight: 800; width: 100%; height: 100%; border-radius: 50%;">${(azienda.nome || "A").trim().charAt(0)}.</span>`;
+    }
+
     html += `
       <article class="team-card azienda reveal reveal-delay-${delayIndex}" style="border-color: var(--line-strong);">
-        <div class="team-foto" style="background: var(--accent); display: grid; place-items: center; font-size: 2.2rem; color: #fff; font-weight: 800;">
-          <span>${(azienda.nome || "A").trim().charAt(0)}.</span>
+        <div class="team-foto">
+          ${fotoHtml}
         </div>
         <div class="team-body">
           <h3>${azienda.nome || "Azienda"}</h3>
