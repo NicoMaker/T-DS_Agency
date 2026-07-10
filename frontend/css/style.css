@@ -3220,3 +3220,173 @@ button {
     transform: none;
   }
 }
+
+/* ============================================================
+   SERVIZIO DETAIL — HERO: IMMAGINE A SINISTRA, TESTO A DESTRA
+   ============================================================ */
+
+.servizio-hero {
+  display: flex;
+  flex-direction: row;
+  margin: 24px 0 44px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--panel);
+  min-height: 280px;
+}
+
+/* ── Immagine a sinistra ── */
+.servizio-hero-image {
+  flex: 0 0 42%;
+  max-height: 340px;
+  background: var(--panel);
+  overflow: hidden;
+  position: relative;
+}
+
+.servizio-hero-image img {
+  width: 100%;
+  height: 100%;
+  max-height: 340px;
+  object-fit: contain;          /* MOSTRA TUTTA L'IMMAGINE — mai tagliata */
+  object-position: center;
+  display: block;
+  background: var(--panel);
+  transition: transform 0.7s var(--ease-spring);
+}
+
+.servizio-hero:hover .servizio-hero-image img {
+  transform: scale(1.02);
+}
+
+/* ── Fallback icona ── */
+.servizio-hero-fallback {
+  position: absolute;
+  inset: 0;
+  display: none;
+  place-items: center;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--accent-rgb), 0.08),
+    rgba(var(--accent-rgb), 0.02)
+  );
+  color: var(--accent-2);
+}
+.servizio-hero-fallback .material-icons {
+  font-size: 64px;
+  opacity: 0.5;
+}
+
+/* ── Testo a destra ── */
+.servizio-hero-content {
+  flex: 1;
+  padding: 32px 36px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--panel);
+}
+
+.servizio-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+
+.servizio-hero-title::before {
+  content: "T-DS studio";
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.servizio-hero-desc {
+  font-size: clamp(0.92rem, 1.05vw, 1.05rem);
+  color: var(--ink-dim);
+  max-width: 520px;
+  line-height: 1.6;
+}
+
+/* ── TABLET / Desktop piccolo: side-by-side ── */
+@media (max-width: 1024px) {
+  .servizio-hero-image {
+    flex: 0 0 40%;
+    max-height: 280px;
+  }
+  .servizio-hero-image img {
+    max-height: 280px;
+  }
+  .servizio-hero-content {
+    padding: 26px 28px 26px 24px;
+  }
+}
+
+/* ── MOBILE: impila verticalmente, immagine sempre intera ── */
+@media (max-width: 768px) {
+  .servizio-hero {
+    flex-direction: column;
+    min-height: auto;
+    margin: 12px 0 28px;
+    border-radius: var(--radius);
+  }
+
+  .servizio-hero-image {
+    flex: 0 0 auto;
+    width: 100%;
+    max-height: 280px;
+    aspect-ratio: auto;         /* nessun rapporto forzato, si adatta all'immagine */
+  }
+
+  .servizio-hero-image img {
+    max-height: 280px;
+    object-fit: contain;        /* ANCHE SU MOBILE: immagine intera, mai tagliata */
+  }
+
+  .servizio-hero-content {
+    padding: 20px 20px 24px;
+  }
+
+  .servizio-hero-title {
+    font-size: clamp(1.2rem, 4.5vw, 1.6rem);
+  }
+  .servizio-hero-title::before {
+    font-size: 0.5rem;
+    margin-bottom: 4px;
+  }
+  .servizio-hero-desc {
+    font-size: 0.92rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .servizio-hero-image {
+    max-height: 220px;
+  }
+  .servizio-hero-image img {
+    max-height: 220px;
+  }
+  .servizio-hero-content {
+    padding: 16px 14px 18px;
+  }
+  .servizio-hero-title {
+    font-size: 1.1rem;
+  }
+}
+
+/* ── Movimento ridotto ── */
+@media (prefers-reduced-motion: reduce) {
+  .servizio-hero-image img {
+    transition: none;
+  }
+  .servizio-hero:hover .servizio-hero-image img {
+    transform: none;
+  }
+}
