@@ -33,14 +33,8 @@
         }
       ],
       "colore": "#1a6cff",
-      "categorie_correlate": [
-        "Sito Web"
-      ],
-      "correlati": [
-        "marketing-digitale",
-        "grafica-stampa",
-        "consulenza-it"
-      ]
+      "categorie_correlate": ["Sito Web"],
+      "correlati": ["marketing-digitale", "grafica-stampa", "consulenza-it"]
     },
     {
       "id": 2,
@@ -73,14 +67,8 @@
         }
       ],
       "colore": "#0d3fa6",
-      "categorie_correlate": [
-        "Brand Identity"
-      ],
-      "correlati": [
-        "grafica-stampa",
-        "siti-web",
-        "marketing-digitale"
-      ]
+      "categorie_correlate": ["Brand Identity"],
+      "correlati": ["grafica-stampa", "siti-web", "marketing-digitale"]
     },
     {
       "id": 3,
@@ -114,11 +102,7 @@
       ],
       "colore": "#00b4d8",
       "categorie_correlate": [],
-      "correlati": [
-        "siti-web",
-        "consulenza-it",
-        "marketing-digitale"
-      ]
+      "correlati": ["siti-web", "consulenza-it", "marketing-digitale"]
     },
     {
       "id": 4,
@@ -152,11 +136,7 @@
       ],
       "colore": "#0077b6",
       "categorie_correlate": [],
-      "correlati": [
-        "siti-web",
-        "brand-identity",
-        "grafica-stampa"
-      ]
+      "correlati": ["siti-web", "brand-identity", "grafica-stampa"]
     },
     {
       "id": 5,
@@ -189,15 +169,8 @@
         }
       ],
       "colore": "#023e8a",
-      "categorie_correlate": [
-        "Grafica e Illustrazione",
-        "Tipografia"
-      ],
-      "correlati": [
-        "brand-identity",
-        "siti-web",
-        "marketing-digitale"
-      ]
+      "categorie_correlate": ["Grafica e Illustrazione", "Tipografia"],
+      "correlati": ["brand-identity", "siti-web", "marketing-digitale"]
     },
     {
       "id": 6,
@@ -231,11 +204,7 @@
       ],
       "colore": "#1a6cff",
       "categorie_correlate": [],
-      "correlati": [
-        "app-software",
-        "siti-web",
-        "brand-identity"
-      ]
+      "correlati": ["app-software", "siti-web", "brand-identity"]
     }
   ]
 }

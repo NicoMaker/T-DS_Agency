@@ -216,7 +216,6 @@ function templateAzienda({
   servizio,
   messaggio,
 }) {
-
   const corpo = `
     <p style="margin:0 0 20px;color:${COLORI.inkDim};">
       Hai ricevuto una nuova richiesta di preventivo dal sito:

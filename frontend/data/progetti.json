@@ -12,11 +12,7 @@
         "Ottimizzato per mobile e ricerca locale",
         "Sezioni prodotti e contatti sempre aggiornate"
       ],
-      "tecnologie": [
-        "HTML",
-        "CSS",
-        "JavaScript"
-      ],
+      "tecnologie": ["HTML", "CSS", "JavaScript"],
       "immagine": "img/Web_Site/Macelleria_da_Ketti.png",
       "immagine_placeholder": "https://picsum.photos/seed/ketti/600/400",
       "anno": 2025,
@@ -32,11 +28,7 @@
         "Galleria dei lavori realizzati",
         "Immagine coordinata con il brand"
       ],
-      "tecnologie": [
-        "HTML",
-        "CSS",
-        "JavaScript"
-      ],
+      "tecnologie": ["HTML", "CSS", "JavaScript"],
       "immagine": "img/Web_Site/IDEALEGNO.jpg",
       "immagine_placeholder": "https://picsum.photos/seed/idealegno/600/400",
       "anno": 2025,
@@ -53,14 +45,12 @@
         "Palette colori e sistema tipografico",
         "Applicazioni del brand su materiali reali"
       ],
-      "tecnologie": [
-        "Illustrator",
-        "Photoshop"
-      ],
+      "tecnologie": ["Illustrator", "Photoshop"],
       "immagine": "img/Brand_Identity/Bottadiculo.png",
       "immagine_placeholder": "https://picsum.photos/seed/bottadiculo/600/400",
       "anno": 2025,
-      "colore": "#e85d1f"
+      "colore": "#e85d1f",
+      "link": "https://www.bottadiculo.it"
     },
     {
       "id": 5,
@@ -72,10 +62,7 @@
         "Gerarchie tipografiche e leggibilità",
         "Impaginazione completa del magazine"
       ],
-      "tecnologie": [
-        "InDesign",
-        "Illustrator"
-      ],
+      "tecnologie": ["InDesign", "Illustrator"],
       "immagine": "img/Brand_Identity/Spazio_Magazine.png",
       "immagine_placeholder": "https://picsum.photos/seed/spazio/600/400",
       "anno": 2025,
@@ -91,10 +78,7 @@
         "Concept grafico coordinato",
         "File pronti per la stampa"
       ],
-      "tecnologie": [
-        "Illustrator",
-        "Photoshop"
-      ],
+      "tecnologie": ["Illustrator", "Photoshop"],
       "immagine": "img/Brand_Identity/Calendario_2024.png",
       "immagine_placeholder": "https://picsum.photos/seed/novus/600/400",
       "anno": 2024,

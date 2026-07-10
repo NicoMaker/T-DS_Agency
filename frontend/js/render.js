@@ -349,7 +349,7 @@ function renderTeam(site) {
     // Sceglie il contenuto della foto: immagine se presente, altrimenti iniziale
     let fotoHtml;
     if (azienda.foto) {
-      fotoHtml = `<img src="${azienda.foto}" alt="${azienda.nome || 'Azienda'}" loading="lazy" />`;
+      fotoHtml = `<img src="${azienda.foto}" alt="${azienda.nome || "Azienda"}" loading="lazy" />`;
     } else {
       fotoHtml = `<span style="background: var(--accent); display: grid; place-items: center; font-size: 2.2rem; color: #fff; font-weight: 800; width: 100%; height: 100%; border-radius: 50%;">${(azienda.nome || "A").trim().charAt(0)}.</span>`;
     }

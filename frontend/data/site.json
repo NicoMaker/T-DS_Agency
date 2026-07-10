@@ -3,7 +3,7 @@
     "nome": "T-DS Studio",
     "slogan": "Informatica & Grafica per il tuo business",
     "email": "tds.comunicationstudio@gmail.com",
-        "foto": "Img/T-DS.png",
+    "foto": "Img/T-DS.png",
     "contattiAzienda": {
       "whatsapp": {
         "numero": "+39 340 495 2592",
@@ -22,56 +22,6 @@
       }
     }
   },
-  "team": [
-    {
-      "id": "marco",
-      "nome": "Marco Bianchi",
-      "ruolo": "Sviluppo & Informatica",
-      "foto": "https://i.pravatar.cc/160?img=11",
-      "piva": "IT01234567890",
-      "contatti": {
-        "whatsapp": {
-          "numero": "+393331234567",
-          "label": "WhatsApp",
-          "url": "https://wa.me/393331234567"
-        },
-        "telefono": {
-          "numero": "+39 333 123 4567",
-          "label": "Chiama Marco",
-          "url": "tel:+393331234567"
-        },
-        "email": {
-          "indirizzo": "marco@tdsagency.it",
-          "label": "Email Marco",
-          "url": "mailto:marco@tdsagency.it"
-        }
-      }
-    },
-    {
-      "id": "giulia",
-      "nome": "Giulia Rossi",
-      "ruolo": "Design & Grafica",
-      "foto": "https://i.pravatar.cc/160?img=47",
-      "piva": "IT09876543210",
-      "contatti": {
-        "whatsapp": {
-          "numero": "+393339876543",
-          "label": "WhatsApp",
-          "url": "https://wa.me/393339876543"
-        },
-        "telefono": {
-          "numero": "+39 333 987 6543",
-          "label": "Chiama Giulia",
-          "url": "tel:+393339876543"
-        },
-        "email": {
-          "indirizzo": "giulia@tdsagency.it",
-          "label": "Email Giulia",
-          "url": "mailto:giulia@tdsagency.it"
-        }
-      }
-    }
-  ],
   "social": {
     "instagram": "https://instagram.com/tdsagency",
     "linkedin": "https://linkedin.com/company/tdsagency",
