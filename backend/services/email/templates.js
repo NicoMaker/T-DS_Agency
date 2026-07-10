@@ -25,9 +25,84 @@ const FONT_DISPLAY = "'Manrope', 'Segoe UI', Helvetica, Arial, sans-serif";
 const FONT_BODY = "'Manrope', 'Segoe UI', Helvetica, Arial, sans-serif";
 const FONT_MONO = "'Manrope', 'Segoe UI', Helvetica, Arial, sans-serif";
 
+// ── Prefissi distrettuali italiani (numeri fissi) ────────────
+// Il piano di numerazione italiano ha prefissi geografici a lunghezza
+// variabile: 2 cifre (02 Milano, 06 Roma), 3 cifre (lista sotto),
+// tutti gli altri che iniziano con 0 hanno 4 cifre (es. 0432 Udine,
+// 0444 Vicenza, 0421 San Donà...).
+const PREFISSI_FISSI_2 = ["02", "06"];
+const PREFISSI_FISSI_3 = [
+  "010", // Genova
+  "011", // Torino
+  "015", // Biella
+  "019", // Savona
+  "030", // Brescia
+  "031", // Como
+  "035", // Bergamo
+  "039", // Monza
+  "040", // Trieste
+  "041", // Venezia
+  "045", // Verona
+  "049", // Padova
+  "050", // Pisa
+  "051", // Bologna
+  "055", // Firenze
+  "059", // Modena
+  "070", // Cagliari
+  "071", // Ancona
+  "075", // Perugia
+  "079", // Sassari
+  "080", // Bari
+  "081", // Napoli
+  "085", // Pescara
+  "089", // Salerno
+  "090", // Messina
+  "091", // Palermo
+  "095", // Catania
+  "099", // Taranto
+];
+
+// Divide un numero fisso italiano in [prefisso distrettuale, resto].
+// Es. "0432123456" -> ["0432", "123456"] · "0212345678" -> ["02", "12345678"]
+function splitPrefissoFisso(locali) {
+  if (PREFISSI_FISSI_2.includes(locali.slice(0, 2)))
+    return [locali.slice(0, 2), locali.slice(2)];
+  if (PREFISSI_FISSI_3.includes(locali.slice(0, 3)))
+    return [locali.slice(0, 3), locali.slice(3)];
+  // Tutti gli altri prefissi geografici sono a 4 cifre (0432, 0444, ...)
+  return [locali.slice(0, 4), locali.slice(4)];
+}
+
+// Raggruppa cifre a blocchi di 3, unendo la coda corta all'ultimo blocco
+// Es. "123456" -> "123 456" · "1234567" -> "123 4567"
+function gruppiDiTre(cifre) {
+  const gruppi = [];
+  for (let i = 0; i < cifre.length; i += 3) gruppi.push(cifre.slice(i, i + 3));
+  if (gruppi.length > 1 && gruppi[gruppi.length - 1].length < 3) {
+    const ultimo = gruppi.pop();
+    gruppi[gruppi.length - 1] += ultimo;
+  }
+  return gruppi.join(" ");
+}
+
+// Formatta il numero d'utente di un fisso (la parte DOPO il prefisso
+// distrettuale) secondo la convenzione italiana:
+// 5 cifre "12 345" · 6 "123 456" · 7 "123 4567" · 8 "1234 5678"
+function formattaUtenteFisso(cifre) {
+  const n = cifre.length;
+  if (n <= 4) return cifre;
+  if (n === 5) return `${cifre.slice(0, 2)} ${cifre.slice(2)}`;
+  if (n === 6 || n === 7) return `${cifre.slice(0, 3)} ${cifre.slice(3)}`;
+  if (n === 8) return `${cifre.slice(0, 4)} ${cifre.slice(4)}`;
+  return gruppiDiTre(cifre);
+}
+
 // ── Utility: formatta un numero di telefono italiano in modo leggibile ──
-// Es: "3331234567" -> "333 123 4567" · "+393331234567" -> "+39 333 123 4567"
-function formatTelefono(telefono) {
+// Mobile:  "3331234567"    -> "333 123 4567"
+//          "+393331234567" -> "+39 333 123 4567"
+// Fisso:   "0432123456"    -> "0432 123 456"  (prefisso distrettuale separato)
+//          "0212345678"    -> "02 123 456 78"
+function formatTelefono(telefono, tipoTelefono) {
   if (!telefono) return "";
   const raw = String(telefono).trim();
   let cifre = raw.replace(/[^\d]/g, "");
@@ -44,17 +119,37 @@ function formatTelefono(telefono) {
 
   const locali = cifre;
   let corpo;
-  if (locali.length === 10) {
+
+  // ── Numero FISSO italiano: separa il prefisso distrettuale ──
+  // (i fissi italiani iniziano sempre con 0: 02, 041, 0432, ...)
+  if ((tipoTelefono === "fisso" || locali.startsWith("0")) && locali.length >= 5) {
+    const [distrettuale, resto] = splitPrefissoFisso(locali);
+    corpo = resto ? `${distrettuale} ${formattaUtenteFisso(resto)}` : distrettuale;
+  } else if (locali.length === 10) {
     // mobile IT: 3 + 3 + 4 (es. 333 123 4567)
     corpo = `${locali.slice(0, 3)} ${locali.slice(3, 6)} ${locali.slice(6)}`;
-  } else if (locali.length === 9) {
-    corpo = `${locali.slice(0, 3)} ${locali.slice(3, 6)} ${locali.slice(6)}`;
-  } else if (locali.length === 8) {
-    corpo = `${locali.slice(0, 2)} ${locali.slice(2, 5)} ${locali.slice(5)}`;
+  } else if (locali.length === 9 || locali.length === 8) {
+    corpo = gruppiDiTre(locali);
   } else {
     return raw; // formato non riconosciuto: lascialo intatto
   }
   return prefisso ? `${prefisso} ${corpo}` : corpo;
+}
+
+// ── Nome della nazione in italiano, dal codice ISO ───────────
+// Es. "IT" -> "Italia" · "DE" -> "Germania" · "US" -> "Stati Uniti"
+// Usa Intl.DisplayNames (nativo in Node); se non disponibile,
+// ricade sulla sigla ISO.
+function nomeNazione(iso) {
+  if (!iso || !/^[A-Za-z]{2}$/.test(iso)) return "";
+  try {
+    const nome = new Intl.DisplayNames(["it"], { type: "region" }).of(
+      iso.toUpperCase(),
+    );
+    return nome && nome !== iso.toUpperCase() ? nome : iso.toUpperCase();
+  } catch {
+    return iso.toUpperCase();
+  }
 }
 
 // Numero "pulito" da usare in tel:, mantenendo il + se presente
@@ -79,15 +174,21 @@ function labelTipoTelefono(tipoTelefono) {
   return tipoTelefono === "fisso" ? "Telefono fisso" : "Cellulare";
 }
 
-// ── Riga telefono: bandiera + numero cliccabile + tipo ──────
+// ── Riga telefono: bandiera + nazione + numero cliccabile + tipo ──
+// Usata sia nell'email all'azienda sia nel riepilogo al cliente.
 function rigaTelefono({ telefono, nazione, tipoTelefono }) {
   if (!telefono) return "";
   const label = labelTipoTelefono(tipoTelefono);
   const flag = flagEmailHtml(nazione);
-  const numero = formatTelefono(telefono);
+  const paese = nomeNazione(nazione);
+  const numero = formatTelefono(telefono, tipoTelefono);
 
   const contenuto = `
-    ${flag ? `<span style="margin-right:8px;">${flag}</span>` : ""}<a href="tel:${escapeHtml(telHref(telefono))}" style="color:${COLORI.accent2};text-decoration:none;font-weight:700;">${escapeHtml(numero)}</a>
+    ${flag ? `<span style="margin-right:6px;">${flag}</span>` : ""}${
+      paese
+        ? `<span style="margin-right:10px;color:${COLORI.inkDim};font-size:13px;font-weight:600;">${escapeHtml(paese)}</span>`
+        : ""
+    }<a href="tel:${escapeHtml(telHref(telefono))}" style="color:${COLORI.accent2};text-decoration:none;font-weight:700;">${escapeHtml(numero)}</a>
     <span style="display:inline-block;margin-left:8px;padding:2px 10px;border:1px solid ${COLORI.line};border-radius:999px;background:${COLORI.panel2};color:${COLORI.inkDim};font-family:${FONT_MONO};font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;vertical-align:1px;">${escapeHtml(label)}</span>`;
 
   return `
@@ -346,4 +447,5 @@ module.exports = {
   formatTelefono,
   flagEmailHtml,
   labelTipoTelefono,
+  nomeNazione,
 };
