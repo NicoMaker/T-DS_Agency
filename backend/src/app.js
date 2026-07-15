@@ -18,7 +18,7 @@ app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ extended: true }));
 
 // ── File statici (frontend) ──
-app.use(express.static(path.join(__dirname, "../frontend")));
+app.use(express.static(path.join(__dirname, "../../frontend")));
 
 // ── API ──
 app.use("/api", contattiRoutes);
